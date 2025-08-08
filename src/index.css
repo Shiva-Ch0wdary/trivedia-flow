@@ -1,20 +1,18 @@
+/* Import component animations - must be at the top */
+@import url('./components/layout/navigation.css');
+@import url('./components/layout/footer.css');
+@import url('./styles/mobile-responsive.css');
+
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import component animations */
-@import url('./components/layout/navigation.css');
-@import url('./components/layout/footer.css');
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
-  @import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "./styles/mobile-responsive.css";
 
 :root {
     /* Brand palette (HSL) */
