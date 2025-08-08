@@ -8,51 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Brand palette (HSL) */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222.2 47.4% 11.2%; /* Neutral 900 */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222.2 47.4% 11.2%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222.2 47.4% 11.2%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Teal brand */
+    --primary: 173 80% 38%; /* #0D9488 */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 168 45% 94%; /* #E6F7F5 like light teal */
+    --secondary-foreground: 173 72% 22%; /* dark teal text on light */
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215 20.2% 45%; /* Neutral 500-ish */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 17 100% 60%; /* #FF6B35 */
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 173 80% 38%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
+    /* Sidebar tokens */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    --sidebar-primary: 173 80% 38%;
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Extended design tokens */
+    --primary-dark: 175 86% 18%; /* #064E49 approx */
+    --primary-light: 168 45% 94%;
+    --shadow-elegant: 0 10px 30px -12px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 20px 60px -20px hsl(var(--primary) / 0.35);
+    --gradient-cta: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.85) 50%, hsl(var(--primary-dark)) 100%);
+    --gradient-hero: radial-gradient(800px 400px at var(--mx,50%) var(--my,30%), hsl(var(--primary) / 0.18), transparent 60%);
   }
 
   .dark {
@@ -100,6 +104,37 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background-image: var(--gradient-hero);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .btn-hero {
+    background: var(--gradient-cta);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-glow);
+    transition: var(--transition-smooth, all 0.25s cubic-bezier(.22,.9,.28,1));
+  }
+  .btn-hero:hover { filter: brightness(1.05); }
+  .btn-accent {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+  .section {
+    @apply py-16 md:py-24;
+  }
+  .container {
+    @apply container mx-auto px-6;
+  }
+  .eyebrow {
+    @apply text-sm font-medium tracking-wide text-muted-foreground uppercase;
+  }
+  .card {
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  }
+  .font-heading {
+    font-family: Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 }
