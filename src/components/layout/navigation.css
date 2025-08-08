@@ -1,0 +1,137 @@
+/* Navigation Animations */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.8), 0 0 30px rgba(255, 193, 7, 0.4); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Desktop Navigation Effects */
+.nav-pill {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-pill::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: 0;
+}
+
+.nav-pill:hover::before {
+  width: 120%;
+  height: 120%;
+}
+
+/* CTA Button Effects */
+.nav-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-cta:hover {
+  animation: glow 2s infinite;
+}
+
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  transition: transform 0.6s ease;
+}
+
+.nav-cta:hover::after {
+  transform: rotate(45deg) translate(100%, 100%);
+}
+
+/* Mobile Navigation Effects */
+.mobile-nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 193, 7, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  z-index: 0;
+}
+
+.mobile-nav-item:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-cta {
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.mobile-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #FFC107, #FFD54F, #FFC107);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-cta:hover::before {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .nav-pill {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ensure mobile bottom nav doesn't interfere with content */
+  body {
+    padding-bottom: 100px;
+  }
+}
+
+/* Smooth scroll behavior for navigation links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+.nav-pill:focus,
+.mobile-nav-item:focus,
+.nav-cta:focus {
+  outline: 2px solid #FFC107;
+  outline-offset: 2px;
+}

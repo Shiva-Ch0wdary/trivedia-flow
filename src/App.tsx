@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Services from "./pages/Services";
@@ -24,8 +25,15 @@ import FAQ from "./pages/FAQ";
 import TestimonialsPage from "./pages/Testimonials";
 import Integrations from "./pages/Integrations";
 import ComingSoon from "./pages/ComingSoon";
+import CaseStudy from "./pages/CaseStudy";
 
 const queryClient = new QueryClient();
+
+// Component to handle scroll-to-top on route changes
+const ScrollToTopHandler = () => {
+  useScrollToTop();
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -34,12 +42,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTopHandler />
           <Header />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:slug" element={<ServiceDetail />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/case-study/:slug" element={<CaseStudy />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />

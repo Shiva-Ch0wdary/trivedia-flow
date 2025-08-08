@@ -1,18 +1,313 @@
-import { Helmet } from "react-helmet-async";
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { ChevronDown, Search, MessageCircle, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-export default function FAQ() {
+const FAQ = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (id: string) => {
+    setOpenAccordion(openAccordion === id ? null : id);
+  };
+
+  const faqCategories = [
+    {
+      id: 'general',
+      title: 'General',
+      color: 'bg-teal-50 border-teal-200',
+      questions: [
+        {
+          id: 'what-does-trivesha-do',
+          question: 'What does Trivesha do?',
+          answer: 'We design, develop, and deploy web and app solutions with integrated DevOps since 2019. Our team specializes in creating custom digital experiences that help businesses grow online.'
+        },
+        {
+          id: 'where-located',
+          question: 'Where are you located?',
+          answer: 'We\'re based in Khammam, India — but we work with clients worldwide. Distance is never a barrier to delivering exceptional digital solutions.'
+        },
+        {
+          id: 'how-to-start',
+          question: 'How do I start a project with you?',
+          answer: 'Just hit "Get a Quote" on our site or email trivesha.tech@gmail.com with your idea. We\'ll schedule a free consultation to discuss your project requirements and provide a detailed proposal.'
+        },
+        {
+          id: 'timeline',
+          question: 'How long does a typical project take?',
+          answer: 'Project timelines vary based on complexity. A simple website takes 2-3 weeks, while complex applications can take 2-3 months. We provide detailed timelines during the proposal phase.'
+        }
+      ]
+    },
+    {
+      id: 'services',
+      title: 'Services',
+      color: 'bg-blue-50 border-blue-200',
+      questions: [
+        {
+          id: 'services-offered',
+          question: 'What services do you offer?',
+          answer: 'UI/UX design, website development, app development, DevOps automation, cloud hosting, and ongoing maintenance. We\'re your one-stop shop for all digital needs.'
+        },
+        {
+          id: 'custom-vs-template',
+          question: 'Do you offer custom designs or templates?',
+          answer: 'Always custom. No cookie-cutters — your project gets its own tailored look and feel that perfectly represents your brand and meets your specific requirements.'
+        },
+        {
+          id: 'mobile-responsive',
+          question: 'Are your websites mobile-responsive?',
+          answer: 'Absolutely! Every website and application we build is fully responsive and optimized for mobile, tablet, and desktop devices. Mobile-first design is our standard approach.'
+        },
+        {
+          id: 'cms-options',
+          question: 'Do you build websites with content management systems?',
+          answer: 'Yes, we can integrate popular CMS platforms like WordPress, or build custom content management solutions based on your specific needs and technical requirements.'
+        }
+      ]
+    },
+    {
+      id: 'pricing',
+      title: 'Pricing',
+      color: 'bg-green-50 border-green-200',
+      questions: [
+        {
+          id: 'website-cost',
+          question: 'How much will my website cost?',
+          answer: 'Small business sites start around ₹30,000, while advanced custom builds depend on features and complexity. We provide transparent, detailed quotes with no hidden fees.'
+        },
+        {
+          id: 'payment-terms',
+          question: 'Do you require an upfront payment?',
+          answer: 'Yes, we take 50% upfront and 50% upon completion. This helps us allocate resources effectively and ensures project commitment from both sides.'
+        },
+        {
+          id: 'payment-methods',
+          question: 'What payment methods do you accept?',
+          answer: 'We accept bank transfers, UPI, credit/debit cards, and digital wallets. International clients can pay via PayPal or wire transfer.'
+        },
+        {
+          id: 'refund-policy',
+          question: 'Do you offer refunds?',
+          answer: 'We offer partial refunds based on work completed if a project is cancelled early. Our terms are clearly outlined in the contract to ensure transparency.'
+        }
+      ]
+    },
+    {
+      id: 'technical',
+      title: 'Technical',
+      color: 'bg-purple-50 border-purple-200',
+      questions: [
+        {
+          id: 'code-ownership',
+          question: 'Who owns the code after delivery?',
+          answer: 'You do. 100% ownership after final payment. We provide complete source code, documentation, and transfer all intellectual property rights to you.'
+        },
+        {
+          id: 'technologies',
+          question: 'Which technologies do you use?',
+          answer: 'Primarily React, TypeScript, Node.js, Python, and cloud services like AWS — but we pick the technology stack that best fits your project requirements and long-term goals.'
+        },
+        {
+          id: 'security',
+          question: 'How do you ensure website security?',
+          answer: 'We implement SSL certificates, secure coding practices, regular updates, backup systems, and follow industry-standard security protocols to protect your data and users.'
+        },
+        {
+          id: 'hosting',
+          question: 'Do you provide hosting services?',
+          answer: 'Yes, we offer reliable cloud hosting solutions with regular backups, monitoring, and maintenance. We can also help you choose and set up hosting with other providers.'
+        }
+      ]
+    },
+    {
+      id: 'support',
+      title: 'Support & Maintenance',
+      color: 'bg-orange-50 border-orange-200',
+      questions: [
+        {
+          id: 'post-launch-support',
+          question: 'Do you provide post-launch support?',
+          answer: 'Yes, we include 30 days of free support after launch. After that, we offer flexible maintenance plans tailored to your needs and budget.'
+        },
+        {
+          id: 'bug-fixing',
+          question: 'How fast do you fix bugs?',
+          answer: 'Most bugs are fixed within 24–48 hours. Critical issues affecting site functionality are prioritized and addressed immediately.'
+        },
+        {
+          id: 'maintenance-plans',
+          question: 'What do your maintenance plans include?',
+          answer: 'Regular updates, security patches, performance monitoring, backups, minor content changes, and technical support. Plans are customized based on your specific needs.'
+        },
+        {
+          id: 'emergency-support',
+          question: 'Do you offer emergency support?',
+          answer: 'Yes, we provide 24/7 emergency support for critical issues. Our team is always ready to help when your business depends on it.'
+        }
+      ]
+    },
+    {
+      id: 'legal',
+      title: 'Legal & Policies',
+      color: 'bg-gray-50 border-gray-200',
+      questions: [
+        {
+          id: 'privacy-terms',
+          question: 'Where can I read your Privacy Policy and Terms of Service?',
+          answer: 'They\'re available on our Privacy Policy and Terms of Service pages. These documents outline how we handle your data and our working relationship.'
+        },
+        {
+          id: 'nda',
+          question: 'Do you sign Non-Disclosure Agreements?',
+          answer: 'Absolutely. We take client confidentiality seriously and are happy to sign NDAs before discussing your project details.'
+        },
+        {
+          id: 'licensing',
+          question: 'What about software licensing for third-party tools?',
+          answer: 'We ensure all third-party tools and libraries we use have proper licensing. Any licensing costs are discussed upfront and included in the project quote.'
+        }
+      ]
+    }
+  ];
+
+  const filteredCategories = faqCategories.map(category => ({
+    ...category,
+    questions: category.questions.filter(
+      q => 
+        q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        q.answer.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  })).filter(category => category.questions.length > 0);
+
   const canonical = typeof window !== 'undefined' ? window.location.href : '/faq';
+
   return (
-    <main className="section">
+    <>
       <Helmet>
-        <title>FAQ — Trivesha</title>
-        <meta name="description" content="Frequently asked questions about services, pricing, and process." />
+        <title>FAQ - Frequently Asked Questions | Trivesha</title>
+        <meta name="description" content="Got questions? We've got answers. Find answers to common questions about our web design, development, and DevOps services." />
         <link rel="canonical" href={canonical} />
       </Helmet>
-      <div className="container text-left">
-        <h1 className="font-heading text-4xl mb-4">FAQ</h1>
-        <p className="text-muted-foreground">Answers to common questions.</p>
+
+      <div className="min-h-screen bg-[#FAFAFA]">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-[#006D77] to-[#004C50] text-white py-20">
+          <div className="container mx-auto max-w-4xl px-6 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-['Poppins']">
+              Got Questions? We've Got Answers
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-white/90 font-['Inter']">
+              Whether it's about pricing, process, or support — here's everything you need to know.
+            </p>
+            
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search FAQs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-full border-0 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#E29578] transition-all duration-300"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Sections */}
+        <section className="py-16">
+          <div className="container mx-auto max-w-4xl px-6">
+            {filteredCategories.length === 0 && searchTerm && (
+              <div className="text-center py-12">
+                <p className="text-gray-600 text-lg">No FAQs found matching your search.</p>
+                <button 
+                  onClick={() => setSearchTerm('')}
+                  className="mt-4 text-[#006D77] hover:text-[#E29578] transition-colors"
+                >
+                  Clear search
+                </button>
+              </div>
+            )}
+
+            {filteredCategories.map((category) => (
+              <div key={category.id} className="mb-12">
+                <h2 className="text-2xl font-bold text-[#006D77] mb-6 font-['Poppins']">
+                  {category.title}
+                </h2>
+                
+                <div className="space-y-4">
+                  {category.questions.map((faq) => (
+                    <div
+                      key={faq.id}
+                      className={`bg-white rounded-xl shadow-sm border transition-all duration-300 hover:shadow-md ${category.color}`}
+                    >
+                      <button
+                        onClick={() => toggleAccordion(faq.id)}
+                        className="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none group"
+                      >
+                        <h3 className="text-lg font-semibold text-[#333333] group-hover:text-[#006D77] transition-colors font-['Inter']">
+                          {faq.question}
+                        </h3>
+                        <ChevronDown 
+                          className={`text-[#006D77] transition-transform duration-300 ${
+                            openAccordion === faq.id ? 'rotate-180' : ''
+                          }`} 
+                          size={20} 
+                        />
+                      </button>
+                      
+                      <div className={`overflow-hidden transition-all duration-300 ${
+                        openAccordion === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}>
+                        <div className="px-6 pb-5">
+                          <p className="text-[#333333] leading-relaxed font-['Inter']">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA Banner */}
+        <section className="bg-gradient-to-r from-[#006D77] to-[#E29578] py-16">
+          <div className="container mx-auto max-w-4xl px-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-['Poppins']">
+              Still got questions?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 font-['Inter']">
+              We're here to help. Get in touch and let's discuss your project.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="inline-flex items-center space-x-2 bg-white text-[#006D77] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                <Mail size={20} />
+                <span>Contact Us</span>
+              </Link>
+              
+              <a
+                href="https://wa.me/917330975148"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 bg-[#25D366] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#25D366]/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                <MessageCircle size={20} />
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
-    </main>
+    </>
   );
-}
+};
+
+export default FAQ;

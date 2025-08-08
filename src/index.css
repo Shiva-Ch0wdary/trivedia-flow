@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import component animations */
+@import url('./components/layout/navigation.css');
+@import url('./components/layout/footer.css');
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -133,5 +137,100 @@ All colors MUST be HSL.
   }
   .font-heading {
     font-family: Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: -0.025em;
+  }
+  
+  /* Services page specific styles */
+  .service-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .service-icon {
+    background: hsl(var(--secondary));
+    color: hsl(var(--primary));
+    transition: all 0.3s ease;
+  }
+  
+  .service-card:hover .service-icon {
+    transform: scale(1.1);
+  }
+  
+  .hero-mockup {
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-mockup:hover {
+    transform: rotate(0deg) !important;
+  }
+  
+  .testimonial-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    backdrop-filter: blur(10px);
+  }
+
+  /* Portfolio page specific styles */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .portfolio-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .portfolio-card:hover {
+    transform: translateY(-8px);
+  }
+  
+  .portfolio-filter {
+    backdrop-filter: blur(8px);
+    background: rgba(248, 250, 252, 0.9);
+  }
+  
+  .portfolio-hero-pattern {
+    background-image: 
+      radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.1) 2px, transparent 0),
+      radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
+    background-size: 100px 100px;
+  }
+  
+  .client-logo {
+    filter: grayscale(100%) contrast(0.8);
+    transition: all 0.3s ease;
+  }
+  
+  .client-logo:hover {
+    filter: grayscale(0%) contrast(1);
+    transform: scale(1.05);
+  }
+  
+  /* Animated filter transitions */
+  .filter-transition {
+    animation: fadeInUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Project card hover animations */
+  .project-overlay {
+    backdrop-filter: blur(4px);
   }
 }

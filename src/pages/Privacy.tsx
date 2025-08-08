@@ -1,18 +1,256 @@
 import { Helmet } from "react-helmet-async";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Shield, User, Lock, Eye, Globe, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Privacy() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/privacy';
+  const lastUpdated = "January 15, 2025";
+
+  const sections = [
+    {
+      id: "introduction",
+      title: "Introduction",
+      icon: Shield,
+      content: "At Trivesha, your privacy matters. This Privacy Policy explains how we collect, use, and protect your personal information when you interact with our website, services, and products."
+    },
+    {
+      id: "information-we-collect",
+      title: "Information We Collect", 
+      icon: User,
+      content: "We may collect the following types of information:",
+      list: [
+        "Contact details — name, email, phone, company",
+        "Project information — details you share about your business needs",
+        "Technical data — IP address, browser type, device info",
+        "Usage data — pages visited, time spent, click patterns",
+        "Payment details (for paid projects) — processed securely by third-party payment providers"
+      ]
+    },
+    {
+      id: "how-we-use",
+      title: "How We Use Your Information",
+      icon: Eye,
+      content: "We use your information to:",
+      list: [
+        "Respond to inquiries and provide quotes",
+        "Deliver and maintain our services",
+        "Improve our website and offerings",
+        "Send service updates, invoices, and important notices",
+        "Comply with legal obligations"
+      ]
+    },
+    {
+      id: "sharing-information",
+      title: "Sharing of Information",
+      icon: Globe,
+      content: "We do not sell your data. We may share information:",
+      list: [
+        "With service providers (e.g., hosting, analytics, payment processors)",
+        "If required by law or legal process",
+        "To protect our rights and prevent fraud"
+      ]
+    },
+    {
+      id: "cookies-tracking",
+      title: "Cookies & Tracking",
+      icon: Eye,
+      content: "Our website uses cookies and similar tools to:",
+      list: [
+        "Remember your preferences",
+        "Measure website performance",
+        "Provide relevant content"
+      ],
+      note: "You can disable cookies in your browser, but some features may not work."
+    },
+    {
+      id: "data-security",
+      title: "Data Security",
+      icon: Lock,
+      content: "We take reasonable technical and organizational measures to protect your data from unauthorized access, loss, or misuse."
+    },
+    {
+      id: "your-rights",
+      title: "Your Rights",
+      icon: User,
+      content: "Depending on your location, you may have rights to:",
+      list: [
+        "Access the data we hold about you",
+        "Request correction or deletion",
+        "Opt-out of marketing communications"
+      ],
+      note: "To exercise these rights, email trivesha.tech@gmail.com."
+    },
+    {
+      id: "policy-changes",
+      title: "Changes to this Policy",
+      icon: Shield,
+      content: "We may update this policy from time to time. Updates will be posted on this page with a new \"last updated\" date."
+    },
+    {
+      id: "contact",
+      title: "Contact",
+      icon: Mail,
+      content: "If you have questions, contact us at:",
+      contact: {
+        company: "Trivesha",
+        email: "trivesha.tech@gmail.com",
+        location: "Khammam, India"
+      }
+    }
+  ];
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <main className="section">
+    <main>
       <Helmet>
         <title>Privacy Policy — Trivesha</title>
-        <meta name="description" content="Privacy policy for Trivesha." />
+        <meta name="description" content="Learn how Trivesha collects, uses, and protects your personal information. Your privacy matters to us." />
         <link rel="canonical" href={canonical} />
       </Helmet>
-      <div className="container text-left">
-        <h1 className="font-heading text-4xl mb-4">Privacy Policy</h1>
-        <p className="text-muted-foreground">We value your privacy. Details will be published here.</p>
+
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-[#E6F7F5]">
+        <div className="container mx-auto max-w-7xl px-6 py-16 md:py-20">
+          {/* Breadcrumbs */}
+          <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
+            <Link to="/" className="hover:text-[#0D9488] transition-colors">Home</Link>
+            <ArrowRight size={14} />
+            <span className="text-muted-foreground">Legal</span>
+            <ArrowRight size={14} />
+            <span className="text-[#0D9488] font-medium">Privacy Policy</span>
+          </nav>
+
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-[#0D9488] mb-4 leading-tight">
+              Privacy Policy
+            </h1>
+            <p className="text-lg text-muted-foreground mb-6">
+              Learn how we collect, use, and protect your personal information
+            </p>
+            <Badge variant="secondary" className="text-[#0D9488] bg-[#0D9488]/10">
+              Last updated: {lastUpdated}
+            </Badge>
+          </div>
+        </div>
+      </section>
+
+      <div className="py-16 bg-white">
+        <div className="container mx-auto max-w-7xl px-6">
+          <div className="grid lg:grid-cols-4 gap-12">
+            {/* Sidebar Navigation */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8">
+                <Card className="p-6 shadow-lg border-0">
+                  <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4">
+                    Quick Navigation
+                  </h3>
+                  <nav className="space-y-2">
+                    {sections.map((section, index) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className="flex items-center space-x-3 w-full text-left px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-[#0D9488]/10 hover:text-[#0D9488] transition-colors"
+                      >
+                        <section.icon size={16} />
+                        <span>{section.title}</span>
+                      </button>
+                    ))}
+                  </nav>
+                </Card>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              <Card className="shadow-xl border-0 overflow-hidden">
+                <CardContent className="p-0">
+                  {sections.map((section, index) => (
+                    <div
+                      key={section.id}
+                      id={section.id}
+                      className="p-8 md:p-12 border-b border-gray-100 last:border-b-0"
+                    >
+                      <div className="flex items-start space-x-4 mb-6">
+                        <div className="w-12 h-12 bg-[#0D9488] rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="font-heading text-2xl md:text-3xl font-bold text-[#0D9488] mb-3">
+                            {section.title}
+                          </h2>
+                          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                            {section.content}
+                          </p>
+                        </div>
+                      </div>
+
+                      {section.list && (
+                        <ul className="space-y-3 mb-6 ml-16">
+                          {section.list.map((item, idx) => (
+                            <li key={idx} className="flex items-start space-x-3">
+                              <div className="w-2 h-2 bg-[#FF6B35] rounded-full mt-2 flex-shrink-0" />
+                              <span className="text-muted-foreground leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {section.note && (
+                        <div className="ml-16 p-4 bg-[#0D9488]/5 rounded-lg border-l-4 border-[#0D9488]">
+                          <p className="text-muted-foreground italic">{section.note}</p>
+                        </div>
+                      )}
+
+                      {section.contact && (
+                        <div className="ml-16 p-6 bg-gradient-to-r from-[#E6F7F5] to-[#F0F9FF] rounded-xl">
+                          <div className="space-y-2">
+                            <h4 className="font-semibold text-[#0D9488] text-lg">{section.contact.company}</h4>
+                            <p className="text-muted-foreground flex items-center space-x-2">
+                              <Mail size={16} />
+                              <a 
+                                href={`mailto:${section.contact.email}`}
+                                className="text-[#FF6B35] hover:underline"
+                              >
+                                {section.contact.email}
+                              </a>
+                            </p>
+                            <p className="text-muted-foreground">{section.contact.location}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Footer CTA */}
+      <section className="py-16 bg-[#0D9488] text-white">
+        <div className="container mx-auto max-w-7xl px-6 text-center">
+          <h3 className="font-heading text-2xl md:text-3xl font-bold mb-4">
+            Have questions about our privacy practices?
+          </h3>
+          <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+            We're here to help. Contact us if you need clarification on any part of this policy.
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-[#FF6B35] hover:bg-[#e55a2b] text-white text-lg px-8"
+            onClick={() => window.location.href = '/contact'}
+          >
+            Contact Us
+          </Button>
+        </div>
+      </section>
     </main>
   );
 }

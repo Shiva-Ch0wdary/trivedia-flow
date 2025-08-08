@@ -1,72 +1,138 @@
 import { Link, NavLink } from "react-router-dom";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useState, useEffect } from "react";
+import { User, Briefcase, DollarSign, FolderOpen, Phone } from "lucide-react";
 
-const nav = [
-  { to: "/services", label: "Services" },
-  { to: "/portfolio", label: "Portfolio" },
-  { to: "/pricing", label: "Pricing" },
+const navItems = [
+  { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/blog", label: "Blog" },
+  { to: "/services", label: "Services" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/portfolio", label: "Portfolio" },
   { to: "/contact", label: "Contact" },
 ];
 
+const mobileNavItems = [
+  { to: "/about", label: "About", icon: User },
+  { to: "/services", label: "Services", icon: Briefcase },
+  { to: "/pricing", label: "Pricing", icon: DollarSign },
+  { to: "/contact", label: "Contact", icon: Phone },
+  { to: "/portfolio", label: "Portfolio", icon: FolderOpen },
+];
+
 export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-heading text-lg">
-          <span aria-hidden className="inline-block h-3 w-3 rounded-sm bg-primary" />
-          <span>Trivesha</span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-6">
-          {nav.map((n) => (
-            <NavLink
-              key={n.to}
-              to={n.to}
-              className={({ isActive }) =>
-                `text-sm transition-colors ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`
-              }
+    <>
+      {/* Desktop Navigation */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-100' 
+          : 'bg-white/60 backdrop-blur-sm'
+      }`}>
+        <div className="container mx-auto max-w-7xl px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Desktop Logo - Left Side */}
+            <Link 
+              to="/" 
+              className="hidden lg:flex items-center group hover:scale-105 transition-transform duration-200"
             >
-              {n.label}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="hidden md:flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2 rounded-md border px-2 py-1 text-xs text-muted-foreground">
-            <span className="inline-block h-2 w-2 rounded-full bg-green-500" aria-hidden />
-            JustDial Verified
+              <img 
+                src="/logo.png" 
+                alt="Trivesha" 
+                className="w-24 h-24 object-contain transition-opacity duration-200 group-hover:opacity-80" 
+              />
+            </Link>
+
+            {/* Mobile Centered Logo */}
+            <div className="lg:hidden flex-1 flex justify-center">
+              <Link 
+                to="/" 
+                className="flex items-center group hover:scale-105 transition-transform duration-200"
+              >
+                <img 
+                  src="/logo.png" 
+                  alt="Trivesha" 
+                  className="w-24 h-24 object-contain transition-opacity duration-200 group-hover:opacity-80" 
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isActive
+                        ? 'text-gray-800 bg-gray-100/70'
+                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50/50'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+
+            {/* CTA Button - Minimal Style */}
+            <div className="hidden md:flex items-center">
+              <Link 
+                to="/contact"
+                className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-md"
+              >
+                Get Started
+              </Link>
+            </div>
           </div>
-          <Button asChild variant="accent" size="sm">
-            <Link to="/contact">Get a quote</Link>
-          </Button>
         </div>
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" aria-label="Open menu">
-                <Menu />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <div className="mt-6 grid gap-3">
-                {nav.map((n) => (
-                  <NavLink key={n.to} to={n.to} className="text-base" >
-                    {n.label}
-                  </NavLink>
-                ))}
-                <Button asChild variant="accent" className="mt-2">
-                  <Link to="/contact">Get a quote</Link>
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+      </header>
+
+      {/* Mobile Bottom Navigation - Redesigned with Glass Effect */}
+      <div className="lg:hidden fixed bottom-6 left-4 right-4 z-50">
+        <nav className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200/50 px-4 py-3">
+          <div className="flex items-center justify-between">
+            {mobileNavItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className="flex flex-col items-center justify-center min-w-[64px] py-2 px-3 rounded-xl transition-all duration-300"
+              >
+                {({ isActive }) => (
+                  <>
+                    <div className={`p-2 rounded-lg transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-gray-800 text-white shadow-lg' 
+                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                    }`}>
+                      <item.icon size={20} strokeWidth={1.5} />
+                    </div>
+                    <span className={`text-xs font-medium mt-1 transition-colors duration-300 ${
+                      isActive ? 'text-gray-800' : 'text-gray-500'
+                    }`}>
+                      {item.label}
+                    </span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
+        </nav>
       </div>
-    </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-16" />
+    </>
   );
 }
