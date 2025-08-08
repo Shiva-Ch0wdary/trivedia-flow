@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import workImage from "@/assets/work.jpeg";
 
 export default function Portfolio() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/portfolio';
@@ -191,7 +192,7 @@ export default function Portfolio() {
             <div className="relative">
               <div className="bg-gradient-to-br from-teal-50 to-orange-50 rounded-2xl p-8">
                 <img 
-                  src="/placeholder.svg" 
+                  src={workImage} 
                   alt="Portfolio showcase mockup"
                   className="w-full rounded-lg shadow-2xl border border-gray-200"
                 />

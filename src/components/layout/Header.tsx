@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { User, Briefcase, DollarSign, FolderOpen, Phone } from "lucide-react";
+import { Briefcase, FolderOpen } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -12,11 +12,36 @@ const navItems = [
 ];
 
 const mobileNavItems = [
-  { to: "/about", label: "About", icon: User },
-  { to: "/services", label: "Services", icon: Briefcase },
-  { to: "/pricing", label: "Pricing", icon: DollarSign },
-  { to: "/contact", label: "Contact", icon: Phone },
-  { to: "/portfolio", label: "Portfolio", icon: FolderOpen },
+  { 
+    to: "/about", 
+    label: "About", 
+    iconType: "custom",
+    iconUrl: "https://img.icons8.com/ios-filled/50/guest-male--v2.png"
+  },
+  { 
+    to: "/services", 
+    label: "Services", 
+    iconType: "lucide",
+    icon: Briefcase 
+  },
+  { 
+    to: "/pricing", 
+    label: "Pricing", 
+    iconType: "custom",
+    iconUrl: "https://img.icons8.com/ios/50/money-bag-rupee.png"
+  },
+  { 
+    to: "/contact", 
+    label: "Contact", 
+    iconType: "custom",
+    iconUrl: "https://img.icons8.com/pulsar-line/48/phone-bubble.png"
+  },
+  { 
+    to: "/portfolio", 
+    label: "Portfolio", 
+    iconType: "lucide",
+    icon: FolderOpen 
+  },
 ];
 
 export default function Header() {
@@ -116,7 +141,19 @@ export default function Header() {
                         ? 'bg-gray-800 text-white shadow-lg' 
                         : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
                     }`}>
-                      <item.icon size={20} strokeWidth={1.5} />
+                      {item.iconType === 'custom' ? (
+                        <img 
+                          src={item.iconUrl} 
+                          alt={item.label}
+                          className={`w-5 h-5 ${
+                            isActive 
+                              ? 'filter brightness-0 invert' 
+                              : 'filter opacity-70 hover:opacity-100'
+                          }`}
+                        />
+                      ) : (
+                        <item.icon size={20} strokeWidth={1.5} />
+                      )}
                     </div>
                     <span className={`text-xs font-medium mt-1 transition-colors duration-300 ${
                       isActive ? 'text-gray-800' : 'text-gray-500'

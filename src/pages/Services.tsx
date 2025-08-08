@@ -2,6 +2,14 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import designImage from "@/assets/1.jpeg";
+import developmentImage from "@/assets/2.jpeg";
+import infrastructureImage from "@/assets/3.jpeg";
+import growthImage from "@/assets/4.jpeg";
+import uiuxImage from "@/assets/uiux.jpeg";
+import webImage from "@/assets/web.jpeg";
+import devImage from "@/assets/dev.jpeg";
+import appImage from "@/assets/app.jpeg";
 
 export default function Services() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/services';
@@ -50,28 +58,28 @@ export default function Services() {
       title: "Design",
       subtitle: "UI/UX, redesigns",
       description: "Transform your ideas into beautiful, functional designs that users love and businesses need.",
-      image: "/placeholder.svg",
+      image: designImage,
       cta: "See design examples"
     },
     {
       title: "Development", 
       subtitle: "Web, Mobile, Games",
       description: "Build robust applications with cutting-edge technologies and best practices for scalability.",
-      image: "/placeholder.svg",
+      image: developmentImage,
       cta: "View development work"
     },
     {
       title: "Infrastructure",
       subtitle: "Domains, Hosting, Maintenance", 
       description: "Keep your digital assets running smoothly with reliable infrastructure and ongoing support.",
-      image: "/placeholder.svg",
+      image: infrastructureImage,
       cta: "Explore infrastructure"
     },
     {
       title: "Growth",
       subtitle: "SEO, Analytics, Support",
       description: "Grow your online presence with data-driven strategies and continuous optimization.",
-      image: "/placeholder.svg", 
+      image: growthImage, 
       cta: "Learn about growth"
     }
   ];
@@ -148,13 +156,13 @@ export default function Services() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-4">
                   <div className="hero-mockup bg-white rounded-lg shadow-lg overflow-hidden transform rotate-2">
-                    <img src="/placeholder.svg" alt="Design mockup" className="w-full h-40 object-cover" />
+                    <img src={uiuxImage} alt="Design mockup" className="w-full h-40 object-cover" />
                     <div className="p-4">
                       <h3 className="font-semibold text-sm">UI/UX Design</h3>
                     </div>
                   </div>
                   <div className="hero-mockup bg-white rounded-lg shadow-lg overflow-hidden transform -rotate-1">
-                    <img src="/placeholder.svg" alt="Mobile app" className="w-full h-32 object-cover" />
+                    <img src={appImage} alt="Mobile app" className="w-full h-32 object-cover" />
                     <div className="p-3">
                       <h3 className="font-semibold text-sm">Mobile Apps</h3>
                     </div>
@@ -162,13 +170,13 @@ export default function Services() {
                 </div>
                 <div className="space-y-4 mt-8">
                   <div className="hero-mockup bg-white rounded-lg shadow-lg overflow-hidden transform -rotate-2">
-                    <img src="/placeholder.svg" alt="Web development" className="w-full h-36 object-cover" />
+                    <img src={webImage} alt="Web development" className="w-full h-36 object-cover" />
                     <div className="p-4">
                       <h3 className="font-semibold text-sm">Web Development</h3>
                     </div>
                   </div>
                   <div className="hero-mockup bg-white rounded-lg shadow-lg overflow-hidden transform rotate-1">
-                    <img src="/placeholder.svg" alt="DevOps" className="w-full h-28 object-cover" />
+                    <img src={devImage} alt="DevOps" className="w-full h-28 object-cover" />
                     <div className="p-3">
                       <h3 className="font-semibold text-sm">DevOps</h3>
                     </div>

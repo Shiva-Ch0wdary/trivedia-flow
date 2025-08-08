@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
+import aboutImage from "@/assets/about-1.png";
 
 export default function About() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/about';
@@ -192,7 +193,7 @@ export default function About() {
             </div>
             <div className="relative">
               <img 
-                src="/placeholder.svg" 
+                src={aboutImage} 
                 alt="Trivesha team at work"
                 className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
               />
