@@ -8,6 +8,7 @@ import { useState } from "react";
 export default function Pricing() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/pricing';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<'Starter' | 'Growth' | 'Scale'>('Growth');
 
   const pricingPlans = [
     {
@@ -202,8 +203,7 @@ export default function Pricing() {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-[#0D9488] text-lg px-8"
+                className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#0D9488] text-lg px-8 transition-all duration-300"
                 onClick={() => document.getElementById('comparison')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Compare Plans
@@ -297,47 +297,224 @@ export default function Pricing() {
             </p>
           </div>
 
-          <div className="overflow-x-auto bg-white rounded-2xl shadow-lg">
-            <table className="w-full min-w-[800px]">
-              <thead>
-                <tr className="bg-[#0D9488] text-white">
-                  <th className="text-left p-6 font-semibold sticky left-0 bg-[#0D9488] z-10">Features</th>
-                  <th className="text-center p-6 font-semibold">Starter</th>
-                  <th className="text-center p-6 font-semibold bg-[#FF6B35]">Growth</th>
-                  <th className="text-center p-6 font-semibold">Scale</th>
-                </tr>
-              </thead>
-              <tbody>
+          {/* Mobile View - Card-based Layout */}
+          <div className="lg:hidden">
+            {/* Mobile Tab Navigation */}
+            <div className="flex bg-gray-100 p-1 rounded-xl mb-6 overflow-hidden">
+              {["Starter", "Growth", "Scale"].map((plan) => (
+                <button
+                  key={plan}
+                  onClick={() => setActiveTab(plan as 'Starter' | 'Growth' | 'Scale')}
+                  className={`flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all ${
+                    activeTab === plan
+                      ? plan === 'Growth' 
+                        ? 'bg-[#FF6B35] text-white shadow-md' 
+                        : 'bg-[#0D9488] text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {plan}
+                  {plan === 'Growth' && <span className="ml-1 text-xs">★</span>}
+                </button>
+              ))}
+            </div>
+
+            {/* Active Plan Details */}
+            <Card className={`border-2 ${activeTab === "Growth" ? "border-[#FF6B35] bg-[#FF6B35]/5" : "border-[#0D9488] bg-[#0D9488]/5"}`}>
+              <CardHeader className={`text-center p-4 ${activeTab === "Growth" ? "bg-[#FF6B35]" : "bg-[#0D9488]"} text-white`}>
+                <CardTitle className="text-xl font-bold">
+                  {activeTab} Plan Features
+                  {activeTab === "Growth" && (
+                    <Badge className="ml-2 bg-white text-[#FF6B35] text-xs">Most Popular</Badge>
+                  )}
+                </CardTitle>
+                <p className="text-sm opacity-90 mt-1">
+                  {activeTab === "Starter" && "₹8k–₹25k • Perfect for small businesses"}
+                  {activeTab === "Growth" && "₹25k–₹80k • Best for growing businesses"}
+                  {activeTab === "Scale" && "₹80k+ • Enterprise solutions"}
+                </p>
+              </CardHeader>
+              <CardContent className="p-4">
                 {comparisonFeatures.map((category, categoryIndex) => (
-                  <>
-                    <tr key={`category-${categoryIndex}`} className="bg-[#E6F7F5]">
-                      <td colSpan={4} className="p-4 font-semibold text-[#0D9488] text-lg">
-                        {category.category}
-                      </td>
-                    </tr>
-                    {category.features.map((feature, featureIndex) => (
-                      <tr 
-                        key={`feature-${categoryIndex}-${featureIndex}`}
-                        className={featureIndex % 2 === 0 ? 'bg-white' : 'bg-[#F9FAFB]'}
-                      >
-                        <td className="p-4 font-medium sticky left-0 bg-inherit z-10">
-                          {feature.name}
-                        </td>
-                        <td className="p-4 text-center">
-                          {renderFeatureValue(feature.starter)}
-                        </td>
-                        <td className="p-4 text-center bg-[#FF6B35]/5">
-                          {renderFeatureValue(feature.growth)}
-                        </td>
-                        <td className="p-4 text-center">
-                          {renderFeatureValue(feature.scale)}
+                  <div key={categoryIndex} className="mb-6 last:mb-0">
+                    <h4 className="font-semibold text-[#0D9488] text-sm uppercase tracking-wide mb-3 border-b border-gray-200 pb-2 flex items-center">
+                      <span className={`w-6 h-6 rounded-full text-white text-xs flex items-center justify-center mr-2 ${
+                        activeTab === "Growth" ? "bg-[#FF6B35]" : "bg-[#0D9488]"
+                      }`}>
+                        {categoryIndex + 1}
+                      </span>
+                      {category.category}
+                    </h4>
+                    <div className="space-y-3">
+                      {category.features.map((feature, featureIndex) => {
+                        const featureValue = activeTab === "Starter" ? feature.starter : 
+                                            activeTab === "Growth" ? feature.growth : 
+                                            feature.scale;
+                        
+                        return (
+                          <div key={featureIndex} className={`flex items-center justify-between py-2 px-3 rounded-lg ${
+                            typeof featureValue === 'boolean' && featureValue ? 'bg-green-50' : 
+                            typeof featureValue === 'string' ? 'bg-blue-50' : 'bg-gray-50'
+                          }`}>
+                            <span className="text-sm text-gray-700 flex-1 font-medium">{feature.name}</span>
+                            <div className="flex-shrink-0 ml-3">
+                              {typeof featureValue === 'boolean' ? (
+                                featureValue ? (
+                                  <div className="flex items-center text-green-600">
+                                    <Check className="w-4 h-4 mr-1" />
+                                    <span className="text-xs font-medium">Included</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center text-gray-400">
+                                    <X className="w-4 h-4 mr-1" />
+                                    <span className="text-xs">Not included</span>
+                                  </div>
+                                )
+                              ) : (
+                                <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                                  {featureValue}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+                
+                {/* CTA Button for Active Plan */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <Button 
+                    size="lg" 
+                    className={`w-full text-lg ${
+                      activeTab === "Growth" 
+                        ? 'bg-[#FF6B35] hover:bg-[#e55a2b] text-white' 
+                        : 'bg-[#0D9488] hover:bg-[#0a7c70] text-white'
+                    }`}
+                  >
+                    Choose {activeTab} Plan
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Compare All Plans - Mobile */}
+            <div className="mt-8 bg-[#E6F7F5] rounded-2xl p-4">
+              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4 text-center">
+                Quick Compare All Plans
+              </h3>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="bg-white rounded-lg p-3">
+                  <h4 className="font-semibold text-[#0D9488] text-xs mb-2">Starter</h4>
+                  <div className="text-xs text-gray-600 space-y-1">
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />Responsive</div>
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />SSL</div>
+                    <div className="text-[#0D9488] font-medium">30d Support</div>
+                  </div>
+                </div>
+                <div className="bg-[#FF6B35] text-white rounded-lg p-3">
+                  <h4 className="font-semibold text-xs mb-2">Growth ★</h4>
+                  <div className="text-xs space-y-1 opacity-90">
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 mr-1" />Everything +</div>
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 mr-1" />Custom Design</div>
+                    <div className="font-medium">60d Support</div>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-3">
+                  <h4 className="font-semibold text-[#0D9488] text-xs mb-2">Scale</h4>
+                  <div className="text-xs text-gray-600 space-y-1">
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />Everything +</div>
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />API Integration</div>
+                    <div className="text-[#0D9488] font-medium">90d Support</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop View - Table Layout */}
+          <div className="hidden lg:block">
+            <div className="overflow-x-auto bg-white rounded-2xl shadow-lg">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-[#0D9488] text-white">
+                    <th className="text-left p-6 font-semibold sticky left-0 bg-[#0D9488] z-10">Features</th>
+                    <th className="text-center p-6 font-semibold">Starter</th>
+                    <th className="text-center p-6 font-semibold bg-[#FF6B35]">Growth</th>
+                    <th className="text-center p-6 font-semibold">Scale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonFeatures.map((category, categoryIndex) => (
+                    <>
+                      <tr key={`category-${categoryIndex}`} className="bg-[#E6F7F5]">
+                        <td colSpan={4} className="p-4 font-semibold text-[#0D9488] text-lg">
+                          {category.category}
                         </td>
                       </tr>
-                    ))}
-                  </>
-                ))}
-              </tbody>
-            </table>
+                      {category.features.map((feature, featureIndex) => (
+                        <tr 
+                          key={`feature-${categoryIndex}-${featureIndex}`}
+                          className={featureIndex % 2 === 0 ? 'bg-white' : 'bg-[#F9FAFB]'}
+                        >
+                          <td className="p-4 font-medium sticky left-0 bg-inherit z-10">
+                            {feature.name}
+                          </td>
+                          <td className="p-4 text-center">
+                            {renderFeatureValue(feature.starter)}
+                          </td>
+                          <td className="p-4 text-center bg-[#FF6B35]/5">
+                            {renderFeatureValue(feature.growth)}
+                          </td>
+                          <td className="p-4 text-center">
+                            {renderFeatureValue(feature.scale)}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Mobile Comparison Toggle Alternative */}
+          <div className="md:hidden lg:hidden mt-8">
+            <div className="bg-[#E6F7F5] rounded-2xl p-6">
+              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4 text-center">
+                Quick Feature Summary
+              </h3>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <h4 className="font-semibold text-[#0D9488] text-sm mb-2">Starter</h4>
+                  <div className="text-xs text-gray-600 space-y-1">
+                    <div>✓ Responsive Design</div>
+                    <div>✓ SSL & Security</div>
+                    <div>✓ 30-day Support</div>
+                    <div className="text-[#FF6B35] font-medium">Basic Features</div>
+                  </div>
+                </div>
+                <div className="border-x border-[#0D9488]/20 px-2">
+                  <h4 className="font-semibold text-[#FF6B35] text-sm mb-2">Growth</h4>
+                  <div className="text-xs text-gray-600 space-y-1">
+                    <div>✓ Everything in Starter</div>
+                    <div>✓ Custom Design</div>
+                    <div>✓ CMS Integration</div>
+                    <div className="text-[#FF6B35] font-medium">Advanced Features</div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[#0D9488] text-sm mb-2">Scale</h4>
+                  <div className="text-xs text-gray-600 space-y-1">
+                    <div>✓ Everything in Growth</div>
+                    <div>✓ API Integration</div>
+                    <div>✓ 90-day Support</div>
+                    <div className="text-[#FF6B35] font-medium">Enterprise Features</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

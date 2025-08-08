@@ -134,13 +134,13 @@ export default function Index() {
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
                 From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700 text-white">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto">
                   <Link to="/contact">
                     Get Free Quote <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-orange-500 text-orange-600 hover:bg-orange-50">
+                <Button asChild variant="outline" size="lg" className="border-orange-500 text-orange-600 hover:bg-orange-50 w-full sm:w-auto">
                   <Link to="/portfolio">See Our Work</Link>
                 </Button>
               </div>
@@ -160,7 +160,7 @@ export default function Index() {
       {/* Quick Benefits Strip */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-6">
-          <div className="grid gap-8 md:grid-cols-4 text-center md:text-left">
+          <div className="grid gap-6 grid-cols-2 md:grid-cols-4 text-center md:text-left">
             <BenefitItem 
               icon={<CheckCircle className="w-6 h-6" />}
               title="Verified on JustDial"
@@ -192,7 +192,7 @@ export default function Index() {
             <h2 className="font-heading text-3xl md:text-4xl text-gray-900 mb-4">Our Services</h2>
             <div className="w-24 h-1 bg-teal-600 mx-auto"></div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             <ServiceCard
               icon={<Layers className="w-8 h-8" />}
               title="UI/UX & Figma Design"
@@ -234,6 +234,11 @@ export default function Index() {
               link="/services/maintenance"
             />
           </div>
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" className="border-teal-600 text-teal-600 hover:bg-teal-50">
+              <Link to="/services">View All Services</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -249,7 +254,7 @@ export default function Index() {
               <Link to="/portfolio">View All Projects</Link>
             </Button>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 grid-cols-2 md:grid-cols-3">
             <ProjectCard
               title="E-commerce Platform"
               result="+120% traffic in 2 months"
@@ -260,11 +265,13 @@ export default function Index() {
               result="50% faster user onboarding"
               image="/placeholder.svg"
             />
-            <ProjectCard
-              title="Mobile Game"
-              result="100K+ downloads in 3 months"
-              image="/placeholder.svg"
-            />
+            <div className="hidden md:block">
+              <ProjectCard
+                title="Mobile Game"
+                result="100K+ downloads in 3 months"
+                image="/placeholder.svg"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -276,7 +283,7 @@ export default function Index() {
             <h2 className="font-heading text-3xl md:text-4xl text-gray-900 mb-4">How We Work</h2>
             <div className="w-24 h-1 bg-teal-600 mx-auto"></div>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             <ProcessStep
               step="Step 1"
               title="Discover"
@@ -289,12 +296,14 @@ export default function Index() {
               desc="Figma first approach with feedback loops and iterative design"
               icon={<Layers className="w-8 h-8" />}
             />
-            <ProcessStep
-              step="Step 3"
-              title="Deploy & Maintain"
-              desc="Launch with CI/CD pipelines and ongoing support"
-              icon={<Rocket className="w-8 h-8" />}
-            />
+            <div className="col-span-2 md:col-span-1">
+              <ProcessStep
+                step="Step 3"
+                title="Deploy & Maintain"
+                desc="Launch with CI/CD pipelines and ongoing support"
+                icon={<Rocket className="w-8 h-8" />}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -306,7 +315,7 @@ export default function Index() {
             <h2 className="font-heading text-3xl md:text-4xl text-gray-900 mb-4">Simple, Transparent Pricing</h2>
             <div className="w-24 h-1 bg-teal-600 mx-auto"></div>
           </div>
-          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+          <div className="grid gap-8 grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto">
             <PricingCard
               title="Starter"
               range="₹15K - ₹50K"
@@ -329,17 +338,19 @@ export default function Index() {
               ]}
               isPopular={true}
             />
-            <PricingCard
-              title="Scale"
-              range="₹2L+"
-              features={[
-                "Complex applications",
-                "Mobile apps",
-                "12 months support",
-                "DevOps & hosting",
-                "Dedicated team"
-              ]}
-            />
+            <div className="col-span-2 md:col-span-1">
+              <PricingCard
+                title="Scale"
+                range="₹2L+"
+                features={[
+                  "Complex applications",
+                  "Mobile apps",
+                  "12 months support",
+                  "DevOps & hosting",
+                  "Dedicated team"
+                ]}
+              />
+            </div>
           </div>
           <div className="text-center mt-8">
             <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700 text-white">
@@ -356,7 +367,7 @@ export default function Index() {
             <h2 className="font-heading text-3xl md:text-4xl text-gray-900 mb-4">What Clients Say</h2>
             <div className="w-24 h-1 bg-teal-600 mx-auto"></div>
           </div>
-          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-8 grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
             <TestimonialCard
               quote="Trivesha delivered our e-commerce platform ahead of schedule. The attention to detail and performance optimization exceeded our expectations."
               name="Rajesh Kumar"
@@ -369,12 +380,14 @@ export default function Index() {
               company="HealthTech India"
               avatar="/placeholder.svg"
             />
-            <TestimonialCard
-              quote="Our website conversions jumped 38% after launch. The design is beautiful and the performance is outstanding."
-              name="Michael Chen"
-              company="Global Ventures"
-              avatar="/placeholder.svg"
-            />
+            <div className="col-span-2 md:col-span-1">
+              <TestimonialCard
+                quote="Our website conversions jumped 38% after launch. The design is beautiful and the performance is outstanding."
+                name="Michael Chen"
+                company="Global Ventures"
+                avatar="/placeholder.svg"
+              />
+            </div>
           </div>
         </div>
       </section>

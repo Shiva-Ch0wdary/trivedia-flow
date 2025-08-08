@@ -345,17 +345,17 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {values.map((value, index) => (
               <Card key={index} className="value-card group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-[#0D9488]/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#FF6B35]/10 transition-colors">
-                    <span className="text-3xl">{value.icon}</span>
+                <CardContent className="p-6 md:p-8 text-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-[#0D9488]/10 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:bg-[#FF6B35]/10 transition-colors">
+                    <span className="text-2xl md:text-3xl">{value.icon}</span>
                   </div>
-                  <h3 className="font-heading text-xl font-bold text-[#0D9488] mb-4">
+                  <h3 className="font-heading text-lg md:text-xl font-bold text-[#0D9488] mb-3 md:mb-4">
                     {value.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                     {value.description}
                   </p>
                 </CardContent>
@@ -377,17 +377,17 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-12">
             {miniServices.map((service, index) => (
               <a 
                 key={index}
                 href={service.link}
-                className="mini-service-card group bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-2 border-transparent hover:border-[#FF6B35]"
+                className="mini-service-card group bg-white rounded-xl p-4 md:p-6 text-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-2 border-transparent hover:border-[#FF6B35]"
               >
-                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">
+                <div className="text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform">
                   {service.icon}
                 </div>
-                <h3 className="font-medium text-gray-900 text-sm leading-tight">
+                <h3 className="font-medium text-gray-900 text-xs md:text-sm leading-tight">
                   {service.title}
                 </h3>
               </a>
@@ -418,21 +418,21 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="testimonial-card bg-white/10 backdrop-blur border-white/20 text-white hover:bg-white/20 transition-colors">
-                <CardContent className="p-8">
-                  <div className="flex mb-4">
+              <Card key={index} className="testimonial-card bg-white border-white/30 hover:bg-gray-50 transition-colors shadow-lg">
+                <CardContent className="p-6 md:p-8">
+                  <div className="flex mb-3 md:mb-4">
                     {renderStars(testimonial.rating)}
                   </div>
-                  <p className="opacity-90 mb-6 italic leading-relaxed text-lg">
+                  <p className="text-gray-900 mb-4 md:mb-6 italic leading-relaxed text-base md:text-lg font-medium">
                     "{testimonial.quote}"
                   </p>
                   <div>
-                    <h4 className="font-semibold text-lg">
+                    <h4 className="font-bold text-gray-900 text-base md:text-lg">
                       {testimonial.author}
                     </h4>
-                    <p className="text-sm opacity-80">
+                    <p className="text-gray-600 text-xs md:text-sm font-medium">
                       {testimonial.role}
                     </p>
                   </div>

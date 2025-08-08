@@ -11,7 +11,12 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
+  @import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./styles/mobile-responsive.css";
+
+:root {
     /* Brand palette (HSL) */
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%; /* Neutral 900 */

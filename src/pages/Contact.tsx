@@ -173,38 +173,40 @@ export default function Contact() {
       {/* Contact Cards */}
       <section className="py-16 bg-white">
         <div className="container mx-auto max-w-7xl px-6">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {contactCards.map((card, index) => (
-              <Card key={index} className="contact-card group border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-[#0D9488] rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#064E49] transition-colors">
-                    <card.icon className="w-8 h-8 text-white" />
-                  </div>
-                  
-                  <h3 className="font-heading text-xl font-bold text-[#0D9488] mb-3">
-                    {card.title}
-                  </h3>
-                  
-                  <p className="text-gray-900 font-medium mb-2">
-                    {card.content}
-                  </p>
-                  
-                  {card.subtitle && (
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {card.subtitle}
+              <div key={index} className={`${index === 2 ? 'col-span-2 md:col-span-1' : ''}`}>
+                <Card className="contact-card group border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white h-full">
+                  <CardContent className="p-6 md:p-8 text-center">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-[#0D9488] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:bg-[#064E49] transition-colors">
+                      <card.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                    </div>
+                    
+                    <h3 className="font-heading text-lg md:text-xl font-bold text-[#0D9488] mb-2 md:mb-3">
+                      {card.title}
+                    </h3>
+                    
+                    <p className="text-gray-900 font-medium mb-1 md:mb-2 text-sm md:text-base">
+                      {card.content}
                     </p>
-                  )}
-                  
-                  <a 
-                    href={card.action}
-                    className="inline-flex items-center text-[#0D9488] hover:text-[#FF6B35] transition-colors font-medium"
-                    target={card.action.startsWith('http') ? '_blank' : '_self'}
-                    rel={card.action.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  >
-                    {card.actionText} →
-                  </a>
-                </CardContent>
-              </Card>
+                    
+                    {card.subtitle && (
+                      <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+                        {card.subtitle}
+                      </p>
+                    )}
+                    
+                    <a 
+                      href={card.action}
+                      className="inline-flex items-center text-[#0D9488] hover:text-[#FF6B35] transition-colors font-medium text-sm md:text-base"
+                      target={card.action.startsWith('http') ? '_blank' : '_self'}
+                      rel={card.action.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    >
+                      {card.actionText} →
+                    </a>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -224,7 +226,7 @@ export default function Contact() {
 
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <form onSubmit={handleFormSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium text-gray-700 uppercase tracking-wider">
                     Name *
@@ -255,7 +257,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="company" className="text-sm font-medium text-gray-700 uppercase tracking-wider">
                     Company
@@ -299,7 +301,7 @@ export default function Contact() {
                 </Select>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="budget" className="text-sm font-medium text-gray-700 uppercase tracking-wider">
                     Budget Range
@@ -423,8 +425,8 @@ export default function Contact() {
       {/* Footer CTA */}
       <section className="py-16 bg-[#0D9488] text-white">
         <div className="container mx-auto max-w-7xl px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between max-w-4xl mx-auto">
-            <div className="text-center md:text-left mb-6 md:mb-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between max-w-4xl mx-auto gap-6">
+            <div className="text-center sm:text-left">
               <h3 className="font-heading text-2xl font-bold mb-2">Ready to start?</h3>
               <p className="opacity-90">Let's discuss your project and make it happen.</p>
             </div>
@@ -432,7 +434,7 @@ export default function Contact() {
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Button 
                 size="lg" 
-                className="bg-[#FF6B35] hover:bg-[#e55a2b] text-white px-8"
+                className="bg-[#FF6B35] hover:bg-[#e55a2b] text-white px-8 w-full sm:w-auto"
                 onClick={scrollToForm}
               >
                 Start Your Project

@@ -136,10 +136,10 @@ export default function Services() {
                 Expert design, development, and maintenance services tailored to your business goals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="btn-hero text-lg px-8">
+                <Button size="lg" className="btn-hero text-lg px-8 w-full sm:w-auto">
                   Get a free quote
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
                   See portfolio
                 </Button>
               </div>
@@ -192,26 +192,26 @@ export default function Services() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => (
               <Card key={index} className="service-card group cursor-pointer border-0">
-                <CardHeader className="text-center">
-                  <div className="service-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">{service.icon}</span>
+                <CardHeader className="text-center p-4 md:p-6">
+                  <div className="service-icon w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                    <span className="text-lg md:text-2xl">{service.icon}</span>
                   </div>
-                  <CardTitle className="text-xl font-bold text-[hsl(175_86%_18%)]">
+                  <CardTitle className="text-lg md:text-xl font-bold text-[hsl(175_86%_18%)]">
                     {service.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-center text-muted-foreground leading-relaxed">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <CardDescription className="text-center text-muted-foreground leading-relaxed text-sm md:text-base">
                     {service.description}
                   </CardDescription>
                 </CardContent>
-                <CardFooter className="justify-center">
+                <CardFooter className="justify-center p-4 md:p-6 pt-0">
                   <a 
                     href={service.link}
-                    className="text-accent hover:text-accent/80 font-medium transition-colors"
+                    className="text-accent hover:text-accent/80 font-medium transition-colors text-sm md:text-base"
                   >
                     Learn more →
                   </a>
@@ -270,16 +270,16 @@ export default function Services() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {processSteps.map((step, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-white/20 transition-colors">
-                  <span className="text-2xl">{step.icon}</span>
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:bg-white/20 transition-colors">
+                  <span className="text-lg md:text-2xl">{step.icon}</span>
                 </div>
-                <h3 className="font-heading text-xl font-bold mb-4">
+                <h3 className="font-heading text-lg md:text-xl font-bold mb-3 md:mb-4">
                   {step.title}
                 </h3>
-                <p className="opacity-90 leading-relaxed">
+                <p className="opacity-90 leading-relaxed text-sm md:text-base">
                   {step.description}
                 </p>
               </div>
@@ -300,24 +300,24 @@ export default function Services() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="testimonial-card border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-8">
-                  <p className="text-muted-foreground mb-6 italic leading-relaxed">
+                <CardContent className="p-6 md:p-8">
+                  <p className="text-muted-foreground mb-4 md:mb-6 italic leading-relaxed text-sm md:text-base">
                     "{testimonial.quote}"
                   </p>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3 md:space-x-4">
                     <img 
                       src={testimonial.avatar} 
                       alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="font-semibold text-[hsl(175_86%_18%)]">
+                      <h4 className="font-semibold text-[hsl(175_86%_18%)] text-sm md:text-base">
                         {testimonial.name}
                       </h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs md:text-sm text-muted-foreground">
                         {testimonial.role}
                       </p>
                     </div>

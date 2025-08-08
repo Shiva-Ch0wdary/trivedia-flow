@@ -155,35 +155,35 @@ export default function Portfolio() {
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
                 From Figma concepts to deployed products — here's how we deliver measurable results for businesses like yours.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-teal-600 hover:bg-teal-700 text-white"
+                  className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto"
                 >
                   Start Your Project
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                  className="border-orange-500 text-orange-600 hover:bg-orange-50 w-full sm:w-auto"
                 >
                   View Case Studies
                 </Button>
               </div>
               
               {/* Stats */}
-              <div className="mt-12 grid grid-cols-3 gap-8">
+              <div className="mt-12 grid grid-cols-3 gap-4 md:gap-8">
                 <div className="text-center md:text-left">
-                  <div className="text-3xl font-bold text-teal-600">120+</div>
-                  <div className="text-sm text-gray-600">Projects Delivered</div>
+                  <div className="text-2xl md:text-3xl font-bold text-teal-600">120+</div>
+                  <div className="text-xs md:text-sm text-gray-600">Projects Delivered</div>
                 </div>
                 <div className="text-center md:text-left">
-                  <div className="text-3xl font-bold text-teal-600">50+</div>
-                  <div className="text-sm text-gray-600">Happy Clients</div>
+                  <div className="text-2xl md:text-3xl font-bold text-teal-600">50+</div>
+                  <div className="text-xs md:text-sm text-gray-600">Happy Clients</div>
                 </div>
                 <div className="text-center md:text-left">
-                  <div className="text-3xl font-bold text-teal-600">6+</div>
-                  <div className="text-sm text-gray-600">Years Experience</div>
+                  <div className="text-2xl md:text-3xl font-bold text-teal-600">6+</div>
+                  <div className="text-xs md:text-sm text-gray-600">Years Experience</div>
                 </div>
               </div>
             </div>
@@ -314,46 +314,46 @@ export default function Portfolio() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {filteredProjects.map((project) => (
               <Card key={project.id} className="group overflow-hidden border-0 shadow-sm hover:shadow-xl cursor-pointer bg-white transition-all duration-300 hover:-translate-y-1">
                 <div className="relative overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-teal-600/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <Button className="bg-white text-teal-600 hover:bg-gray-100">
+                    <Button className="bg-white text-teal-600 hover:bg-gray-100 text-sm md:text-base">
                       View Case Study →
                     </Button>
                   </div>
-                  <span className="absolute top-4 left-4 bg-white/90 text-teal-600 text-sm font-medium px-3 py-1 rounded-full">
+                  <span className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/90 text-teal-600 text-xs md:text-sm font-medium px-2 py-1 md:px-3 md:py-1 rounded-full">
                     {project.category}
                   </span>
                 </div>
                 
-                <CardContent className="p-6">
-                  <h3 className="font-heading text-xl font-bold text-gray-900 mb-3">
+                <CardContent className="p-4 md:p-6">
+                  <h3 className="font-heading text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                  <p className="text-gray-600 mb-3 md:mb-4 line-clamp-2 leading-relaxed text-sm md:text-base">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, index) => (
+                  <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
+                    {project.tags.slice(0, 3).map((tag, index) => (
                       <span key={index} className="text-xs bg-teal-50 text-teal-700 px-2 py-1 rounded border border-teal-200">
                         {tag}
                       </span>
                     ))}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">
+                    <span className="text-xs md:text-sm text-gray-500">
                       Client: {project.client}
                     </span>
                     <a 
                       href={project.link}
-                      className="text-orange-600 hover:text-orange-700 font-medium text-sm transition-colors"
+                      className="text-orange-600 hover:text-orange-700 font-medium text-xs md:text-sm transition-colors"
                     >
                       View Details →
                     </a>
@@ -404,17 +404,16 @@ export default function Portfolio() {
           <p className="text-xl text-teal-100 mb-8 max-w-3xl mx-auto leading-relaxed">
             Let's design and build something that works for you. Join the growing list of businesses we've helped transform digitally.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button 
               size="lg" 
-              className="bg-orange-500 hover:bg-orange-600 text-white"
+              className="bg-orange-500 hover:bg-orange-600 text-white w-full sm:w-auto"
             >
               Get a Free Quote
             </Button>
             <Button 
-              variant="outline" 
               size="lg" 
-              className="border-white text-white hover:bg-white hover:text-teal-600"
+              className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-teal-600 w-full sm:w-auto transition-all duration-300"
             >
               Schedule a Call
             </Button>

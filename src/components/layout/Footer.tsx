@@ -149,7 +149,7 @@ export default function Footer() {
                     <div>
                       <h3 className="f-title f_600 t_color f_size_18 text-[#263b5e] mb-4">Pages</h3>
                       <ul className="list-unstyled f_list space-y-2">
-                        {mainPages.map((page, index) => (
+                        {mainPages.slice(0, 4).map((page, index) => (
                           <li key={index}>
                             <Link 
                               to={page.to}
@@ -164,7 +164,7 @@ export default function Footer() {
                     <div>
                       <h3 className="f-title f_600 t_color f_size_18 text-[#263b5e] mb-4">Support</h3>
                       <ul className="list-unstyled f_list space-y-2">
-                        {supportPages.map((page, index) => (
+                        {supportPages.slice(0, 4).map((page, index) => (
                           <li key={index}>
                             <Link 
                               to={page.to}
