@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import ScrollToTop from "@/components/ui/scroll-to-top";
 import { Search, Clock, User, Calendar, ArrowRight, Share2, Bookmark, Heart } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -124,19 +125,19 @@ export default function Blog() {
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Web Development": "bg-[#0D9488] text-white",
-      "UI/UX Design": "bg-[#FF6B35] text-white", 
-      "Mobile Development": "bg-[#8B5CF6] text-white",
-      "DevOps": "bg-[#059669] text-white",
-      "Game Development": "bg-[#DC2626] text-white",
-      "Company News": "bg-[#0EA5E9] text-white",
-      "Industry Insights": "bg-[#7C3AED] text-white"
+      "Web Development": "bg-teal-600 text-white",
+      "UI/UX Design": "bg-orange-500 text-white", 
+      "Mobile Development": "bg-purple-600 text-white",
+      "DevOps": "bg-green-600 text-white",
+      "Game Development": "bg-red-600 text-white",
+      "Company News": "bg-blue-600 text-white",
+      "Industry Insights": "bg-violet-600 text-white"
     };
-    return colors[category as keyof typeof colors] || "bg-gray-500 text-white";
+    return colors[category as keyof typeof colors] || "bg-gray-600 text-white";
   };
 
   return (
-    <main>
+    <main className="min-h-screen bg-black">
       <Helmet>
         <title>Insights & Ideas — Trivesha Blog</title>
         <meta name="description" content="Design, Development & Digital Trends from the Trivesha Team. Expert insights on web development, UI/UX design, and modern technology." />
@@ -144,52 +145,52 @@ export default function Blog() {
       </Helmet>
 
       {/* Header */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#FAFAFA] via-white to-[#E6F7F5]">
+      <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
         {/* Background Accent Shapes */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-[#0D9488] rounded-full blur-3xl" />
-          <div className="absolute top-40 right-20 w-24 h-24 bg-[#FF6B35] rounded-full blur-2xl" />
-          <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-[#0D9488] rounded-full blur-3xl" />
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-teal-400 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-20 w-24 h-24 bg-orange-400 rounded-full blur-2xl" />
+          <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-teal-400 rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto max-w-7xl px-6 py-20 md:py-24 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-bold text-[#0D9488] mb-6 leading-tight">
+            <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text mb-6 leading-tight">
               Insights & Ideas
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed">
               Design, Development & Digital Trends from the Trivesha Team
             </p>
 
             {/* Breadcrumbs */}
-            <nav className="flex items-center justify-center space-x-2 text-sm text-muted-foreground mb-8">
-              <Link to="/" className="hover:text-[#0D9488] transition-colors">Home</Link>
+            <nav className="flex items-center justify-center space-x-2 text-sm text-gray-400 mb-8">
+              <Link to="/" className="hover:text-teal-400 transition-colors">Home</Link>
               <ArrowRight size={14} />
-              <span className="text-[#0D9488] font-medium">Blog</span>
+              <span className="text-teal-400 font-medium">Blog</span>
             </nav>
           </div>
         </div>
       </section>
 
       {/* Featured Post Section */}
-      <section className="py-16 bg-[#FAFAFA]">
+      <section className="py-16 bg-gray-900 border-t border-gray-800">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="mb-12">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-[#0D9488] mb-2">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2">
               Featured Article
             </h2>
-            <p className="text-muted-foreground">Our latest insights and discoveries</p>
+            <p className="text-gray-400">Our latest insights and discoveries</p>
           </div>
 
-          <Card className="featured-post-card group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-white">
+          <Card className="featured-post-card group overflow-hidden border border-gray-800/50 shadow-2xl hover:shadow-teal-500/10 hover:border-teal-500/50 transition-all duration-300 bg-gray-900/80 backdrop-blur-sm">
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="relative overflow-hidden">
                 <img 
                   src={featuredPost.image} 
                   alt={featuredPost.title}
-                  className="w-full h-64 lg:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-64 lg:h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
                 
                 {/* Category Badge */}
                 <Badge className={`absolute top-4 left-4 ${getCategoryColor(featuredPost.category)}`}>
@@ -198,17 +199,17 @@ export default function Blog() {
 
                 {/* Action Buttons */}
                 <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Button size="sm" variant="secondary" className="w-9 h-9 p-0">
+                  <Button size="sm" variant="secondary" className="w-9 h-9 p-0 bg-gray-800/80 text-white hover:bg-gray-700">
                     <Share2 size={16} />
                   </Button>
-                  <Button size="sm" variant="secondary" className="w-9 h-9 p-0">
+                  <Button size="sm" variant="secondary" className="w-9 h-9 p-0 bg-gray-800/80 text-white hover:bg-gray-700">
                     <Bookmark size={16} />
                   </Button>
                 </div>
               </div>
 
               <CardContent className="p-8 lg:p-12 flex flex-col justify-center">
-                <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
+                <div className="flex items-center space-x-4 text-sm text-gray-400 mb-4">
                   <div className="flex items-center space-x-1">
                     <User size={14} />
                     <span>{featuredPost.author}</span>
@@ -223,15 +224,15 @@ export default function Blog() {
                   </div>
                 </div>
 
-                <h3 className="font-heading text-2xl lg:text-3xl font-bold text-gray-900 mb-4 group-hover:text-[#0D9488] transition-colors">
+                <h3 className="font-heading text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-teal-400 transition-colors">
                   {featuredPost.title}
                 </h3>
                 
-                <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                <p className="text-gray-300 text-lg leading-relaxed mb-8">
                   {featuredPost.excerpt}
                 </p>
 
-                <Button className="bg-[#0D9488] hover:bg-[#064E49] text-white w-fit">
+                <Button className="bg-teal-600 hover:bg-teal-500 text-white w-fit shadow-lg shadow-teal-500/25">
                   Read Full Article
                   <ArrowRight size={16} className="ml-2" />
                 </Button>
@@ -241,16 +242,16 @@ export default function Blog() {
         </div>
       </section>
 
-      <div className="grid lg:grid-cols-4 gap-8 py-16 bg-white">
+      <div className="grid lg:grid-cols-4 gap-8 py-16 bg-black border-t border-gray-800">
         <div className="lg:col-span-3">
           {/* Blog Grid */}
           <section className="container mx-auto max-w-7xl px-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
               <div>
-                <h2 className="font-heading text-2xl md:text-3xl font-bold text-[#0D9488] mb-2">
+                <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2">
                   Latest Articles
                 </h2>
-                <p className="text-muted-foreground">Stay updated with our latest insights</p>
+                <p className="text-gray-400">Stay updated with our latest insights</p>
               </div>
 
               {/* Category Filter */}
@@ -262,8 +263,8 @@ export default function Blog() {
                     size="sm"
                     onClick={() => setSelectedCategory(category)}
                     className={selectedCategory === category 
-                      ? "bg-[#0D9488] hover:bg-[#064E49]" 
-                      : "border-[#0D9488] text-[#0D9488] hover:bg-[#0D9488] hover:text-white"
+                      ? "bg-teal-600 hover:bg-teal-500 text-white" 
+                      : "border-teal-500/50 text-teal-400 hover:bg-teal-600 hover:text-white bg-transparent"
                     }
                   >
                     {category}
@@ -274,14 +275,14 @@ export default function Blog() {
 
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
               {filteredPosts.map((post) => (
-                <Card key={post.id} className="blog-card group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white overflow-hidden">
+                <Card key={post.id} className="blog-card group cursor-pointer border border-gray-800/50 shadow-lg hover:shadow-2xl hover:shadow-teal-500/10 hover:border-teal-500/50 transition-all duration-300 bg-gray-900/80 backdrop-blur-sm overflow-hidden">
                   <div className="relative overflow-hidden">
                     <img 
                       src={post.image} 
                       alt={post.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
                     />
-                    <div className="absolute inset-0 bg-[#0D9488]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-teal-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Category Badge */}
                     <Badge className={`absolute top-3 left-3 text-xs ${getCategoryColor(post.category)}`}>
@@ -290,17 +291,17 @@ export default function Blog() {
 
                     {/* Action Buttons */}
                     <div className="absolute top-3 right-3 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0">
+                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-gray-800/80 text-white hover:bg-gray-700">
                         <Heart size={12} />
                       </Button>
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0">
+                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-gray-800/80 text-white hover:bg-gray-700">
                         <Share2 size={12} />
                       </Button>
                     </div>
                   </div>
 
                   <CardContent className="p-6">
-                    <div className="flex items-center space-x-3 text-xs text-muted-foreground mb-3">
+                    <div className="flex items-center space-x-3 text-xs text-gray-400 mb-3">
                       <div className="flex items-center space-x-1">
                         <User size={12} />
                         <span>{post.author}</span>
@@ -311,17 +312,17 @@ export default function Blog() {
                       </div>
                     </div>
 
-                    <h3 className="font-heading text-lg font-bold text-gray-900 mb-3 group-hover:text-[#0D9488] transition-colors line-clamp-2">
+                    <h3 className="font-heading text-lg font-bold text-white mb-3 group-hover:text-teal-400 transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{post.date}</span>
-                      <ArrowRight size={14} className="text-[#0D9488] group-hover:translate-x-1 transition-transform" />
+                      <span className="text-xs text-gray-400">{post.date}</span>
+                      <ArrowRight size={14} className="text-teal-400 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
@@ -333,7 +334,7 @@ export default function Blog() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-[#0D9488] text-[#0D9488] hover:bg-[#0D9488] hover:text-white px-8"
+                className="border-teal-500/50 text-teal-400 hover:bg-teal-600 hover:text-white px-8 bg-transparent"
               >
                 Load More Articles
               </Button>
@@ -345,22 +346,22 @@ export default function Blog() {
         <div className="lg:col-span-1">
           <div className="container mx-auto px-6 space-y-8 sticky top-8">
             {/* Search */}
-            <Card className="p-6 shadow-lg border-0">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4">Search Articles</h3>
+            <Card className="p-6 shadow-lg border border-gray-800/50 bg-gray-900/80 backdrop-blur-sm">
+              <h3 className="font-heading text-lg font-bold text-white mb-4">Search Articles</h3>
               <div className="relative">
-                <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <Input 
                   placeholder="Search blog posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 border-2 focus:border-[#0D9488]"
+                  className="pl-10 border-2 border-gray-700/50 bg-gray-800/50 text-white placeholder-gray-400 focus:border-teal-500"
                 />
               </div>
             </Card>
 
             {/* Categories */}
-            <Card className="p-6 shadow-lg border-0">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4">Categories</h3>
+            <Card className="p-6 shadow-lg border border-gray-800/50 bg-gray-900/80 backdrop-blur-sm">
+              <h3 className="font-heading text-lg font-bold text-white mb-4">Categories</h3>
               <div className="space-y-2">
                 {categories.map((category) => (
                   <button
@@ -368,8 +369,8 @@ export default function Blog() {
                     onClick={() => setSelectedCategory(category)}
                     className={`block w-full text-left px-3 py-2 rounded-lg transition-colors ${
                       selectedCategory === category 
-                        ? "bg-[#0D9488] text-white" 
-                        : "text-muted-foreground hover:bg-[#0D9488]/10 hover:text-[#0D9488]"
+                        ? "bg-teal-600 text-white" 
+                        : "text-gray-400 hover:bg-teal-600/20 hover:text-teal-400"
                     }`}
                   >
                     {category}
@@ -379,14 +380,14 @@ export default function Blog() {
             </Card>
 
             {/* Tags */}
-            <Card className="p-6 shadow-lg border-0">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4">Popular Tags</h3>
+            <Card className="p-6 shadow-lg border border-gray-800/50 bg-gray-900/80 backdrop-blur-sm">
+              <h3 className="font-heading text-lg font-bold text-white mb-4">Popular Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {popularTags.map((tag) => (
                   <Badge 
                     key={tag} 
                     variant="secondary"
-                    className="cursor-pointer hover:bg-[#0D9488] hover:text-white transition-colors"
+                    className="cursor-pointer bg-gray-800/50 text-gray-300 hover:bg-teal-600 hover:text-white transition-colors border border-gray-700/50"
                   >
                     {tag}
                   </Badge>
@@ -395,20 +396,20 @@ export default function Blog() {
             </Card>
 
             {/* Authors */}
-            <Card className="p-6 shadow-lg border-0">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4">Meet the Authors</h3>
+            <Card className="p-6 shadow-lg border border-gray-800/50 bg-gray-900/80 backdrop-blur-sm">
+              <h3 className="font-heading text-lg font-bold text-white mb-4">Meet the Authors</h3>
               <div className="space-y-4">
                 {authors.map((author, index) => (
                   <div key={index} className="flex items-start space-x-3">
                     <img 
                       src={author.avatar} 
                       alt={author.name}
-                      className="w-12 h-12 rounded-full object-cover"
+                      className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-700/50"
                     />
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-sm">{author.name}</h4>
-                      <p className="text-xs text-[#0D9488] mb-1">{author.role}</p>
-                      <p className="text-xs text-muted-foreground">{author.expertise}</p>
+                      <h4 className="font-semibold text-white text-sm">{author.name}</h4>
+                      <p className="text-xs text-teal-400 mb-1">{author.role}</p>
+                      <p className="text-xs text-gray-400">{author.expertise}</p>
                     </div>
                   </div>
                 ))}
@@ -419,12 +420,19 @@ export default function Blog() {
       </div>
 
       {/* Newsletter Signup Banner */}
-      <section className="py-16 bg-gradient-to-r from-[#E6F7F5] to-[#F0F9FF]">
-        <div className="container mx-auto max-w-4xl px-6 text-center">
-          <h3 className="font-heading text-2xl md:text-3xl font-bold text-[#0D9488] mb-4">
+      <section className="py-16 bg-gradient-to-r from-gray-900 via-black to-gray-900 border-t border-gray-800 relative overflow-hidden">
+        {/* Background particles */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal-400/20 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-400/30 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-teal-300/20 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        <div className="container mx-auto max-w-4xl px-6 text-center relative z-10">
+          <h3 className="font-heading text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text mb-4">
             Stay Updated with Trivesha
           </h3>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
             Get the latest articles, insights, and updates delivered directly to your inbox. 
             Join our community of developers and designers.
           </p>
@@ -432,18 +440,21 @@ export default function Blog() {
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input 
               placeholder="Enter your email address"
-              className="flex-1 border-2 focus:border-[#0D9488]"
+              className="flex-1 border-2 border-gray-700/50 bg-gray-800/50 text-white placeholder-gray-400 focus:border-teal-500"
             />
-            <Button className="bg-[#0D9488] hover:bg-[#064E49] text-white px-8">
+            <Button className="bg-teal-600 hover:bg-teal-500 text-white px-8 shadow-lg shadow-teal-500/25">
               Subscribe
             </Button>
           </div>
 
-          <p className="text-xs text-muted-foreground mt-4">
+          <p className="text-xs text-gray-400 mt-4">
             No spam, unsubscribe anytime. We respect your privacy.
           </p>
         </div>
       </section>
+      
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </main>
   );
 }

@@ -46,23 +46,38 @@ const mobileNavItems = [
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      setIsScrolled(currentScrollY > 20);
+      
+      // Hide header when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
     <>
       {/* Desktop Navigation */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-100' 
-          : 'bg-white/60 backdrop-blur-sm'
+          ? 'bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-800' 
+          : 'bg-gray-900/80 backdrop-blur-sm'
+      } ${
+        isVisible ? 'transform translate-y-0' : 'transform -translate-y-full'
       }`}>
         <div className="container mx-auto max-w-7xl px-6">
           <div className="flex items-center justify-between h-16">
@@ -72,9 +87,9 @@ export default function Header() {
               className="hidden lg:flex items-center group hover:scale-105 transition-transform duration-200"
             >
               <img 
-                src="/logo.png" 
+                src="/logo-b.png" 
                 alt="Trivesha" 
-                className="w-24 h-24 object-contain transition-opacity duration-200 group-hover:opacity-80" 
+                className="w-28 h-28 object-contain transition-opacity duration-200 group-hover:opacity-80" 
               />
             </Link>
 
@@ -85,9 +100,9 @@ export default function Header() {
                 className="flex items-center group hover:scale-105 transition-transform duration-200"
               >
                 <img 
-                  src="/logo.png" 
+                  src="/logo-b.png" 
                   alt="Trivesha" 
-                  className="w-24 h-24 object-contain transition-opacity duration-200 group-hover:opacity-80" 
+                  className="w-28 h-28 object-contain transition-opacity duration-200 group-hover:opacity-80" 
                 />
               </Link>
             </div>
@@ -101,8 +116,8 @@ export default function Header() {
                   className={({ isActive }) =>
                     `relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                       isActive
-                        ? 'text-gray-800 bg-gray-100/70'
-                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50/50'
+                        ? 'text-white bg-teal-600/20 border border-teal-500/30'
+                        : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                     }`
                   }
                 >
@@ -111,11 +126,11 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* CTA Button - Minimal Style */}
+            {/* CTA Button - Dark Theme */}
             <div className="hidden md:flex items-center">
               <Link 
                 to="/contact"
-                className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-md"
+                className="px-6 py-2 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-lg shadow-teal-500/25"
               >
                 Get Started
               </Link>
@@ -124,9 +139,9 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation - Redesigned with Glass Effect */}
-      <div className="lg:hidden fixed bottom-6 left-4 right-4 z-50">
-        <nav className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200/50 px-4 py-3">
+      {/* Mobile Bottom Navigation - Dark Theme */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-50">
+        <nav className="bg-gray-900/95 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-700/50 px-4 py-4 shadow-teal-500/10">
           <div className="flex items-center justify-between">
             {mobileNavItems.map((item) => (
               <NavLink
@@ -138,8 +153,8 @@ export default function Header() {
                   <>
                     <div className={`p-2 rounded-lg transition-all duration-300 ${
                       isActive 
-                        ? 'bg-gray-800 text-white shadow-lg' 
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                        ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/25' 
+                        : 'text-white hover:bg-gray-800 hover:text-teal-300'
                     }`}>
                       {item.iconType === 'custom' ? (
                         <img 
@@ -148,7 +163,7 @@ export default function Header() {
                           className={`w-5 h-5 ${
                             isActive 
                               ? 'filter brightness-0 invert' 
-                              : 'filter opacity-70 hover:opacity-100'
+                              : 'filter brightness-0 invert opacity-90 hover:opacity-100'
                           }`}
                         />
                       ) : (
@@ -156,7 +171,7 @@ export default function Header() {
                       )}
                     </div>
                     <span className={`text-xs font-medium mt-1 transition-colors duration-300 ${
-                      isActive ? 'text-gray-800' : 'text-gray-500'
+                      isActive ? 'text-white' : 'text-white/80'
                     }`}>
                       {item.label}
                     </span>

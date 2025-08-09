@@ -78,7 +78,7 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 193, 7, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease;
@@ -119,7 +119,17 @@
 @media (max-width: 768px) {
   /* Ensure mobile bottom nav doesn't interfere with content */
   body {
-    padding-bottom: 100px;
+    padding-bottom: 110px;
+  }
+  
+  /* Make sure mobile header has smooth transitions */
+  header {
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+  }
+  
+  /* Adjust scroll to top button position for mobile with bottom nav */
+  .scroll-to-top-mobile {
+    bottom: 120px !important;
   }
 }
 
@@ -128,10 +138,47 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Custom gradients for scroll to top button */
+@keyframes gradient-conic-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.bg-gradient-conic {
+  background: conic-gradient(from 0deg, var(--tw-gradient-stops));
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
 /* Focus states for accessibility */
 .nav-pill:focus,
 .mobile-nav-item:focus,
 .nav-cta:focus {
-  outline: 2px solid #FFC107;
+  outline: 2px solid #14B8A6;
   outline-offset: 2px;
+}
+
+/* Mobile bottom navigation specific styles */
+@media (max-width: 1024px) {
+  .mobile-bottom-nav {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 30px rgba(20, 184, 166, 0.1);
+  }
+  
+  .mobile-nav-icon {
+    filter: brightness(0) invert(1);
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-icon.active {
+    filter: brightness(0) invert(1);
+  }
+  
+  .mobile-nav-icon:hover {
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(20, 184, 166, 0.5));
+  }
 }

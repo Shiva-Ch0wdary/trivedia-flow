@@ -4,6 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import domainIcon from "@/assets/pricing/domain.png";
+import sslIcon from "@/assets/pricing/ssl.png";
+import securityIcon from "@/assets/pricing/security.png";
+import supportIcon from "@/assets/pricing/30day.png";
 
 export default function Pricing() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/pricing';
@@ -112,22 +116,22 @@ export default function Pricing() {
 
   const includedFeatures = [
     {
-      icon: "🌐",
+      image: domainIcon,
       title: "Domain Setup Help",
       description: "We'll help you register and configure your perfect domain name"
     },
     {
-      icon: "🔒",
+      image: sslIcon,
       title: "SSL & Security",
       description: "Free SSL certificates and basic security hardening included"
     },
     {
-      icon: "📱",
+      image: securityIcon,
       title: "Mobile Responsive",
       description: "Every site works perfectly on all devices and screen sizes"
     },
     {
-      icon: "🛠️",
+      image: supportIcon,
       title: "30-Day Support",
       description: "Post-launch support to ensure everything runs smoothly"
     }
@@ -163,16 +167,16 @@ export default function Pricing() {
   const renderFeatureValue = (value: boolean | string) => {
     if (typeof value === "boolean") {
       return value ? (
-        <Check className="w-5 h-5 text-[#0D9488] mx-auto" />
+        <Check className="w-5 h-5 text-[#2ECC71] mx-auto" />
       ) : (
-        <X className="w-5 h-5 text-gray-300 mx-auto" />
+        <X className="w-5 h-5 text-[#B0B3B8] mx-auto" />
       );
     }
-    return <span className="text-sm text-center text-gray-600">{value}</span>;
+    return <span className="text-sm text-center text-[#E4E6EB] bg-[#007C78]/20 px-2 py-1 rounded-full border border-[#007C78]/30">{value}</span>;
   };
 
   return (
-    <main>
+    <main className="bg-[#0E1117] text-[#E4E6EB]">
       <Helmet>
         <title>Pricing — Trivesha</title>
         <meta name="description" content="Transparent pricing for web design and development. Choose from Starter, Growth, or Scale packages with clear deliverables." />
@@ -180,7 +184,7 @@ export default function Pricing() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#0D9488] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#007C78] via-[#0D9488] to-[#0E1117] text-white">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -194,16 +198,16 @@ export default function Pricing() {
             <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
               Simple plans. Clear deliverables. No hidden fees.
             </h1>
-            <p className="text-xl md:text-2xl opacity-90 mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-[#B0B3B8] mb-10 leading-relaxed">
               Whether you need a simple static site or a full custom app, we've got a package for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-[#FF6B35] hover:bg-[#e55a2b] text-white text-lg px-8">
+              <Button size="lg" className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-lg px-8 shadow-[0_10px_40px_rgba(255,107,61,0.25)] hover:shadow-[0_15px_50px_rgba(255,107,61,0.35)]">
                 Get a Free Quote
               </Button>
               <Button 
                 size="lg" 
-                className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#0D9488] text-lg px-8 transition-all duration-300"
+                className="border-2 border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white text-lg px-8 transition-all duration-300"
                 onClick={() => document.getElementById('comparison')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Compare Plans
@@ -214,13 +218,13 @@ export default function Pricing() {
       </section>
 
       {/* Pricing Cards Section */}
-      <section className="py-20 md:py-24 bg-[#F9FAFB]">
+      <section className="py-20 md:py-24 bg-[#0E1117]">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0D9488] mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
               Choose Your Perfect Plan
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-[#B0B3B8] max-w-2xl mx-auto">
               Transparent pricing with everything you need to succeed online
             </p>
           </div>
@@ -229,27 +233,27 @@ export default function Pricing() {
             {pricingPlans.map((plan, index) => (
               <Card 
                 key={index}
-                className={`pricing-card relative border-0 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 bg-white ${
-                  plan.popular ? 'lg:scale-105 ring-2 ring-[#FF6B35]' : ''
+                className={`pricing-card relative border border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-300 bg-[#1A1F26] ${
+                  plan.popular ? 'lg:scale-105 ring-2 ring-[#FF6B3D] shadow-[0_0_30px_rgba(255,107,61,0.3)]' : ''
                 }`}
               >
                 {plan.popular && (
-                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FF6B35] hover:bg-[#e55a2b] text-white px-4 py-1">
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FF6B3D] hover:bg-[#e55a2b] text-white px-4 py-1 shadow-[0_0_20px_rgba(255,107,61,0.4)]">
                     Most Popular
                   </Badge>
                 )}
 
                 <CardHeader className="text-center p-8 pb-4">
-                  <CardTitle className="text-2xl font-bold text-[#0D9488] mb-2">
+                  <CardTitle className="text-2xl font-bold text-white mb-2">
                     {plan.name}
                   </CardTitle>
-                  <div className="text-4xl font-bold text-gray-900 mb-2" style={{ letterSpacing: '-0.02em' }}>
+                  <div className="text-4xl font-bold text-white mb-2" style={{ letterSpacing: '-0.02em' }}>
                     {plan.price}
                   </div>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-[#B0B3B8] mb-4">
                     {plan.priceNote}
                   </p>
-                  <CardDescription className="text-base leading-relaxed">
+                  <CardDescription className="text-base leading-relaxed text-[#E4E6EB]">
                     {plan.description}
                   </CardDescription>
                 </CardHeader>
@@ -258,8 +262,8 @@ export default function Pricing() {
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start space-x-3">
-                        <Check className="w-5 h-5 text-[#0D9488] mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-600">{feature}</span>
+                        <Check className="w-5 h-5 text-[#2ECC71] mt-0.5 flex-shrink-0" />
+                        <span className="text-[#E4E6EB]">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -268,14 +272,14 @@ export default function Pricing() {
                     size="lg" 
                     className={`w-full text-lg ${
                       plan.popular 
-                        ? 'bg-[#FF6B35] hover:bg-[#e55a2b] text-white' 
-                        : 'bg-[#0D9488] hover:bg-[#0a7c70] text-white'
+                        ? 'bg-[#FF6B3D] hover:bg-[#e55a2b] text-white shadow-[0_10px_30px_rgba(255,107,61,0.3)] hover:shadow-[0_15px_40px_rgba(255,107,61,0.4)]' 
+                        : 'bg-[#007C78] hover:bg-[#006763] text-white shadow-[0_10px_30px_rgba(0,124,120,0.3)]'
                     }`}
                   >
                     {plan.cta}
                   </Button>
 
-                  <p className="text-sm text-muted-foreground text-center mt-4">
+                  <p className="text-sm text-[#B0B3B8] text-center mt-4">
                     {plan.note}
                   </p>
                 </CardContent>
@@ -286,13 +290,13 @@ export default function Pricing() {
       </section>
 
       {/* Feature Comparison Table */}
-      <section id="comparison" className="py-20 md:py-24 bg-white">
+      <section id="comparison" className="py-20 md:py-24 bg-[#121212]">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0D9488] mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
               Compare All Features
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-[#B0B3B8]">
               See exactly what's included in each plan
             </p>
           </div>
@@ -300,7 +304,7 @@ export default function Pricing() {
           {/* Mobile View - Card-based Layout */}
           <div className="lg:hidden">
             {/* Mobile Tab Navigation */}
-            <div className="flex bg-gray-100 p-1 rounded-xl mb-6 overflow-hidden">
+            <div className="flex bg-[#1A1F26] p-1 rounded-xl mb-6 overflow-hidden border border-white/5">
               {["Starter", "Growth", "Scale"].map((plan) => (
                 <button
                   key={plan}
@@ -308,9 +312,9 @@ export default function Pricing() {
                   className={`flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all ${
                     activeTab === plan
                       ? plan === 'Growth' 
-                        ? 'bg-[#FF6B35] text-white shadow-md' 
-                        : 'bg-[#0D9488] text-white shadow-md'
-                      : 'text-gray-600 hover:text-gray-900'
+                        ? 'bg-[#FF6B3D] text-white shadow-md shadow-[#FF6B3D]/20' 
+                        : 'bg-[#007C78] text-white shadow-md shadow-[#007C78]/20'
+                      : 'text-[#B0B3B8] hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {plan}
@@ -320,12 +324,12 @@ export default function Pricing() {
             </div>
 
             {/* Active Plan Details */}
-            <Card className={`border-2 ${activeTab === "Growth" ? "border-[#FF6B35] bg-[#FF6B35]/5" : "border-[#0D9488] bg-[#0D9488]/5"}`}>
-              <CardHeader className={`text-center p-4 ${activeTab === "Growth" ? "bg-[#FF6B35]" : "bg-[#0D9488]"} text-white`}>
+            <Card className={`border-2 ${activeTab === "Growth" ? "border-[#FF6B3D]/30 bg-[#FF6B3D]/5" : "border-[#007C78]/30 bg-[#007C78]/5"} bg-[#1A1F26]`}>
+              <CardHeader className={`text-center p-4 ${activeTab === "Growth" ? "bg-[#FF6B3D]" : "bg-[#007C78]"} text-white rounded-t-lg`}>
                 <CardTitle className="text-xl font-bold">
                   {activeTab} Plan Features
                   {activeTab === "Growth" && (
-                    <Badge className="ml-2 bg-white text-[#FF6B35] text-xs">Most Popular</Badge>
+                    <Badge className="ml-2 bg-white text-[#FF6B3D] text-xs">Most Popular</Badge>
                   )}
                 </CardTitle>
                 <p className="text-sm opacity-90 mt-1">
@@ -337,9 +341,9 @@ export default function Pricing() {
               <CardContent className="p-4">
                 {comparisonFeatures.map((category, categoryIndex) => (
                   <div key={categoryIndex} className="mb-6 last:mb-0">
-                    <h4 className="font-semibold text-[#0D9488] text-sm uppercase tracking-wide mb-3 border-b border-gray-200 pb-2 flex items-center">
+                    <h4 className="font-semibold text-white text-sm uppercase tracking-wide mb-3 border-b border-white/10 pb-2 flex items-center">
                       <span className={`w-6 h-6 rounded-full text-white text-xs flex items-center justify-center mr-2 ${
-                        activeTab === "Growth" ? "bg-[#FF6B35]" : "bg-[#0D9488]"
+                        activeTab === "Growth" ? "bg-[#FF6B3D]" : "bg-[#007C78]"
                       }`}>
                         {categoryIndex + 1}
                       </span>
@@ -353,25 +357,25 @@ export default function Pricing() {
                         
                         return (
                           <div key={featureIndex} className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-                            typeof featureValue === 'boolean' && featureValue ? 'bg-green-50' : 
-                            typeof featureValue === 'string' ? 'bg-blue-50' : 'bg-gray-50'
+                            typeof featureValue === 'boolean' && featureValue ? 'bg-[#2ECC71]/10 border border-[#2ECC71]/20' : 
+                            typeof featureValue === 'string' ? 'bg-[#007C78]/10 border border-[#007C78]/20' : 'bg-white/5 border border-white/5'
                           }`}>
-                            <span className="text-sm text-gray-700 flex-1 font-medium">{feature.name}</span>
+                            <span className="text-sm text-[#E4E6EB] flex-1 font-medium">{feature.name}</span>
                             <div className="flex-shrink-0 ml-3">
                               {typeof featureValue === 'boolean' ? (
                                 featureValue ? (
-                                  <div className="flex items-center text-green-600">
+                                  <div className="flex items-center text-[#2ECC71]">
                                     <Check className="w-4 h-4 mr-1" />
                                     <span className="text-xs font-medium">Included</span>
                                   </div>
                                 ) : (
-                                  <div className="flex items-center text-gray-400">
+                                  <div className="flex items-center text-[#B0B3B8]">
                                     <X className="w-4 h-4 mr-1" />
                                     <span className="text-xs">Not included</span>
                                   </div>
                                 )
                               ) : (
-                                <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                                <span className="text-xs font-semibold text-[#007C78] bg-[#007C78]/20 px-2 py-1 rounded-full border border-[#007C78]/30">
                                   {featureValue}
                                 </span>
                               )}
@@ -384,13 +388,13 @@ export default function Pricing() {
                 ))}
                 
                 {/* CTA Button for Active Plan */}
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="mt-6 pt-6 border-t border-white/10">
                   <Button 
                     size="lg" 
                     className={`w-full text-lg ${
                       activeTab === "Growth" 
-                        ? 'bg-[#FF6B35] hover:bg-[#e55a2b] text-white' 
-                        : 'bg-[#0D9488] hover:bg-[#0a7c70] text-white'
+                        ? 'bg-[#FF6B3D] hover:bg-[#e55a2b] text-white shadow-[0_10px_30px_rgba(255,107,61,0.3)]' 
+                        : 'bg-[#007C78] hover:bg-[#006763] text-white shadow-[0_10px_30px_rgba(0,124,120,0.3)]'
                     }`}
                   >
                     Choose {activeTab} Plan
@@ -400,20 +404,20 @@ export default function Pricing() {
             </Card>
 
             {/* Quick Compare All Plans - Mobile */}
-            <div className="mt-8 bg-[#E6F7F5] rounded-2xl p-4">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4 text-center">
+            <div className="mt-8 bg-[#1A1F26] rounded-2xl p-4 border border-white/5">
+              <h3 className="font-heading text-lg font-bold text-white mb-4 text-center">
                 Quick Compare All Plans
               </h3>
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="bg-white rounded-lg p-3">
-                  <h4 className="font-semibold text-[#0D9488] text-xs mb-2">Starter</h4>
-                  <div className="text-xs text-gray-600 space-y-1">
-                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />Responsive</div>
-                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />SSL</div>
-                    <div className="text-[#0D9488] font-medium">30d Support</div>
+                <div className="bg-[#1E242C] rounded-lg p-3 border border-white/5">
+                  <h4 className="font-semibold text-white text-xs mb-2">Starter</h4>
+                  <div className="text-xs text-[#B0B3B8] space-y-1">
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-[#2ECC71] mr-1" />Responsive</div>
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-[#2ECC71] mr-1" />SSL</div>
+                    <div className="text-[#007C78] font-medium">30d Support</div>
                   </div>
                 </div>
-                <div className="bg-[#FF6B35] text-white rounded-lg p-3">
+                <div className="bg-[#FF6B3D] text-white rounded-lg p-3 shadow-[0_0_20px_rgba(255,107,61,0.3)]">
                   <h4 className="font-semibold text-xs mb-2">Growth ★</h4>
                   <div className="text-xs space-y-1 opacity-90">
                     <div className="flex items-center justify-center"><Check className="w-3 h-3 mr-1" />Everything +</div>
@@ -421,12 +425,12 @@ export default function Pricing() {
                     <div className="font-medium">60d Support</div>
                   </div>
                 </div>
-                <div className="bg-white rounded-lg p-3">
-                  <h4 className="font-semibold text-[#0D9488] text-xs mb-2">Scale</h4>
-                  <div className="text-xs text-gray-600 space-y-1">
-                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />Everything +</div>
-                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-green-500 mr-1" />API Integration</div>
-                    <div className="text-[#0D9488] font-medium">90d Support</div>
+                <div className="bg-[#1E242C] rounded-lg p-3 border border-white/5">
+                  <h4 className="font-semibold text-white text-xs mb-2">Scale</h4>
+                  <div className="text-xs text-[#B0B3B8] space-y-1">
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-[#2ECC71] mr-1" />Everything +</div>
+                    <div className="flex items-center justify-center"><Check className="w-3 h-3 text-[#2ECC71] mr-1" />API Integration</div>
+                    <div className="text-[#007C78] font-medium">90d Support</div>
                   </div>
                 </div>
               </div>
@@ -435,36 +439,36 @@ export default function Pricing() {
 
           {/* Desktop View - Table Layout */}
           <div className="hidden lg:block">
-            <div className="overflow-x-auto bg-white rounded-2xl shadow-lg">
+            <div className="overflow-x-auto bg-[#1E242C] rounded-2xl shadow-lg border border-white/5">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-[#0D9488] text-white">
-                    <th className="text-left p-6 font-semibold sticky left-0 bg-[#0D9488] z-10">Features</th>
+                  <tr className="bg-[#007C78] text-white">
+                    <th className="text-left p-6 font-semibold sticky left-0 bg-[#007C78] z-10">Features</th>
                     <th className="text-center p-6 font-semibold">Starter</th>
-                    <th className="text-center p-6 font-semibold bg-[#FF6B35]">Growth</th>
+                    <th className="text-center p-6 font-semibold bg-[#FF6B3D]">Growth</th>
                     <th className="text-center p-6 font-semibold">Scale</th>
                   </tr>
                 </thead>
                 <tbody>
                   {comparisonFeatures.map((category, categoryIndex) => (
                     <>
-                      <tr key={`category-${categoryIndex}`} className="bg-[#E6F7F5]">
-                        <td colSpan={4} className="p-4 font-semibold text-[#0D9488] text-lg">
+                      <tr key={`category-${categoryIndex}`} className="bg-[#1A1F26]">
+                        <td colSpan={4} className="p-4 font-semibold text-white text-lg">
                           {category.category}
                         </td>
                       </tr>
                       {category.features.map((feature, featureIndex) => (
                         <tr 
                           key={`feature-${categoryIndex}-${featureIndex}`}
-                          className={featureIndex % 2 === 0 ? 'bg-white' : 'bg-[#F9FAFB]'}
+                          className={featureIndex % 2 === 0 ? 'bg-[#1E242C]' : 'bg-[#232830]'}
                         >
-                          <td className="p-4 font-medium sticky left-0 bg-inherit z-10">
+                          <td className="p-4 font-medium sticky left-0 bg-inherit z-10 text-[#E4E6EB]">
                             {feature.name}
                           </td>
                           <td className="p-4 text-center">
                             {renderFeatureValue(feature.starter)}
                           </td>
-                          <td className="p-4 text-center bg-[#FF6B35]/5">
+                          <td className="p-4 text-center bg-[#FF6B3D]/5">
                             {renderFeatureValue(feature.growth)}
                           </td>
                           <td className="p-4 text-center">
@@ -481,36 +485,36 @@ export default function Pricing() {
 
           {/* Mobile Comparison Toggle Alternative */}
           <div className="md:hidden lg:hidden mt-8">
-            <div className="bg-[#E6F7F5] rounded-2xl p-6">
-              <h3 className="font-heading text-lg font-bold text-[#0D9488] mb-4 text-center">
+            <div className="bg-[#1A1F26] rounded-2xl p-6 border border-white/5">
+              <h3 className="font-heading text-lg font-bold text-white mb-4 text-center">
                 Quick Feature Summary
               </h3>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <h4 className="font-semibold text-[#0D9488] text-sm mb-2">Starter</h4>
-                  <div className="text-xs text-gray-600 space-y-1">
+                  <h4 className="font-semibold text-white text-sm mb-2">Starter</h4>
+                  <div className="text-xs text-[#B0B3B8] space-y-1">
                     <div>✓ Responsive Design</div>
                     <div>✓ SSL & Security</div>
                     <div>✓ 30-day Support</div>
-                    <div className="text-[#FF6B35] font-medium">Basic Features</div>
+                    <div className="text-[#FF6B3D] font-medium">Basic Features</div>
                   </div>
                 </div>
-                <div className="border-x border-[#0D9488]/20 px-2">
-                  <h4 className="font-semibold text-[#FF6B35] text-sm mb-2">Growth</h4>
-                  <div className="text-xs text-gray-600 space-y-1">
+                <div className="border-x border-white/10 px-2">
+                  <h4 className="font-semibold text-[#FF6B3D] text-sm mb-2">Growth</h4>
+                  <div className="text-xs text-[#B0B3B8] space-y-1">
                     <div>✓ Everything in Starter</div>
                     <div>✓ Custom Design</div>
                     <div>✓ CMS Integration</div>
-                    <div className="text-[#FF6B35] font-medium">Advanced Features</div>
+                    <div className="text-[#FF6B3D] font-medium">Advanced Features</div>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-[#0D9488] text-sm mb-2">Scale</h4>
-                  <div className="text-xs text-gray-600 space-y-1">
+                  <h4 className="font-semibold text-white text-sm mb-2">Scale</h4>
+                  <div className="text-xs text-[#B0B3B8] space-y-1">
                     <div>✓ Everything in Growth</div>
                     <div>✓ API Integration</div>
                     <div>✓ 90-day Support</div>
-                    <div className="text-[#FF6B35] font-medium">Enterprise Features</div>
+                    <div className="text-[#FF6B3D] font-medium">Enterprise Features</div>
                   </div>
                 </div>
               </div>
@@ -520,13 +524,13 @@ export default function Pricing() {
       </section>
 
       {/* What's Included Section */}
-      <section className="py-20 md:py-24 bg-[#E6F7F5]">
+      <section className="py-20 md:py-24 bg-[#0E1117]">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0D9488] mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
               What's Included in All Plans
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-[#B0B3B8]">
               Every project comes with these essential features
             </p>
           </div>
@@ -534,13 +538,17 @@ export default function Pricing() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {includedFeatures.map((feature, index) => (
               <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <span className="text-3xl">{feature.icon}</span>
+                <div className="w-40 h-40 flex items-center justify-center mx-auto mb-6 bg-[#1A1F26] rounded-2xl border border-white/5 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-32 h-32 object-contain pricing-icon drop-shadow-[0_8px_30px_rgba(13,148,136,0.25)]"
+                  />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-[#0D9488] mb-3">
+                <h3 className="font-heading text-xl font-bold text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-[#B0B3B8] leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -550,17 +558,28 @@ export default function Pricing() {
       </section>
 
       {/* Custom Quote CTA */}
-      <section className="py-20 bg-[#0D9488] text-white">
-        <div className="container mx-auto max-w-7xl px-6 text-center">
+      <section className="py-20 bg-gradient-to-br from-[#007C78] via-[#0D9488] to-[#121212] text-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(255,107,61,0.15), transparent 50%),
+                                radial-gradient(circle at 80% 50%, rgba(0,124,120,0.15), transparent 50%)`,
+            }}
+          />
+        </div>
+        
+        <div className="container mx-auto max-w-7xl px-6 text-center relative z-10">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             Need something unique? Let's scope it together.
           </h2>
-          <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-[#B0B3B8] mb-8 max-w-2xl mx-auto">
             Every business is different. If our packages don't fit perfectly, let's create a custom solution just for you.
           </p>
           <Button 
             size="lg" 
-            className="bg-[#FF6B35] hover:bg-[#e55a2b] text-white text-xl px-10 py-4"
+            className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-xl px-10 py-4 shadow-[0_15px_50px_rgba(255,107,61,0.25)] hover:shadow-[0_20px_60px_rgba(255,107,61,0.35)]"
           >
             Request Custom Quote
           </Button>
@@ -568,37 +587,37 @@ export default function Pricing() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 md:py-24 bg-white">
+      <section className="py-20 md:py-24 bg-[#121212]">
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0D9488] mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-[#B0B3B8]">
               Everything you need to know about our pricing and process
             </p>
           </div>
 
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <Card key={index} className="border-2 border-transparent hover:border-[#0D9488]/20 transition-colors">
+              <Card key={index} className="border border-white/10 bg-[#1A1F26] hover:border-[#007C78]/50 hover:bg-[#232830] transition-all duration-300">
                 <CardContent className="p-0">
                   <button
                     className="w-full p-6 text-left flex items-center justify-between focus:outline-none"
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   >
-                    <h3 className="font-semibold text-lg text-[#0D9488] pr-4">
+                    <h3 className="font-semibold text-lg text-white pr-4">
                       {faq.question}
                     </h3>
                     {openFaq === index ? (
-                      <ChevronUp className="w-5 h-5 text-[#0D9488] flex-shrink-0" />
+                      <ChevronUp className="w-5 h-5 text-[#007C78] flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-[#0D9488] flex-shrink-0" />
+                      <ChevronDown className="w-5 h-5 text-[#007C78] flex-shrink-0" />
                     )}
                   </button>
                   {openFaq === index && (
                     <div className="px-6 pb-6">
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-[#B0B3B8] leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
@@ -611,23 +630,23 @@ export default function Pricing() {
       </section>
 
       {/* Trust Section */}
-      <section className="py-16 bg-[#F9FAFB] border-t">
+      <section className="py-16 bg-[#0E1117] border-t border-white/10">
         <div className="container mx-auto max-w-7xl px-6 text-center">
           <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-12">
-            <Badge variant="secondary" className="bg-[#0D9488]/10 text-[#0D9488] px-4 py-2">
+            <Badge variant="secondary" className="bg-[#007C78]/20 text-[#007C78] border border-[#007C78]/30 px-4 py-2">
               ✅ JustDial Verified Partner
             </Badge>
             <div className="flex items-center space-x-4">
               <img 
                 src="/placeholder.svg" 
                 alt="Client testimonial" 
-                className="w-12 h-12 rounded-full"
+                className="w-12 h-12 rounded-full border-2 border-white/10"
               />
               <div className="text-left">
-                <p className="text-sm text-muted-foreground italic">
+                <p className="text-sm text-[#B0B3B8] italic">
                   "Excellent value for money. Professional service at fair prices."
                 </p>
-                <p className="text-xs text-[#0D9488] font-medium mt-1">
+                <p className="text-xs text-[#007C78] font-medium mt-1">
                   — Verified Client Review
                 </p>
               </div>

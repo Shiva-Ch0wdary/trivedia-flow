@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ChevronDown, Search, MessageCircle, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ScrollToTop from '@/components/ui/scroll-to-top';
 
 const FAQ = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +16,7 @@ const FAQ = () => {
     {
       id: 'general',
       title: 'General',
-      color: 'bg-teal-50 border-teal-200',
+      color: 'bg-teal-500/10 border-teal-500/30',
       questions: [
         {
           id: 'what-does-trivesha-do',
@@ -42,7 +43,7 @@ const FAQ = () => {
     {
       id: 'services',
       title: 'Services',
-      color: 'bg-blue-50 border-blue-200',
+      color: 'bg-blue-500/10 border-blue-500/30',
       questions: [
         {
           id: 'services-offered',
@@ -69,7 +70,7 @@ const FAQ = () => {
     {
       id: 'pricing',
       title: 'Pricing',
-      color: 'bg-green-50 border-green-200',
+      color: 'bg-green-500/10 border-green-500/30',
       questions: [
         {
           id: 'website-cost',
@@ -96,7 +97,7 @@ const FAQ = () => {
     {
       id: 'technical',
       title: 'Technical',
-      color: 'bg-purple-50 border-purple-200',
+      color: 'bg-purple-500/10 border-purple-500/30',
       questions: [
         {
           id: 'code-ownership',
@@ -123,7 +124,7 @@ const FAQ = () => {
     {
       id: 'support',
       title: 'Support & Maintenance',
-      color: 'bg-orange-50 border-orange-200',
+      color: 'bg-orange-500/10 border-orange-500/30',
       questions: [
         {
           id: 'post-launch-support',
@@ -150,7 +151,7 @@ const FAQ = () => {
     {
       id: 'legal',
       title: 'Legal & Policies',
-      color: 'bg-gray-50 border-gray-200',
+      color: 'bg-gray-500/10 border-gray-500/30',
       questions: [
         {
           id: 'privacy-terms',
@@ -190,14 +191,21 @@ const FAQ = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      <div className="min-h-screen bg-[#FAFAFA]">
+      <div className="min-h-screen bg-black">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-[#006D77] to-[#004C50] text-white py-20">
-          <div className="container mx-auto max-w-4xl px-6 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-['Poppins']">
+        <section className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-20 relative overflow-hidden">
+          {/* Background particles */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-20 left-20 w-3 h-3 bg-teal-400 rounded-full animate-pulse"></div>
+            <div className="absolute top-32 right-32 w-2 h-2 bg-orange-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+            <div className="absolute bottom-40 left-40 w-4 h-4 bg-teal-300 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+          
+          <div className="container mx-auto max-w-4xl px-6 text-center relative z-10">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-['Poppins'] bg-gradient-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text">
               Got Questions? We've Got Answers
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90 font-['Inter']">
+            <p className="text-xl md:text-2xl mb-8 text-gray-300 font-['Inter']">
               Whether it's about pricing, process, or support — here's everything you need to know.
             </p>
             
@@ -209,21 +217,21 @@ const FAQ = () => {
                 placeholder="Search FAQs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full border-0 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#E29578] transition-all duration-300"
+                className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-700/50 bg-gray-800/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 backdrop-blur-sm"
               />
             </div>
           </div>
         </section>
 
         {/* FAQ Sections */}
-        <section className="py-16">
+        <section className="py-16 bg-gray-900 border-t border-gray-800">
           <div className="container mx-auto max-w-4xl px-6">
             {filteredCategories.length === 0 && searchTerm && (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-lg">No FAQs found matching your search.</p>
+                <p className="text-gray-400 text-lg">No FAQs found matching your search.</p>
                 <button 
                   onClick={() => setSearchTerm('')}
-                  className="mt-4 text-[#006D77] hover:text-[#E29578] transition-colors"
+                  className="mt-4 text-teal-400 hover:text-teal-300 transition-colors"
                 >
                   Clear search
                 </button>
@@ -232,7 +240,7 @@ const FAQ = () => {
 
             {filteredCategories.map((category) => (
               <div key={category.id} className="mb-12">
-                <h2 className="text-2xl font-bold text-[#006D77] mb-6 font-['Poppins']">
+                <h2 className="text-2xl font-bold text-white mb-6 font-['Poppins']">
                   {category.title}
                 </h2>
                 
@@ -240,17 +248,17 @@ const FAQ = () => {
                   {category.questions.map((faq) => (
                     <div
                       key={faq.id}
-                      className={`bg-white rounded-xl shadow-sm border transition-all duration-300 hover:shadow-md ${category.color}`}
+                      className={`bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/10 hover:border-teal-500/50 ${category.color}`}
                     >
                       <button
                         onClick={() => toggleAccordion(faq.id)}
                         className="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none group"
                       >
-                        <h3 className="text-lg font-semibold text-[#333333] group-hover:text-[#006D77] transition-colors font-['Inter']">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-teal-400 transition-colors font-['Inter']">
                           {faq.question}
                         </h3>
                         <ChevronDown 
-                          className={`text-[#006D77] transition-transform duration-300 ${
+                          className={`text-teal-400 transition-transform duration-300 ${
                             openAccordion === faq.id ? 'rotate-180' : ''
                           }`} 
                           size={20} 
@@ -261,7 +269,7 @@ const FAQ = () => {
                         openAccordion === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}>
                         <div className="px-6 pb-5">
-                          <p className="text-[#333333] leading-relaxed font-['Inter']">
+                          <p className="text-gray-300 leading-relaxed font-['Inter']">
                             {faq.answer}
                           </p>
                         </div>
@@ -275,19 +283,26 @@ const FAQ = () => {
         </section>
 
         {/* CTA Banner */}
-        <section className="bg-gradient-to-r from-[#006D77] to-[#E29578] py-16">
-          <div className="container mx-auto max-w-4xl px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-['Poppins']">
+        <section className="bg-gradient-to-r from-gray-900 via-black to-gray-900 py-16 border-t border-gray-800 relative overflow-hidden">
+          {/* Background particles */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal-400/20 rounded-full animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-400/30 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-teal-300/20 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+          </div>
+          
+          <div className="container mx-auto max-w-4xl px-6 text-center relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text mb-4 font-['Poppins']">
               Still got questions?
             </h2>
-            <p className="text-xl text-white/90 mb-8 font-['Inter']">
+            <p className="text-xl text-gray-300 mb-8 font-['Inter']">
               We're here to help. Get in touch and let's discuss your project.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
-                className="inline-flex items-center space-x-2 bg-white text-[#006D77] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="inline-flex items-center space-x-2 bg-teal-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-500 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-teal-500/25"
               >
                 <Mail size={20} />
                 <span>Contact Us</span>
@@ -305,6 +320,9 @@ const FAQ = () => {
             </div>
           </div>
         </section>
+        
+        {/* Scroll to Top Button */}
+        <ScrollToTop />
       </div>
     </>
   );

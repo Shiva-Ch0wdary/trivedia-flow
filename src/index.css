@@ -236,4 +236,134 @@ All colors MUST be HSL.
   .project-overlay {
     backdrop-filter: blur(4px);
   }
+  
+  /* Category card glow effects */
+  .category-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .category-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(45deg, transparent, transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  .category-card:hover::before {
+    opacity: 1;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 25px 50px -12px rgba(45, 212, 191, 0.25),
+      0 0 0 1px rgba(45, 212, 191, 0.1);
+  }
+  
+  /* Alternating glow colors for each category */
+  .category-card:nth-child(1):hover::before {
+    background: linear-gradient(45deg, hsl(173, 80%, 38%), hsl(17, 100%, 60%));
+  }
+  
+  .category-card:nth-child(1):hover {
+    box-shadow: 
+      0 25px 50px -12px rgba(45, 212, 191, 0.3),
+      0 0 20px rgba(45, 212, 191, 0.2),
+      0 0 0 1px rgba(45, 212, 191, 0.1);
+  }
+  
+  .category-card:nth-child(2):hover::before {
+    background: linear-gradient(45deg, hsl(17, 100%, 60%), hsl(173, 80%, 38%));
+  }
+  
+  .category-card:nth-child(2):hover {
+    box-shadow: 
+      0 25px 50px -12px rgba(255, 107, 53, 0.3),
+      0 0 20px rgba(255, 107, 53, 0.2),
+      0 0 0 1px rgba(255, 107, 53, 0.1);
+  }
+  
+  .category-card:nth-child(3):hover::before {
+    background: linear-gradient(45deg, hsl(173, 80%, 38%), hsl(17, 100%, 60%));
+  }
+  
+  .category-card:nth-child(3):hover {
+    box-shadow: 
+      0 25px 50px -12px rgba(45, 212, 191, 0.3),
+      0 0 20px rgba(45, 212, 191, 0.2),
+      0 0 0 1px rgba(45, 212, 191, 0.1);
+  }
+  
+  .category-card:nth-child(4):hover::before {
+    background: linear-gradient(45deg, hsl(17, 100%, 60%), hsl(173, 80%, 38%));
+  }
+  
+  .category-card:nth-child(4):hover {
+    box-shadow: 
+      0 25px 50px -12px rgba(255, 107, 53, 0.3),
+      0 0 20px rgba(255, 107, 53, 0.2),
+      0 0 0 1px rgba(255, 107, 53, 0.1);
+  }
+  
+  /* Contact icon hover effects */
+  .contact-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  
+  .contact-icon:hover {
+    transform: translateY(-4px) scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.6)) 
+            drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));
+  }
+  
+  /* Process step icon hover effects */
+  .process-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  
+  .process-icon:hover {
+    transform: translateY(-8px) scale(1.15);
+    filter: drop-shadow(0 0 20px rgba(45, 212, 191, 0.7))
+            drop-shadow(0 0 40px rgba(45, 212, 191, 0.5))
+            drop-shadow(0 0 60px rgba(45, 212, 191, 0.3));
+  }
+
+  /* Pricing icon hover effects */
+  .pricing-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  
+  .pricing-icon:hover {
+    transform: translateY(-8px) scale(1.15);
+    filter: drop-shadow(0 0 20px rgba(13, 148, 136, 0.7))
+            drop-shadow(0 0 40px rgba(13, 148, 136, 0.5))
+            drop-shadow(0 0 60px rgba(13, 148, 136, 0.3));
+  }
+  
+  /* Contact card hover effects */
+  .contact-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 25px 50px -12px rgba(56, 189, 248, 0.3) !important,
+      0 10px 25px -5px rgba(56, 189, 248, 0.2) !important,
+      0 0 20px rgba(56, 189, 248, 0.15) !important,
+      0 0 0 1px rgba(56, 189, 248, 0.1) !important;
+  }
 }
