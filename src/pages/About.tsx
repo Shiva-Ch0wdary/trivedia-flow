@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
+import { generateOrganizationSchema } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +10,25 @@ import { Link } from "react-router-dom";
 import aboutImage from "@/assets/about-1.png";
 
 export default function About() {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/about';
+  // Schema markup for about page
+  const aboutSchema = {
+    ...generateOrganizationSchema(),
+    "foundingDate": "2019",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "Founder Name",
+        "jobTitle": "CEO & Founder"
+      }
+    ],
+    "numberOfEmployees": "10-50",
+    "knowsAbout": [
+      "Web Development",
+      "Mobile App Development", 
+      "UI/UX Design",
+      "Software Consulting"
+    ]
+  };
 
   const milestones = [
     {
@@ -115,11 +135,13 @@ export default function About() {
 
   return (
     <main className="bg-[#0A0E2A] text-zinc-100">
-      <Helmet>
-        <title>About Us — Trivesha</title>
-        <meta name="description" content="Learn about Trivesha's journey, founders, and our mission to deliver exceptional digital solutions since 2019." />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <SEO
+        title="About Us — Trivesha"
+        description="Learn about Trivesha's journey, founders, and our mission to deliver exceptional digital solutions since 2019."
+        canonical="/about"
+        ogImage="/social-images/og-about.png"
+        schemaMarkup={aboutSchema}
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#1C1C1C]">

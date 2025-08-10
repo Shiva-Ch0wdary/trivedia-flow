@@ -1,4 +1,5 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
+import { generateArticleSchema, generateBreadcrumbSchema } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,9 +10,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Blog() {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/blog';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Schema markup for blog page
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Blog", url: "/blog" }
+  ]);
+
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Trivesha Blog",
+    "description": "Design, Development & Digital Trends from the Trivesha Team",
+    "url": "https://trivesha.com/blog",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Trivesha",
+      "logo": "https://trivesha.com/logo.png"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://trivesha.com/blog"
+    }
+  };
 
   const featuredPost = {
     id: 1,
@@ -138,11 +161,13 @@ export default function Blog() {
 
   return (
     <main className="min-h-screen bg-black">
-      <Helmet>
-        <title>Insights & Ideas — Trivesha Blog</title>
-        <meta name="description" content="Design, Development & Digital Trends from the Trivesha Team. Expert insights on web development, UI/UX design, and modern technology." />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <SEO
+        title="Insights & Ideas — Trivesha Blog"
+        description="Design, Development & Digital Trends from the Trivesha Team. Expert insights on web development, UI/UX design, and modern technology."
+        canonical="/blog"
+        ogImage="/social-images/og-blog.png"
+        schemaMarkup={[breadcrumbSchema, blogSchema]}
+      />
 
       {/* Header */}
       <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">

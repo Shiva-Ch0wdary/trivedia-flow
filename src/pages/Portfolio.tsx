@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
+import { generateBreadcrumbSchema } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,9 +12,25 @@ import project2 from "@/assets/project/project-2.png";
 import project3 from "@/assets/project/project-3.png";
 
 export default function Portfolio() {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/portfolio';
-  
   const [activeFilter, setActiveFilter] = useState('All');
+  
+  // Schema markup for portfolio
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Portfolio", url: "/portfolio" }
+  ]);
+
+  const portfolioSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Trivesha Portfolio",
+    "description": "Showcase of our best web development, mobile app, and design projects",
+    "url": "https://trivesha.com/portfolio",
+    "creator": {
+      "@type": "Organization", 
+      "name": "Trivesha"
+    }
+  };
   
   const categories = ['All', 'Web Design', 'Web Development', 'Mobile Apps', 'Games', 'Maintenance'];
   
@@ -139,11 +156,13 @@ export default function Portfolio() {
 
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA]">
-      <Helmet>
-        <title>Portfolio — Trivesha</title>
-        <meta name="description" content="Explore our portfolio of web design, development, mobile apps, games and maintenance projects. Real results for real businesses." />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <SEO
+        title="Portfolio — Trivesha"
+        description="Explore our portfolio of web design, development, mobile apps, games and maintenance projects. Real results for real businesses."
+        canonical="/portfolio"
+        ogImage="/social-images/og-portfolio.png"
+        schemaMarkup={[breadcrumbSchema, portfolioSchema]}
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0F1428] to-[#0A0E2A] pt-24 pb-24 md:pt-32 md:pb-32">

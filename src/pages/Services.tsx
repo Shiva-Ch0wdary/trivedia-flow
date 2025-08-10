@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
+import { generateServiceSchema } from "@/lib/seo";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +18,30 @@ import buildIcon from "@/assets/services/build-icon.png";
 import launchIcon from "@/assets/services/launch-icon.png";
 
 export default function Services() {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/services';
+  // Schema markup for services
+  const servicesSchema = [
+    generateServiceSchema({
+      name: "UI/UX Design",
+      description: "Figma-first prototypes and user-centered design solutions that convert visitors into customers.",
+      url: "https://trivesha.com/services/ui-ux-design",
+      image: "https://trivesha.com/assets/services/design.png",
+      category: "Design Services"
+    }),
+    generateServiceSchema({
+      name: "Web Development", 
+      description: "Static, dynamic, and custom websites built with modern technologies for optimal performance.",
+      url: "https://trivesha.com/services/web-development",
+      image: "https://trivesha.com/assets/services/development.png",
+      category: "Development Services"
+    }),
+    generateServiceSchema({
+      name: "Mobile App Development",
+      description: "Native and cross-platform mobile applications for iOS and Android.",
+      url: "https://trivesha.com/services/mobile-app-development", 
+      image: "https://trivesha.com/assets/services/app.png",
+      category: "Development Services"
+    })
+  ];
   
   const services = [
     {
@@ -139,11 +163,13 @@ export default function Services() {
 
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA]">
-      <Helmet>
-        <title>Services — Trivesha</title>
-        <meta name="description" content="Web design, development, apps, DevOps, maintenance. Explore Trivesha services and compare plans." />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <SEO
+        title="Services — Trivesha"
+        description="Web design, development, apps, DevOps, maintenance. Explore Trivesha services and compare plans."
+        canonical="/services"
+        ogImage="/social-images/og-services.png"
+        schemaMarkup={servicesSchema}
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0F1428] to-[#0A0E2A]">

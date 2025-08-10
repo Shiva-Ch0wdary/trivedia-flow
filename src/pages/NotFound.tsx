@@ -1,15 +1,26 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Home, ArrowLeft, Zap } from "lucide-react";
+import { Home, ArrowLeft, Zap, Search } from "lucide-react";
 
 export default function NotFound() {
+  const popularPages = [
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+    { name: "Portfolio", url: "/portfolio" },
+    { name: "About", url: "/about" },
+    { name: "Contact", url: "/contact" }
+  ];
+
   return (
     <>
-      <Helmet>
-        <title>404 - Page Not Found | Trivedia Flow</title>
-        <meta name="description" content="The page you're looking for doesn't exist. Return to Trivedia Flow homepage to explore our digital solutions." />
-      </Helmet>
+      <SEO
+        title="404 - Page Not Found | Trivesha"
+        description="The page you're looking for doesn't exist. Return to Trivesha homepage to explore our digital solutions."
+        canonical="/404"
+        ogImage="/social-images/og-home.png"
+        noindex={true}
+      />
 
       {/* Full Screen 404 Page with GIF Background */}
       <div 
@@ -77,7 +88,7 @@ export default function NotFound() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 <Button 
                   size="lg" 
                   className="bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-black font-bold text-lg px-8 py-4 rounded-xl shadow-[0_15px_40px_rgba(45,212,191,0.25)] hover:shadow-[0_20px_50px_rgba(45,212,191,0.35)] transition-all duration-300 hover:-translate-y-1"
@@ -98,6 +109,26 @@ export default function NotFound() {
                   <ArrowLeft className="w-5 h-5 mr-2" />
                   Go Back
                 </Button>
+              </div>
+
+              {/* Popular Pages Section */}
+              <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-2">
+                  <Search className="w-6 h-6 text-cyan-400" />
+                  Popular Pages
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  {popularPages.map((page, index) => (
+                    <Button
+                      key={index}
+                      variant="ghost"
+                      className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-400/10 border border-gray-600/50 hover:border-cyan-400/50 transition-all duration-300"
+                      asChild
+                    >
+                      <Link to={page.url}>{page.name}</Link>
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

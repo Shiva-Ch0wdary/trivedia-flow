@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ContactAnimatedBackground from "@/components/ui/contact-animated-background";
 import emailIcon from "@/assets/contact/email.png";
 import callIcon from "@/assets/contact/call.png";
 import locationIcon from "@/assets/contact/location.png";
@@ -106,7 +107,7 @@ export default function ContactDark() {
   };
 
   return (
-    <main className="bg-[#0A0E2A] text-zinc-100">
+    <main className="text-zinc-100 relative">
       <Helmet>
         <title>Contact Us — Trivesha</title>
         <meta
@@ -116,50 +117,38 @@ export default function ContactDark() {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Hero Section (Dark) */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#1C1C1C]">
-        {/* Subtle grid texture */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(circle at 0 0, rgba(13,148,136,0.25), transparent 40%),
-                                radial-gradient(circle at 100% 0, rgba(255,107,53,0.15), transparent 40%),
-                                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20h60M20 40h60M20 60h60M20 80h60' stroke='%235E6A86' stroke-width='1' fill='none'/%3E%3C/svg%3E")`,
-              backgroundSize: "auto, auto, 100px 100px",
-            }}
-          />
-        </div>
-
+      {/* Hero Section with Animated Background */}
+      <section className="contact-animated-bg relative overflow-hidden min-h-screen flex items-center">
+        <ContactAnimatedBackground />
         <div className="container mx-auto max-w-7xl px-6 py-20 md:py-24 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-bold text-teal-300 mb-6 leading-tight drop-shadow-[0_6px_24px_rgba(13,148,136,0.35)]">
+            <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-[0_6px_24px_rgba(255,255,255,0.35)]">
               Let's Build Something Together
             </h1>
-            <p className="text-lg md:text-xl text-zinc-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-200 mb-12 leading-relaxed max-w-3xl mx-auto">
               Have a project in mind? We're here to answer questions, discuss ideas, and start your next launch.
             </p>
 
             {/* Founders Quote */}
-            <div className="flex items-center justify-center mb-8 bg-white/5 backdrop-blur rounded-2xl p-6 max-w-lg mx-auto border border-white/10">
+            <div className="flex items-center justify-center mb-8 bg-black/20 backdrop-blur-md rounded-2xl p-6 max-w-lg mx-auto border border-white/20">
               <div className="flex -space-x-3 mr-4">
                 <img
                   src="/placeholder.svg"
                   alt="Founder"
-                  className="w-12 h-12 rounded-full border-2 border-white/20 shadow"
+                  className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
                 />
                 <img
                   src="/placeholder.svg"
                   alt="Founder"
-                  className="w-12 h-12 rounded-full border-2 border-white/20 shadow"
+                  className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
                 />
               </div>
-              <p className="text-sm text-teal-300 font-medium">"We reply in less than 24 hours"</p>
+              <p className="text-sm text-white font-medium">"We reply in less than 24 hours"</p>
             </div>
 
             <Button
               size="lg"
-              className="bg-teal-500 hover:bg-teal-400 text-black text-lg px-10 py-4 shadow-[0_10px_40px_rgba(45,212,191,0.25)]"
+              className="bg-white/20 hover:bg-white/30 text-white text-lg px-10 py-4 shadow-[0_10px_40px_rgba(255,255,255,0.25)] backdrop-blur-sm border border-white/30"
               onClick={scrollToForm}
             >
               Request a Quote
@@ -168,13 +157,13 @@ export default function ContactDark() {
         </div>
       </section>
 
-      {/* Contact Cards (Dark) */}
-      <section className="py-16 bg-[#0A0E2A]">
+      {/* Contact Cards */}
+      <section className="py-16 bg-[#0A0E2A] relative z-10">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {contactCards.map((card, index) => (
               <div key={index} className={`${index === 2 ? "col-span-2 md:col-span-1" : ""}`}>
-                <Card className="group border border-white/10 bg-[#111528]/80 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(2,132,199,0.15)] transition-all duration-300 rounded-2xl h-full">
+                <Card className="group border border-white/10 bg-[#111528]/80 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-all duration-300 rounded-2xl h-full">
                   <CardContent className="p-6 md:p-8 text-center">
                     <div className="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center mx-auto mb-4 md:mb-6">
                       <img
@@ -196,7 +185,7 @@ export default function ContactDark() {
 
                     <a
                       href={card.action}
-                      className="inline-flex items-center text-teal-300 hover:text-orange-300 transition-colors font-medium text-sm md:text-base"
+                      className="inline-flex items-center text-blue-300 hover:text-white transition-colors font-medium text-sm md:text-base"
                       target={card.action.startsWith("http") ? "_blank" : "_self"}
                       rel={card.action.startsWith("http") ? "noopener noreferrer" : undefined}
                     >
@@ -210,8 +199,8 @@ export default function ContactDark() {
         </div>
       </section>
 
-      {/* Contact Form (Dark) */}
-      <section id="contact-form" className="py-20 md:py-24 bg-[#0A0E2A]">
+      {/* Contact Form */}
+      <section id="contact-form" className="py-20 md:py-24 bg-[#0A0E2A] relative z-10">
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-teal-300 mb-4">Tell Us About Your Project</h2>
@@ -233,7 +222,7 @@ export default function ContactDark() {
                     placeholder="Your full name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400"
+                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400"
                   />
                 </div>
 
@@ -248,7 +237,7 @@ export default function ContactDark() {
                     placeholder="your@email.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400"
+                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400"
                   />
                 </div>
               </div>
@@ -263,7 +252,7 @@ export default function ContactDark() {
                     placeholder="Your company name"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400"
+                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400"
                   />
                 </div>
 
@@ -276,7 +265,7 @@ export default function ContactDark() {
                     placeholder="+91 98765 43210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400"
+                    className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400"
                   />
                 </div>
               </div>
@@ -289,7 +278,7 @@ export default function ContactDark() {
                   value={formData.projectType}
                   onValueChange={(value) => setFormData({ ...formData, projectType: value })}
                 >
-                  <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-teal-400">
+                  <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-blue-400">
                     <SelectValue placeholder="Select project type" />
                   </SelectTrigger>
                   <SelectContent className="bg-[#0F1428] text-zinc-100 border-white/10">
@@ -308,7 +297,7 @@ export default function ContactDark() {
                     Budget Range
                   </Label>
                   <Select value={formData.budget} onValueChange={(value) => setFormData({ ...formData, budget: value })}>
-                    <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-teal-400">
+                    <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-blue-400">
                       <SelectValue placeholder="Select budget range" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0F1428] text-zinc-100 border-white/10">
@@ -329,7 +318,7 @@ export default function ContactDark() {
                     value={formData.timeline}
                     onValueChange={(value) => setFormData({ ...formData, timeline: value })}
                   >
-                    <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-teal-400">
+                    <SelectTrigger className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 focus:border-blue-400">
                       <SelectValue placeholder="Select timeline" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0F1428] text-zinc-100 border-white/10">
@@ -353,7 +342,7 @@ export default function ContactDark() {
                   rows={6}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-teal-400 resize-none"
+                  className="border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400 resize-none"
                 />
               </div>
 
@@ -363,11 +352,11 @@ export default function ContactDark() {
                   id="privacy"
                   checked={formData.privacyPolicy}
                   onChange={(e) => setFormData({ ...formData, privacyPolicy: e.target.checked })}
-                  className="mt-1 h-4 w-4 accent-teal-400 bg-[#0B0F1F] border-white/20"
+                  className="mt-1 h-4 w-4 accent-blue-400 bg-[#0B0F1F] border-white/20"
                 />
                 <label htmlFor="privacy" className="text-sm text-zinc-300">
                   I agree to the{" "}
-                  <Link to="/privacy" className="text-teal-300 hover:text-orange-300 underline">
+                  <Link to="/privacy" className="text-blue-300 hover:text-white underline">
                     privacy policy
                   </Link>{" "}
                   and consent to being contacted about this inquiry.
@@ -387,8 +376,8 @@ export default function ContactDark() {
         </div>
       </section>
 
-      {/* FAQ Section (Dark) */}
-      <section className="py-20 md:py-24 bg-[#0A0E2A]">
+      {/* FAQ Section */}
+      <section className="py-20 md:py-24 bg-[#0A0E2A] relative z-10">
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-teal-300 mb-4">Frequently Asked Questions</h2>
@@ -399,7 +388,7 @@ export default function ContactDark() {
             {faqs.map((faq, index) => (
               <Card
                 key={index}
-                className="border border-white/10 bg-[#0F1428] hover:border-teal-400/20 hover:bg-[#0F1428]/90 transition-all duration-300"
+                className="border border-white/10 bg-[#0F1428] hover:border-blue-400/30 hover:bg-[#0F1428]/90 transition-all duration-300"
               >
                 <CardContent className="p-0">
                   <button
@@ -408,9 +397,9 @@ export default function ContactDark() {
                   >
                     <h3 className="font-semibold text-lg text-teal-300 pr-4">{faq.question}</h3>
                     {openFaq === index ? (
-                      <ChevronUp className="w-5 h-5 text-teal-300 flex-shrink-0" />
+                      <ChevronUp className="w-5 h-5 text-blue-300 flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-teal-300 flex-shrink-0" />
+                      <ChevronDown className="w-5 h-5 text-blue-300 flex-shrink-0" />
                     )}
                   </button>
                   {openFaq === index && (
@@ -425,15 +414,15 @@ export default function ContactDark() {
         </div>
       </section>
 
-      {/* Footer CTA (Dark) */}
-      <section className="py-20 bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#0F1428] relative overflow-hidden">
+      {/* Footer CTA */}
+      <section className="py-20 bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#0F1428] relative overflow-hidden z-10">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
             className="absolute inset-0"
             style={{
               backgroundImage: `radial-gradient(circle at 20% 50%, rgba(13,148,136,0.15), transparent 50%),
-                                radial-gradient(circle at 80% 50%, rgba(255,107,53,0.15), transparent 50%)`,
+                                radial-gradient(circle at 80% 50%, rgba(59,130,246,0.15), transparent 50%)`,
             }}
           />
         </div>

@@ -1,4 +1,5 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
+import { generateOrganizationSchema, generateLocalBusinessSchema, generateWebSiteSchema } from "@/lib/seo";
 import heroBgImage from "@/assets/hero-bg.jpeg";
 import uiImage from "@/assets/home/ui.png";
 import webImage from "@/assets/home/web.png";
@@ -29,7 +30,7 @@ const ServiceCard = ({ image, title, bullets, link }: { image: string; title: st
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-blue-500/20"></div>
       <img 
         src={image} 
-        alt={title}
+        alt={`${title} - Professional service illustration showing modern design and development capabilities`}
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 z-10 opacity-90"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -136,22 +137,22 @@ const ProcessStep = ({ step, title, desc, icon }: { step: string; title: string;
 );
 
 export default function Index() {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/';
+  // Schema markup for homepage
+  const schemaMarkup = [
+    generateOrganizationSchema(),
+    generateLocalBusinessSchema(),
+    generateWebSiteSchema()
+  ];
+
   return (
     <main className="min-h-screen bg-black">
-      <Helmet>
-        <title>Build, Launch, Maintain — Websites, Apps, Games | Trivesha</title>
-        <meta name="description" content="From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place. Since 2019, we've delivered 120+ projects with 99.9% uptime." />
-        <link rel="canonical" href={canonical} />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Trivesha",
-          url: canonical,
-          foundingDate: "2019",
-          sameAs: [],
-        })}</script>
-      </Helmet>
+      <SEO
+        title="Build, Launch, Maintain — Websites, Apps, Games | Trivesha"
+        description="From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place. Since 2019, we've delivered 120+ projects with 99.9% uptime."
+        canonical="/"
+        ogImage="/social-images/og-home.png"
+        schemaMarkup={schemaMarkup}
+      />
 
       {/* Hero Section */}
       <section className="relative min-h-screen overflow-hidden">
