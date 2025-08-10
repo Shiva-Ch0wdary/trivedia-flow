@@ -14,11 +14,8 @@ import ServiceDetail from "./pages/ServiceDetail";
 import Portfolio from "./pages/Portfolio";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
-import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
-import Support from "./pages/Support";
-import Dashboard from "./pages/Dashboard";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
@@ -26,6 +23,19 @@ import TestimonialsPage from "./pages/Testimonials";
 import Integrations from "./pages/Integrations";
 import ComingSoon from "./pages/ComingSoon";
 import CaseStudy from "./pages/CaseStudy";
+import WebDevelopment from "./pages/services/WebDevelopment";
+import MobileAppDevelopment from "./pages/services/MobileAppDevelopment";
+import UIUXDesign from "./pages/services/UIUXDesign";
+import DesignServices from "./pages/services/DesignServices";
+import DevelopmentServices from "./pages/services/DevelopmentServices";
+import InfrastructureServices from "./pages/services/InfrastructureServices";
+import GrowthServices from "./pages/services/GrowthServices";
+import ECommerceRedesign from "./pages/portfolio/ECommerceRedesign";
+import FinTechApp from "./pages/portfolio/FinTechApp";
+import SaaSDashboard from "./pages/portfolio/SaaSDashboard";
+import HealthcarePlatform from "./pages/case-study/HealthcarePlatform";
+import EdTechSolution from "./pages/case-study/EdTechSolution";
+import RealEstateApp from "./pages/case-study/RealEstateApp";
 
 const queryClient = new QueryClient();
 
@@ -48,15 +58,25 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:slug" element={<ServiceDetail />} />
+            <Route path="/services/web-development" element={<WebDevelopment />} />
+            <Route path="/services/mobile-app-development" element={<MobileAppDevelopment />} />
+            <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
+            <Route path="/services/design" element={<DesignServices />} />
+            <Route path="/services/development" element={<DevelopmentServices />} />
+            <Route path="/services/infrastructure" element={<InfrastructureServices />} />
+            <Route path="/services/growth" element={<GrowthServices />} />
+            <Route path="/portfolio/ecommerce-redesign" element={<ECommerceRedesign />} />
+            <Route path="/portfolio/fintech-app" element={<FinTechApp />} />
+            <Route path="/portfolio/saas-dashboard" element={<SaaSDashboard />} />
+            <Route path="/case-study/healthcare-platform" element={<HealthcarePlatform />} />
+            <Route path="/case-study/edtech-solution" element={<EdTechSolution />} />
+            <Route path="/case-study/real-estate-app" element={<RealEstateApp />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/case-study/:slug" element={<CaseStudy />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
-            <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/faq" element={<FAQ />} />

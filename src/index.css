@@ -361,9 +361,9 @@ All colors MUST be HSL.
   .contact-card:hover {
     transform: translateY(-4px);
     box-shadow: 
-      0 25px 50px -12px rgba(56, 189, 248, 0.3) !important,
-      0 10px 25px -5px rgba(56, 189, 248, 0.2) !important,
-      0 0 20px rgba(56, 189, 248, 0.15) !important,
+      0 25px 50px -12px rgba(56, 189, 248, 0.3),
+      0 10px 25px -5px rgba(56, 189, 248, 0.2),
+      0 0 20px rgba(56, 189, 248, 0.15),
       0 0 0 1px rgba(56, 189, 248, 0.1) !important;
   }
 }

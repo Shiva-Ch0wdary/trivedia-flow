@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import domainIcon from "@/assets/pricing/domain.png";
 import sslIcon from "@/assets/pricing/ssl.png";
 import securityIcon from "@/assets/pricing/security.png";
@@ -202,8 +203,8 @@ export default function Pricing() {
               Whether you need a simple static site or a full custom app, we've got a package for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-lg px-8 shadow-[0_10px_40px_rgba(255,107,61,0.25)] hover:shadow-[0_15px_50px_rgba(255,107,61,0.35)]">
-                Get a Free Quote
+              <Button size="lg" className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-lg px-8 shadow-[0_10px_40px_rgba(255,107,61,0.25)] hover:shadow-[0_15px_50px_rgba(255,107,61,0.35)]" asChild>
+                <Link to="/contact">Get a Free Quote</Link>
               </Button>
               <Button 
                 size="lg" 
@@ -275,8 +276,9 @@ export default function Pricing() {
                         ? 'bg-[#FF6B3D] hover:bg-[#e55a2b] text-white shadow-[0_10px_30px_rgba(255,107,61,0.3)] hover:shadow-[0_15px_40px_rgba(255,107,61,0.4)]' 
                         : 'bg-[#007C78] hover:bg-[#006763] text-white shadow-[0_10px_30px_rgba(0,124,120,0.3)]'
                     }`}
+                    asChild
                   >
-                    {plan.cta}
+                    <Link to="/contact">{plan.cta}</Link>
                   </Button>
 
                   <p className="text-sm text-[#B0B3B8] text-center mt-4">
@@ -396,8 +398,9 @@ export default function Pricing() {
                         ? 'bg-[#FF6B3D] hover:bg-[#e55a2b] text-white shadow-[0_10px_30px_rgba(255,107,61,0.3)]' 
                         : 'bg-[#007C78] hover:bg-[#006763] text-white shadow-[0_10px_30px_rgba(0,124,120,0.3)]'
                     }`}
+                    asChild
                   >
-                    Choose {activeTab} Plan
+                    <Link to="/contact">Choose {activeTab} Plan</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -580,8 +583,9 @@ export default function Pricing() {
           <Button 
             size="lg" 
             className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-xl px-10 py-4 shadow-[0_15px_50px_rgba(255,107,61,0.25)] hover:shadow-[0_20px_60px_rgba(255,107,61,0.35)]"
+            asChild
           >
-            Request Custom Quote
+            <Link to="/contact">Request Custom Quote</Link>
           </Button>
         </div>
       </section>

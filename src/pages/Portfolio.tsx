@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import workImage from "@/assets/work.jpeg";
 import projectFeatured from "@/assets/project/project-featured.png";
 import project1 from "@/assets/project/project-1.png";
@@ -25,7 +26,7 @@ export default function Portfolio() {
       image: project1,
       tags: ["Figma", "React", "TypeScript"],
       client: "Fashion Forward",
-      link: "/case-study/ecommerce-redesign"
+      link: "/portfolio/ecommerce-redesign"
     },
     {
       id: 2,
@@ -35,7 +36,7 @@ export default function Portfolio() {
       image: project2,
       tags: ["React Native", "Node.js", "MongoDB"],
       client: "SecureBank",
-      link: "/case-study/fintech-app"
+      link: "/portfolio/fintech-app"
     },
     {
       id: 3,
@@ -45,7 +46,7 @@ export default function Portfolio() {
       image: project3,
       tags: ["Next.js", "PostgreSQL", "AWS"],
       client: "DataFlow Pro",
-      link: "/case-study/saas-dashboard"
+      link: "/portfolio/saas-dashboard"
     },
     {
       id: 4,
@@ -176,13 +177,15 @@ export default function Portfolio() {
                 <Button 
                   size="lg" 
                   className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold w-full sm:w-auto shadow-[0_8px_24px_rgba(45,212,191,0.25)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.35)] border-0"
+                  asChild
                 >
-                  Start Your Project
+                  <Link to="/contact">Start Your Project</Link>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   className="border-2 border-[#FF7849]/50 text-[#FF7849] hover:bg-[#FF7849]/10 hover:border-[#FF7849] hover:text-[#FF8B61] w-full sm:w-auto font-semibold bg-transparent"
+                  onClick={() => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   View Case Studies
                 </Button>
@@ -321,8 +324,8 @@ export default function Portfolio() {
                 ))}
               </div>
 
-              <Button className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold shadow-[0_8px_24px_rgba(45,212,191,0.25)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.35)] border-0">
-                View Full Case Study
+              <Button className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold shadow-[0_8px_24px_rgba(45,212,191,0.25)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.35)] border-0" asChild>
+                <Link to="/portfolio/ecommerce-redesign">View Full Case Study</Link>
               </Button>
             </div>
           </div>
@@ -431,14 +434,16 @@ export default function Portfolio() {
             <Button 
               size="lg" 
               className="bg-[#FF7849] hover:bg-[#FF8B61] text-white w-full sm:w-auto font-bold shadow-[0_12px_32px_rgba(255,120,73,0.3)] hover:shadow-[0_20px_48px_rgba(255,120,73,0.4)] border-0 transition-all duration-300 transform hover:scale-105"
+              asChild
             >
-              Get a Free Quote
+              <Link to="/contact">Get a Free Quote</Link>
             </Button>
             <Button 
               size="lg" 
               className="border-2 border-[#2DD4BF]/50 bg-transparent text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] w-full sm:w-auto font-bold transition-all duration-300"
+              asChild
             >
-              Schedule a Call
+              <Link to="/contact">Schedule a Call</Link>
             </Button>
           </div>
         </div>

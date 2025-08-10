@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import aboutImage from "@/assets/about-1.png";
 
 export default function About() {
@@ -203,8 +204,8 @@ export default function About() {
               <span className="ml-6 text-lg text-teal-300 font-medium">Founded by Gopi & Shiva</span>
             </div>
             
-            <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-black text-lg px-8 py-4 shadow-[0_10px_40px_rgba(45,212,191,0.25)]">
-              Work with us
+            <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-black text-lg px-8 py-4 shadow-[0_10px_40px_rgba(45,212,191,0.25)]" asChild>
+              <Link to="/contact">Work with us</Link>
             </Button>
           </div>
         </div>
@@ -533,8 +534,9 @@ export default function About() {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-black text-lg font-semibold px-8 py-4 rounded-xl shadow-[0_15px_50px_rgba(45,212,191,0.25)] hover:shadow-[0_20px_60px_rgba(45,212,191,0.35)] transition-all duration-300 hover:-translate-y-1"
+                asChild
               >
-                Request a free quote
+                <Link to="/contact">Request a free quote</Link>
               </Button>
               
               {/* AI Agent mention */}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,13 +24,13 @@ export default function Services() {
       icon: "🎨",
       title: "UI/UX Design",
       description: "Figma-first prototypes and user-centered design solutions that convert visitors into customers.",
-      link: "#design"
+      link: "/services/ui-ux-design"
     },
     {
       icon: "💻",
       title: "Website Development",
       description: "Static, dynamic, and custom websites built with modern technologies for optimal performance.",
-      link: "#web-dev"
+      link: "/services/web-development"
     },
     {
       icon: "⚙️",
@@ -41,7 +42,7 @@ export default function Services() {
       icon: "📱",
       title: "Mobile App Development",
       description: "Cross-platform mobile applications for Play Store and App Store with native performance.",
-      link: "#mobile"
+      link: "/services/mobile-app-development"
     },
     {
       icon: "🎮",
@@ -63,28 +64,32 @@ export default function Services() {
       subtitle: "UI/UX, redesigns",
       description: "Transform your ideas into beautiful, functional designs that users love and businesses need.",
       image: designImage,
-      cta: "See design examples"
+      cta: "See design examples",
+      link: "/services/design"
     },
     {
       title: "Development", 
       subtitle: "Web, Mobile, Games",
       description: "Build robust applications with cutting-edge technologies and best practices for scalability.",
       image: developmentImage,
-      cta: "View development work"
+      cta: "View development work",
+      link: "/services/development"
     },
     {
       title: "Infrastructure",
       subtitle: "Domains, Hosting, Maintenance", 
       description: "Keep your digital assets running smoothly with reliable infrastructure and ongoing support.",
       image: infrastructureImage,
-      cta: "Explore infrastructure"
+      cta: "Explore infrastructure",
+      link: "/services/infrastructure"
     },
     {
       title: "Growth",
       subtitle: "SEO, Analytics, Support",
       description: "Grow your online presence with data-driven strategies and continuous optimization.",
       image: growthImage, 
-      cta: "Learn about growth"
+      cta: "Learn about growth",
+      link: "/services/growth"
     }
   ];
 
@@ -153,11 +158,11 @@ export default function Services() {
                 Expert design, development, and maintenance services tailored to your business goals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold text-lg px-8 w-full sm:w-auto shadow-[0_8px_24px_rgba(45,212,191,0.25)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.35)] border-0">
-                  Get a free quote
+                <Button size="lg" className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold text-lg px-8 w-full sm:w-auto shadow-[0_8px_24px_rgba(45,212,191,0.25)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.35)] border-0" asChild>
+                  <Link to="/contact">Get a free quote</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 border-2 border-[#2DD4BF]/50 text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] w-full sm:w-auto font-semibold bg-transparent">
-                  See portfolio
+                <Button size="lg" variant="outline" className="text-lg px-8 border-2 border-[#2DD4BF]/50 text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] w-full sm:w-auto font-semibold bg-transparent" asChild>
+                  <Link to="/portfolio">See portfolio</Link>
                 </Button>
               </div>
             </div>
@@ -226,12 +231,21 @@ export default function Services() {
                   </CardDescription>
                 </CardContent>
                 <CardFooter className="justify-center p-4 md:p-6 pt-0">
-                  <a 
-                    href={service.link}
-                    className="text-[#2DD4BF] hover:text-[#5EEAD4] font-medium transition-colors text-sm md:text-base hover:drop-shadow-[0_0_8px_rgba(94,234,212,0.6)]"
-                  >
-                    Learn more →
-                  </a>
+                  {service.link.startsWith('#') ? (
+                    <a 
+                      href={service.link}
+                      className="text-[#2DD4BF] hover:text-[#5EEAD4] font-medium transition-colors text-sm md:text-base hover:drop-shadow-[0_0_8px_rgba(94,234,212,0.6)]"
+                    >
+                      Learn more →
+                    </a>
+                  ) : (
+                    <Link 
+                      to={service.link}
+                      className="text-[#2DD4BF] hover:text-[#5EEAD4] font-medium transition-colors text-sm md:text-base hover:drop-shadow-[0_0_8px_rgba(94,234,212,0.6)]"
+                    >
+                      Learn more →
+                    </Link>
+                  )}
                 </CardFooter>
               </Card>
             ))}
@@ -277,8 +291,10 @@ export default function Services() {
                   <p className="text-lg text-[#A0AEC0] leading-relaxed">
                     {category.description}
                   </p>
-                  <Button variant="outline" className="border-2 border-[#2DD4BF]/50 text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] font-semibold bg-transparent">
-                    {category.cta}
+                  <Button asChild variant="outline" className="border-2 border-[#2DD4BF]/50 text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] font-semibold bg-transparent">
+                    <Link to={category.link}>
+                      {category.cta}
+                    </Link>
                   </Button>
                 </div>
                 <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
@@ -472,17 +488,21 @@ export default function Services() {
             <Button 
               size="lg" 
               className="group bg-gradient-to-r from-[#FF7849] to-[#FF8B61] hover:from-[#FF8B61] hover:to-[#FFB088] text-white font-bold text-xl px-12 py-4 shadow-[0_12px_32px_rgba(255,120,73,0.3)] hover:shadow-[0_20px_48px_rgba(255,120,73,0.4)] border-0 transition-all duration-300 transform hover:scale-105"
+              asChild
             >
-              <span className="mr-2">Get Quote</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              <Link to="/contact">
+                <span className="mr-2">Get Quote</span>
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              </Link>
             </Button>
             
             <Button 
               size="lg" 
               variant="outline"
               className="text-xl px-12 py-4 border-2 border-[#2DD4BF]/50 text-[#2DD4BF] hover:bg-[#2DD4BF]/10 hover:border-[#2DD4BF] hover:text-[#5EEAD4] font-bold bg-transparent backdrop-blur-sm shadow-[0_8px_24px_rgba(45,212,191,0.15)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.25)] transition-all duration-300"
+              asChild
             >
-              View Portfolio
+              <Link to="/portfolio">View Portfolio</Link>
             </Button>
           </div>
           
