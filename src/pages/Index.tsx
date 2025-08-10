@@ -6,6 +6,7 @@ import appImage from "@/assets/home/app.png";
 import dImage from "@/assets/home/d.png";
 import { Button } from "@/components/ui/button";
 import ScrollToTop from "@/components/ui/scroll-to-top";
+import AnimatedBackground from "@/components/ui/animated-background";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Calendar, Users, HeartHandshake, Layers, Rocket, Shield, Smartphone, Globe, Gamepad2, Wrench, Eye, Star, MessageSquare, Mail } from "lucide-react";
 
@@ -153,28 +154,12 @@ export default function Index() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
-        {/* Animated Background Effects */}
-        <div className="absolute inset-0">
-          {/* Base gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-          
-          {/* Animated particles */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal-400 rounded-full opacity-60 animate-pulse"></div>
-            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-400 rounded-full opacity-40 animate-ping" style={{animationDelay: '1s'}}></div>
-            <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-teal-300 rounded-full opacity-50 animate-pulse" style={{animationDelay: '2s'}}></div>
-            <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-orange-300 rounded-full opacity-30 animate-ping" style={{animationDelay: '3s'}}></div>
-          </div>
-          
-          {/* Grid overlay */}
-          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]"></div>
-          
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
-        </div>
+      <section className="relative min-h-screen overflow-hidden">
+        {/* Animated Background */}
+        <AnimatedBackground />
         
-        <div className="container mx-auto px-6 relative z-10">
+        {/* Content Overlay */}
+        <div className="container mx-auto px-6 relative z-20">
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-center max-w-5xl mx-auto">
               <div className="inline-block bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-gray-700/50 mb-8">
