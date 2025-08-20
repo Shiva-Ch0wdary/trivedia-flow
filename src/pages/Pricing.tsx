@@ -2,13 +2,14 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Check, X, ChevronDown, ChevronUp, Sparkles, Zap, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import domainIcon from "@/assets/pricing/domain.png";
 import sslIcon from "@/assets/pricing/ssl.png";
 import securityIcon from "@/assets/pricing/security.png";
 import supportIcon from "@/assets/pricing/30day.png";
+import heroGif from "@/assets/pricing/hero.gif";
 
 export default function Pricing() {
   const canonical = typeof window !== 'undefined' ? window.location.href : '/pricing';
@@ -185,42 +186,171 @@ export default function Pricing() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#007C78] via-[#0D9488] to-[#0E1117] text-white">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-purple-600/90 via-blue-500/80 to-cyan-400/70">
+        {/* Animated Background Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/30 to-cyan-900/20" />
+        
+        {/* Dynamic Background Pattern */}
+        <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20v40c11.046 0 20-8.954 20-20z'/%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '40px 40px'
+            backgroundImage: `
+              radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.4) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.2) 0%, transparent 50%)
+            `
           }} />
         </div>
 
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-purple-400/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-blue-400/25 rounded-full blur-2xl animate-bounce" style={{ animationDuration: '3s' }} />
+          <div className="absolute bottom-1/3 left-1/6 w-20 h-20 bg-cyan-400/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-20 right-1/3 w-16 h-16 bg-purple-300/25 rounded-full blur-lg animate-bounce" style={{ animationDelay: '2s', animationDuration: '4s' }} />
+        </div>
+
         <div className="container mx-auto max-w-7xl px-6 py-20 md:py-24 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              Simple plans. Clear deliverables. No hidden fees.
-            </h1>
-            <p className="text-xl md:text-2xl text-[#B0B3B8] mb-10 leading-relaxed">
-              Whether you need a simple static site or a full custom app, we've got a package for you.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-[#FF6B3D] hover:bg-[#e55a2b] text-white text-lg px-8 shadow-[0_10px_40px_rgba(255,107,61,0.25)] hover:shadow-[0_15px_50px_rgba(255,107,61,0.35)]" asChild>
-                <Link to="/contact">Get a Free Quote</Link>
-              </Button>
-              <Button 
-                size="lg" 
-                className="border-2 border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white text-lg px-8 transition-all duration-300"
-                onClick={() => document.getElementById('comparison')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Compare Plans
-              </Button>
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+            
+            {/* Left Side - Content */}
+            <div className="space-y-8 text-white">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium">
+                <Sparkles className="w-4 h-4 text-yellow-300" />
+                <span className="bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">
+                  Transparent Pricing
+                </span>
+              </div>
+
+              {/* Main Heading */}
+              <div className="space-y-4">
+                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-white via-purple-100 to-cyan-100 bg-clip-text text-transparent">
+                    Simple plans.
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-purple-200 via-blue-200 to-cyan-200 bg-clip-text text-transparent">
+                    Clear results.
+                  </span>
+                </h1>
+                
+                <p className="text-xl md:text-2xl text-purple-100/90 leading-relaxed max-w-2xl">
+                  Whether you need a simple static site or a full custom app, we've got a 
+                  <span className="font-semibold text-cyan-200"> transparent package</span> for you.
+                </p>
+              </div>
+
+              {/* Key Features */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <Zap className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-purple-100 font-medium">No Hidden Fees</span>
+                </div>
+                
+                <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-blue-100 font-medium">Clear Deliverables</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-4 rounded-xl shadow-[0_20px_40px_rgba(168,85,247,0.3)] hover:shadow-[0_25px_50px_rgba(168,85,247,0.4)] transform hover:-translate-y-1 transition-all duration-300 border border-purple-400/20" 
+                  asChild
+                >
+                  <Link to="/contact">
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Get Free Quote
+                  </Link>
+                </Button>
+                
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/40 text-lg px-8 py-4 rounded-xl transition-all duration-300"
+                  onClick={() => document.getElementById('comparison')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Compare Plans
+                </Button>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="flex items-center gap-6 pt-6 text-sm text-purple-200/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span>120+ Projects Delivered</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <span>6+ Years Experience</span>
+                </div>
+              </div>
             </div>
+
+            {/* Right Side - Hero Visual */}
+            <div className="relative flex items-center justify-center lg:justify-end">
+              {/* Main Visual Container */}
+              <div className="relative w-full max-w-lg">
+                {/* Hero GIF */}
+                <div className="relative rounded-xl overflow-hidden">
+                  <img 
+                    src={heroGif}
+                    alt="Pricing visualization with animated 3D gradient spiral representing our transparent and scalable pricing structure"
+                    className="w-full h-auto object-cover"
+                    style={{ 
+                      filter: 'brightness(1.1) contrast(1.1) saturate(1.2)',
+                      borderRadius: '12px'
+                    }}
+                  />
+                </div>
+
+                {/* Floating Price Tags */}
+                <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-2 animate-bounce" style={{ animationDuration: '3s' }}>
+                  <span className="text-xs font-medium text-cyan-200">Starting</span>
+                  <div className="text-lg font-bold text-white">₹8k</div>
+                </div>
+                
+                <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-2 animate-bounce" style={{ animationDuration: '4s', animationDelay: '1s' }}>
+                  <span className="text-xs font-medium text-purple-200">Enterprise</span>
+                  <div className="text-lg font-bold text-white">Custom</div>
+                </div>
+
+                {/* Orbiting Elements */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-spin" style={{ animationDuration: '8s' }} />
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full animate-spin" style={{ animationDuration: '6s', animationDirection: 'reverse' }} />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse" />
           </div>
         </div>
       </section>
 
       {/* Pricing Cards Section */}
-      <section className="py-20 md:py-24 bg-[#0E1117]">
-        <div className="container mx-auto max-w-7xl px-6">
+      <section className="py-20 md:py-24 bg-gradient-to-b from-slate-900 via-gray-900 to-black relative">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)
+            `
+          }} />
+        </div>
+        
+        <div className="container mx-auto max-w-7xl px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
               Choose Your Perfect Plan
