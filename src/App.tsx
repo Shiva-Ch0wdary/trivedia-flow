@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
@@ -37,6 +38,14 @@ import HealthcarePlatform from "./pages/case-study/HealthcarePlatform";
 import EdTechSolution from "./pages/case-study/EdTechSolution";
 import RealEstateApp from "./pages/case-study/RealEstateApp";
 
+// Admin pages
+import AdminLogin from "./pages/admin/Login";
+import AdminRegister from "./pages/admin/Register";
+import AdminDashboard from "./pages/admin/Dashboard";
+import PortfolioManagement from "./pages/admin/PortfolioManagement";
+import AdminLayout from "./components/admin/AdminLayout";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
 const queryClient = new QueryClient();
 
 // Component to handle scroll-to-top on route changes
@@ -48,47 +57,241 @@ const ScrollToTopHandler = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTopHandler />
-          <Header />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<ServiceDetail />} />
-            <Route path="/services/web-development" element={<WebDevelopment />} />
-            <Route path="/services/mobile-app-development" element={<MobileAppDevelopment />} />
-            <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
-            <Route path="/services/design" element={<DesignServices />} />
-            <Route path="/services/development" element={<DevelopmentServices />} />
-            <Route path="/services/infrastructure" element={<InfrastructureServices />} />
-            <Route path="/services/growth" element={<GrowthServices />} />
-            <Route path="/portfolio/ecommerce-redesign" element={<ECommerceRedesign />} />
-            <Route path="/portfolio/fintech-app" element={<FinTechApp />} />
-            <Route path="/portfolio/saas-dashboard" element={<SaaSDashboard />} />
-            <Route path="/case-study/healthcare-platform" element={<HealthcarePlatform />} />
-            <Route path="/case-study/edtech-solution" element={<EdTechSolution />} />
-            <Route path="/case-study/real-estate-app" element={<RealEstateApp />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/case-study/:slug" element={<CaseStudy />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/testimonials" element={<TestimonialsPage />} />
-            <Route path="/integrations" element={<Integrations />} />
-            <Route path="/coming-soon" element={<ComingSoon />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTopHandler />
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={
+                <>
+                  <Header />
+                  <Index />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services" element={
+                <>
+                  <Header />
+                  <Services />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/:slug" element={
+                <>
+                  <Header />
+                  <ServiceDetail />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/web-development" element={
+                <>
+                  <Header />
+                  <WebDevelopment />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/mobile-app-development" element={
+                <>
+                  <Header />
+                  <MobileAppDevelopment />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/ui-ux-design" element={
+                <>
+                  <Header />
+                  <UIUXDesign />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/design" element={
+                <>
+                  <Header />
+                  <DesignServices />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/development" element={
+                <>
+                  <Header />
+                  <DevelopmentServices />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/infrastructure" element={
+                <>
+                  <Header />
+                  <InfrastructureServices />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/growth" element={
+                <>
+                  <Header />
+                  <GrowthServices />
+                  <Footer />
+                </>
+              } />
+              <Route path="/portfolio/ecommerce-redesign" element={
+                <>
+                  <Header />
+                  <ECommerceRedesign />
+                  <Footer />
+                </>
+              } />
+              <Route path="/portfolio/fintech-app" element={
+                <>
+                  <Header />
+                  <FinTechApp />
+                  <Footer />
+                </>
+              } />
+              <Route path="/portfolio/saas-dashboard" element={
+                <>
+                  <Header />
+                  <SaaSDashboard />
+                  <Footer />
+                </>
+              } />
+              <Route path="/case-study/healthcare-platform" element={
+                <>
+                  <Header />
+                  <HealthcarePlatform />
+                  <Footer />
+                </>
+              } />
+              <Route path="/case-study/edtech-solution" element={
+                <>
+                  <Header />
+                  <EdTechSolution />
+                  <Footer />
+                </>
+              } />
+              <Route path="/case-study/real-estate-app" element={
+                <>
+                  <Header />
+                  <RealEstateApp />
+                  <Footer />
+                </>
+              } />
+              <Route path="/portfolio" element={
+                <>
+                  <Header />
+                  <Portfolio />
+                  <Footer />
+                </>
+              } />
+              <Route path="/case-study/:slug" element={
+                <>
+                  <Header />
+                  <CaseStudy />
+                  <Footer />
+                </>
+              } />
+              <Route path="/pricing" element={
+                <>
+                  <Header />
+                  <Pricing />
+                  <Footer />
+                </>
+              } />
+              <Route path="/about" element={
+                <>
+                  <Header />
+                  <About />
+                  <Footer />
+                </>
+              } />
+              <Route path="/contact" element={
+                <>
+                  <Header />
+                  <Contact />
+                  <Footer />
+                </>
+              } />
+              <Route path="/blog" element={
+                <>
+                  <Header />
+                  <Blog />
+                  <Footer />
+                </>
+              } />
+              <Route path="/privacy" element={
+                <>
+                  <Header />
+                  <Privacy />
+                  <Footer />
+                </>
+              } />
+              <Route path="/terms" element={
+                <>
+                  <Header />
+                  <Terms />
+                  <Footer />
+                </>
+              } />
+              <Route path="/faq" element={
+                <>
+                  <Header />
+                  <FAQ />
+                  <Footer />
+                </>
+              } />
+              <Route path="/testimonials" element={
+                <>
+                  <Header />
+                  <TestimonialsPage />
+                  <Footer />
+                </>
+              } />
+              <Route path="/integrations" element={
+                <>
+                  <Header />
+                  <Integrations />
+                  <Footer />
+                </>
+              } />
+              <Route path="/coming-soon" element={
+                <>
+                  <Header />
+                  <ComingSoon />
+                  <Footer />
+                </>
+              } />
+
+              {/* Admin routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/register" element={<AdminRegister />} />
+              <Route path="/admin/dashboard" element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <AdminDashboard />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/portfolio" element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <PortfolioManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={
+                <>
+                  <Header />
+                  <NotFound />
+                  <Footer />
+                </>
+              } />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </HelmetProvider>
   </QueryClientProvider>
 );

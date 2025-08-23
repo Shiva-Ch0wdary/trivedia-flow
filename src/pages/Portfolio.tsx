@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { portfolioAPI } from "@/lib/api";
 import SEO from "@/components/SEO";
 import { generateBreadcrumbSchema } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
@@ -7,12 +9,65 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import workImage from "@/assets/work.jpeg";
 import projectFeatured from "@/assets/project/project-featured.png";
-import project1 from "@/assets/project/project-1.png";
-import project2 from "@/assets/project/project-2.png";
-import project3 from "@/assets/project/project-3.png";
 
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('All');
+  
+  // Fetch projects data
+  const { data: projectsData, isLoading: projectsLoading, error: projectsError } = useQuery({
+    queryKey: ['portfolio'], // Remove activeFilter to prevent excessive requests
+    queryFn: async () => {
+      console.log('🚀 Making portfolio API call');
+      try {
+        const response = await portfolioAPI.getAll({ 
+          limit: 50 // Get all projects, filter on frontend for now
+        });
+        console.log('📦 Portfolio API Response:', response);
+        console.log('📊 Response data:', response.data);
+        return response;
+      } catch (error) {
+        console.error('❌ Portfolio API Error:', error);
+        throw error;
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes  
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    retry: false, // Disable retry to prevent 429 errors
+    refetchOnMount: false, // Disable refetch on mount to prevent multiple requests
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  const { data: categoriesData, error: categoriesError } = useQuery({
+    queryKey: ['portfolio-categories'], // Remove timestamp from query key
+    queryFn: async () => {
+      console.log('🚀 Making categories API call');
+      try {
+        const response = await portfolioAPI.getCategories();
+        console.log('📦 Categories API Response:', response);
+        console.log('📊 Categories data:', response.data);
+        return response;
+      } catch (error) {
+        console.error('❌ Categories API Error:', error);
+        throw error;
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    retry: false, // Disable retry to prevent 429 errors
+    refetchOnMount: false, // Disable refetch on mount
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  // Debug logging
+  console.log('🎯 Portfolio Page Debug:');
+  console.log('Active Filter:', activeFilter);
+  console.log('Projects Data:', projectsData);
+  console.log('Projects Loading:', projectsLoading);
+  console.log('Projects Error:', projectsError);
+  console.log('Categories Data:', categoriesData);
+  console.log('Categories Error:', categoriesError);
   
   // Schema markup for portfolio
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -32,100 +87,18 @@ export default function Portfolio() {
     }
   };
   
-  const categories = ['All', 'Web Design', 'Web Development', 'Mobile Apps', 'Games', 'Maintenance'];
+  const categories = ['All', ...(categoriesData?.data?.data?.categories || [])];
   
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform Redesign",
-      category: "Web Design",
-      description: "Complete UI/UX overhaul that increased conversion rates by 45% for a leading fashion retailer.",
-      image: project1,
-      tags: ["Figma", "React", "TypeScript"],
-      client: "Fashion Forward",
-      link: "/portfolio/ecommerce-redesign"
-    },
-    {
-      id: 2,
-      title: "FinTech Mobile App",
-      category: "Mobile Apps",
-      description: "Secure banking app with biometric authentication serving 100K+ active users daily.",
-      image: project2,
-      tags: ["React Native", "Node.js", "MongoDB"],
-      client: "SecureBank",
-      link: "/portfolio/fintech-app"
-    },
-    {
-      id: 3,
-      title: "SaaS Dashboard Development",
-      category: "Web Development",
-      description: "Real-time analytics dashboard processing 1M+ data points for enterprise clients.",
-      image: project3,
-      tags: ["Next.js", "PostgreSQL", "AWS"],
-      client: "DataFlow Pro",
-      link: "/portfolio/saas-dashboard"
-    },
-    {
-      id: 4,
-      title: "Casual Puzzle Game",
-      category: "Games",
-      description: "HTML5 puzzle game with 500K+ downloads and 4.8-star rating on mobile stores.",
-      image: "/placeholder.svg",
-      tags: ["Phaser.js", "Canvas", "WebGL"],
-      client: "GameStudio XYZ",
-      link: "/case-study/puzzle-game"
-    },
-    {
-      id: 5,
-      title: "Restaurant Chain Website",
-      category: "Web Design",
-      description: "Multi-location restaurant website with online ordering and table reservation system.",
-      image: "/placeholder.svg",
-      tags: ["Figma", "WordPress", "WooCommerce"],
-      client: "Spice Route",
-      link: "/case-study/restaurant-website"
-    },
-    {
-      id: 6,
-      title: "Cloud Infrastructure Optimization",
-      category: "Maintenance",
-      description: "Reduced hosting costs by 60% while improving performance for high-traffic application.",
-      image: "/placeholder.svg",
-      tags: ["AWS", "Docker", "Kubernetes"],
-      client: "TechScale Inc",
-      link: "/case-study/cloud-optimization"
-    },
-    {
-      id: 7,
-      title: "Healthcare Management System",
-      category: "Web Development",
-      description: "HIPAA-compliant patient management system for 50+ medical practices.",
-      image: "/placeholder.svg",
-      tags: ["Vue.js", "Laravel", "MySQL"],
-      client: "MedCare Solutions",
-      link: "/case-study/healthcare-system"
-    },
-    {
-      id: 8,
-      title: "Learning Management App",
-      category: "Mobile Apps",
-      description: "Educational app with offline capabilities used by 250K+ students across India.",
-      image: "/placeholder.svg",
-      tags: ["Flutter", "Firebase", "Dart"],
-      client: "EduTech Prime",
-      link: "/case-study/learning-app"
-    },
-    {
-      id: 9,
-      title: "Racing Game Mobile",
-      category: "Games",
-      description: "3D racing game with multiplayer support and in-app purchase integration.",
-      image: "/placeholder.svg",
-      tags: ["Unity", "C#", "Photon"],
-      client: "Speed Games",
-      link: "/case-study/racing-game"
-    }
-  ];
+  const projects = projectsData?.data?.data?.projects || [];
+  
+  // Debug logging
+  console.log('🔍 Projects Debug Info:');
+  console.log('📊 Raw projectsData:', projectsData);
+  console.log('📊 projectsData.data:', projectsData?.data);
+  console.log('📊 projectsData.data.data:', projectsData?.data?.data);
+  console.log('📊 Final projects array:', projects);
+  console.log('📊 Projects length:', projects.length);
+  console.log('📊 Categories debug:', categoriesData?.data?.data);
 
   const featuredProject = {
     title: "TechStart Platform",
@@ -152,7 +125,7 @@ export default function Portfolio() {
 
   const filteredProjects = activeFilter === 'All' 
     ? projects 
-    : projects.filter(project => project.category === activeFilter);
+    : projects.filter((project: any) => project.category === activeFilter);
 
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA]">
@@ -365,52 +338,82 @@ export default function Portfolio() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {filteredProjects.map((project) => (
-              <Card key={project.id} className="group overflow-hidden border-2 border-[#1C2333] shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.25)] cursor-pointer bg-[#111528] transition-all duration-500 hover:-translate-y-1 hover:border-[#2DD4BF]/30">
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-[#2DD4BF]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <Button className="bg-[#0A0E2A] text-[#2DD4BF] hover:bg-[#111528] hover:text-[#5EEAD4] text-sm md:text-base font-semibold shadow-[0_8px_24px_rgba(10,14,42,0.3)]">
-                      View Case Study →
-                    </Button>
+            {projectsLoading ? (
+              // Loading skeleton
+              [...Array(6)].map((_, i) => (
+                <Card key={i} className="overflow-hidden border-2 border-[#1C2333] bg-[#111528]">
+                  <div className="h-48 md:h-64 bg-gray-700 animate-pulse" />
+                  <CardContent className="p-4 md:p-6">
+                    <div className="h-6 bg-gray-700 rounded animate-pulse mb-2" />
+                    <div className="h-4 bg-gray-700 rounded animate-pulse mb-4 w-3/4" />
+                    <div className="flex gap-2 mb-4">
+                      <div className="h-6 w-16 bg-gray-700 rounded animate-pulse" />
+                      <div className="h-6 w-20 bg-gray-700 rounded animate-pulse" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : projectsError ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-[#FF6B6B] text-lg mb-4">Error loading projects</p>
+                <p className="text-[#A0AEC0] text-sm">
+                  {(projectsError as any)?.response?.status === 429 
+                    ? "Too many requests - please wait a moment and refresh the page"
+                    : (projectsError as any)?.message || "Something went wrong"}
+                </p>
+              </div>
+            ) : filteredProjects.length > 0 ? (
+              filteredProjects.map((project) => (
+                <Card key={project._id} className="group overflow-hidden border-2 border-[#1C2333] shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.25)] cursor-pointer bg-[#111528] transition-all duration-500 hover:-translate-y-1 hover:border-[#2DD4BF]/30">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={(project as any).fullImageUrl || (project as any).image} 
+                      alt={project.title}
+                      className="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-[#2DD4BF]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                      <Button className="bg-[#0A0E2A] text-[#2DD4BF] hover:bg-[#111528] hover:text-[#5EEAD4] text-sm md:text-base font-semibold shadow-[0_8px_24px_rgba(10,14,42,0.3)]">
+                        View Case Study →
+                      </Button>
+                    </div>
+                    <Badge className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#111528]/90 text-[#2DD4BF] border border-[#2DD4BF]/20 text-xs md:text-sm font-medium">
+                      {project.category}
+                    </Badge>
                   </div>
-                  <Badge className="absolute top-2 left-2 md:top-4 md:left-4 bg-[#111528]/90 text-[#2DD4BF] border border-[#2DD4BF]/20 text-xs md:text-sm font-medium">
-                    {project.category}
-                  </Badge>
-                </div>
-                
-                <CardContent className="p-4 md:p-6">
-                  <h3 className="font-heading text-lg md:text-xl font-bold text-[#EAEAEA] mb-2 md:mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-[#A0AEC0] mb-3 md:mb-4 line-clamp-2 leading-relaxed text-sm md:text-base">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
-                    {project.tags.slice(0, 3).map((tag, index) => (
-                      <span key={index} className="text-xs bg-[#2DD4BF]/10 text-[#2DD4BF] px-2 py-1 rounded border border-[#2DD4BF]/20">
-                        {tag}
+                  
+                  <CardContent className="p-4 md:p-6">
+                    <h3 className="font-heading text-lg md:text-xl font-bold text-[#EAEAEA] mb-2 md:mb-3">
+                      {project.title}
+                    </h3>
+                    <p className="text-[#A0AEC0] mb-3 md:mb-4 line-clamp-2 leading-relaxed text-sm md:text-base">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
+                      {project.tags?.slice(0, 3).map((tag, index) => (
+                        <span key={index} className="text-xs bg-[#2DD4BF]/10 text-[#2DD4BF] px-2 py-1 rounded border border-[#2DD4BF]/20">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs md:text-sm text-[#7A869C]">
+                        Client: {project.client}
                       </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs md:text-sm text-[#7A869C]">
-                      Client: {project.client}
-                    </span>
-                    <a 
-                      href={project.link}
-                      className="text-[#FF7849] hover:text-[#FF8B61] font-medium text-xs md:text-sm transition-colors hover:drop-shadow-[0_0_8px_rgba(255,120,73,0.6)]"
-                    >
-                      View Details →
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                      <a 
+                        href={project.link || project.externalLink || '#'}
+                        className="text-[#FF7849] hover:text-[#FF8B61] font-medium text-xs md:text-sm transition-colors hover:drop-shadow-[0_0_8px_rgba(255,120,73,0.6)]"
+                      >
+                        View Details →
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-[#A0AEC0] text-lg">No projects found for this category.</p>
+              </div>
+            )}
           </div>
 
           <div className="text-center mt-12">
