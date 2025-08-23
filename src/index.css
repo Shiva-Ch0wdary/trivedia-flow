@@ -2,6 +2,7 @@
 @import url('./components/layout/navigation.css');
 @import url('./components/layout/footer.css');
 @import url('./styles/mobile-responsive.css');
+@import url('./styles/admin-responsive.css');
 
 /* Tailwind directives */
 @tailwind base;

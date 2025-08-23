@@ -24,6 +24,7 @@ import TestimonialsPage from "./pages/Testimonials";
 import Integrations from "./pages/Integrations";
 import ComingSoon from "./pages/ComingSoon";
 import CaseStudy from "./pages/CaseStudy";
+import ProjectDetail from "./pages/ProjectDetail";
 import WebDevelopment from "./pages/services/WebDevelopment";
 import MobileAppDevelopment from "./pages/services/MobileAppDevelopment";
 import UIUXDesign from "./pages/services/UIUXDesign";
@@ -31,9 +32,9 @@ import DesignServices from "./pages/services/DesignServices";
 import DevelopmentServices from "./pages/services/DevelopmentServices";
 import InfrastructureServices from "./pages/services/InfrastructureServices";
 import GrowthServices from "./pages/services/GrowthServices";
-import ECommerceRedesign from "./pages/portfolio/ECommerceRedesign";
-import FinTechApp from "./pages/portfolio/FinTechApp";
-import SaaSDashboard from "./pages/portfolio/SaaSDashboard";
+import ECommerceRedesign from "./pages/projects/ECommerceRedesign";
+import FinTechApp from "./pages/projects/FinTechApp";
+import SaaSDashboard from "./pages/projects/SaaSDashboard";
 import HealthcarePlatform from "./pages/case-study/HealthcarePlatform";
 import EdTechSolution from "./pages/case-study/EdTechSolution";
 import RealEstateApp from "./pages/case-study/RealEstateApp";
@@ -42,7 +43,8 @@ import RealEstateApp from "./pages/case-study/RealEstateApp";
 import AdminLogin from "./pages/admin/Login";
 import AdminRegister from "./pages/admin/Register";
 import AdminDashboard from "./pages/admin/Dashboard";
-import PortfolioManagement from "./pages/admin/PortfolioManagement";
+import PortfolioManagement from "./pages/admin/EnhancedPortfolioManagement";
+import UserManagement from "./pages/admin/UserManagement";
 import AdminLayout from "./components/admin/AdminLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
@@ -184,6 +186,13 @@ const App = () => (
                   <Footer />
                 </>
               } />
+              <Route path="/portfolio/:slug" element={
+                <>
+                  <Header />
+                  <ProjectDetail />
+                  <Footer />
+                </>
+              } />
               <Route path="/case-study/:slug" element={
                 <>
                   <Header />
@@ -276,6 +285,13 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminLayout>
                     <PortfolioManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/users" element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <UserManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

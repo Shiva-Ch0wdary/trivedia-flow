@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { adminAPI } from '@/lib/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Users,
   UserCheck,
@@ -12,6 +14,11 @@ import {
   Clock,
   Shield,
   Eye,
+  Plus,
+  Settings,
+  FileText,
+  Upload,
+  BarChart3
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -204,6 +211,16 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                 ))}
+                {users?.data?.users?.length > 0 && (
+                  <div className="pt-3 border-t border-gray-600">
+                    <Link to="/admin/users">
+                      <Button variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-700">
+                        <Users className="h-4 w-4 mr-2" />
+                        View All Users
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
@@ -220,18 +237,33 @@ const Dashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors">
-              <Users className="h-5 w-5 text-blue-400" />
-              <span className="text-white">Manage Users</span>
-            </button>
-            <button className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors">
-              <Shield className="h-5 w-5 text-green-400" />
-              <span className="text-white">Content Management</span>
-            </button>
-            <button className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors">
-              <Eye className="h-5 w-5 text-purple-400" />
-              <span className="text-white">View Analytics</span>
-            </button>
+            <Link to="/admin/users">
+              <Button 
+                variant="outline" 
+                className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors w-full justify-start"
+              >
+                <Users className="h-5 w-5 text-blue-400" />
+                <span className="text-white">Manage Users</span>
+              </Button>
+            </Link>
+            <Link to="/admin/content">
+              <Button 
+                variant="outline" 
+                className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors w-full justify-start"
+              >
+                <FileText className="h-5 w-5 text-green-400" />
+                <span className="text-white">Content Management</span>
+              </Button>
+            </Link>
+            <Link to="/admin/analytics">
+              <Button 
+                variant="outline" 
+                className="flex items-center space-x-3 p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors w-full justify-start"
+              >
+                <BarChart3 className="h-5 w-5 text-purple-400" />
+                <span className="text-white">View Analytics</span>
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

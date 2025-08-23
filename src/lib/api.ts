@@ -25,13 +25,11 @@ api.interceptors.request.use(
 // Response interceptor to handle errors
 api.interceptors.response.use(
   (response) => {
-    console.log('✅ API Success:', response.config.method?.toUpperCase(), response.config.url, response.status);
     return response;
   },
   (error) => {
-    console.error('❌ API Error:', error.config?.method?.toUpperCase(), error.config?.url, error.response?.status, error.response?.data);
+    console.error('❌ API Error:', error.config?.method?.toUpperCase(), error.config?.url, error.response?.status);
     if (error.response?.status === 401) {
-      console.warn('🔒 Authentication failed - redirecting to login');
       // Token expired or invalid
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -69,6 +67,11 @@ export const portfolioAPI = {
     return api.get('/portfolio', { params });
   },
   getById: (id: string) => api.get(`/portfolio/${id}`),
+  getBySlug: (slug: string) => api.get(`/portfolio/slug/${slug}`),
+  getFeatured: async () => {
+    console.log('📡 Portfolio getFeatured called');
+    return api.get('/portfolio', { params: { featured: 'true', limit: 1 } });
+  },
   getCategories: async () => {
     console.log('📡 Portfolio getCategories called');
     return api.get('/portfolio/categories');
