@@ -1,0 +1,124 @@
+import axios from 'axios';
+
+// Create axios instance
+const api = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor to add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle errors
+api.interceptors.response.use(
+  (response) => {
+    console.log('✅ API Success:', response.config.method?.toUpperCase(), response.config.url, response.status);
+    return response;
+  },
+  (error) => {
+    console.error('❌ API Error:', error.config?.method?.toUpperCase(), error.config?.url, error.response?.status, error.response?.data);
+    if (error.response?.status === 401) {
+      console.warn('🔒 Authentication failed - redirecting to login');
+      // Token expired or invalid
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/admin/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth API
+export const authAPI = {
+  register: (data: any) => api.post('/auth/register', data),
+  login: (data: any) => api.post('/auth/login', data),
+  logout: () => api.post('/auth/logout'),
+  getProfile: () => api.get('/auth/me'),
+  updateProfile: (data: any) => api.put('/auth/profile', data),
+  changePassword: (data: any) => api.put('/auth/change-password', data),
+};
+
+// Admin API
+export const adminAPI = {
+  getUsers: (params?: any) => api.get('/admin/users', { params }),
+  getUser: (id: string) => api.get(`/admin/users/${id}`),
+  createUser: (data: any) => api.post('/admin/users', data),
+  updateUser: (id: string, data: any) => api.put(`/admin/users/${id}`, data),
+  deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
+  getStats: () => api.get('/admin/stats'),
+};
+
+// Portfolio API
+export const portfolioAPI = {
+  // Public endpoints
+  getAll: async (params?: any) => {
+    console.log('📡 Portfolio getAll called with params:', params);
+    return api.get('/portfolio', { params });
+  },
+  getById: (id: string) => api.get(`/portfolio/${id}`),
+  getCategories: async () => {
+    console.log('📡 Portfolio getCategories called');
+    return api.get('/portfolio/categories');
+  },
+  
+  // Admin endpoints
+  getAllAdmin: async (params?: any) => {
+    console.log('📡 Portfolio getAllAdmin called with params:', params);
+    console.log('🔑 Current auth token:', localStorage.getItem('token') ? 'Present' : 'Missing');
+    return api.get('/portfolio/admin/all', { params });
+  },
+  create: (data: any) => api.post('/portfolio', data),
+  update: (id: string, data: any) => api.put(`/portfolio/${id}`, data),
+  delete: (id: string) => api.delete(`/portfolio/${id}`),
+  bulkUpdateStatus: (data: any) => api.patch('/portfolio/bulk-status', data),
+  reorder: (data: any) => api.patch('/portfolio/reorder', data),
+};
+
+// Content API
+export const contentAPI = {
+  getAll: () => api.get('/content'),
+  getSection: (section: string) => api.get(`/content/${section}`),
+  updateSection: (section: string, data: any) => api.put(`/content/${section}`, { data }),
+  createSection: (section: string, data: any) => api.post('/content', { section, data }),
+  deleteSection: (section: string) => api.delete(`/content/${section}`),
+  getSchema: (section: string) => api.get(`/content/schema/${section}`),
+};
+
+// Upload API
+export const uploadAPI = {
+  uploadImage: (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    return api.post('/upload/image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+  uploadImages: (files: File[]) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('images', file));
+    return api.post('/upload/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+  deleteFile: (filename: string) => api.delete(`/upload/${filename}`),
+  getFiles: (params?: any) => api.get('/upload/files', { params }),
+};
+
+export default api;

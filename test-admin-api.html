@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin API</title>
+</head>
+<body>
+    <h1>Testing Admin API</h1>
+    <button onclick="testAPI()">Test Admin API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAPI() {
+            try {
+                // Get token from localStorage (if exists)
+                const token = localStorage.getItem('token');
+                console.log('Token:', token);
+                
+                const response = await fetch('/api/portfolio/admin/all', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                document.getElementById('result').innerHTML = `
+                    <h2>Response Status: ${response.status}</h2>
+                    <h3>Data Structure:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<h2>Error: ${error.message}</h2>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,8 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import SEO from "@/components/SEO";
 import { generateOrganizationSchema } from "@/lib/seo";
-import WordByWordTyping from "@/components/ui/word-by-word-typing";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,61 +9,7 @@ import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import aboutImage from "@/assets/about-1.png";
 
-interface Founder {
-  name: string;
-  role: string;
-  bio: string;
-  image: string;
-  linkedin: string;
-}
-
 export default function About() {
-  // Scroll reveal component for founder cards
-  const FounderCard = ({ founder, index }: { founder: Founder; index: number }) => {
-    const { elementRef, animationClass } = useScrollReveal({
-      threshold: 0.2,
-      delay: index * 200, // Stagger animation by 200ms for each card
-      duration: 600,
-    });
-
-    return (
-      <div
-        ref={elementRef}
-        className={`transition-all duration-600 ease-out ${animationClass}`}
-      >
-        <Card className="founder-card group cursor-pointer border border-white/10 bg-[#111528]/80 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_50px_rgba(45,212,191,0.15)] hover:-translate-y-2 hover:border-teal-400/30 hover:border-b-4 hover:border-b-orange-400 transition-all duration-300 rounded-2xl overflow-hidden">
-          <CardContent className="p-8 text-center">
-            <div className="relative mb-6">
-              <img 
-                src={founder.image} 
-                alt={founder.name}
-                className="w-32 h-32 rounded-full object-cover mx-auto shadow-lg group-hover:shadow-xl transition-shadow"
-              />
-            </div>
-            
-            <h3 className="font-heading text-2xl font-bold text-teal-300 mb-1">
-              {founder.name}
-            </h3>
-            <p className="text-orange-400 font-medium mb-4">
-              {founder.role}
-            </p>
-            <p className="text-zinc-300 leading-relaxed mb-6">
-              {founder.bio}
-            </p>
-            
-            <a 
-              href={founder.linkedin}
-              className="inline-flex items-center space-x-2 text-teal-300 hover:text-orange-400 transition-colors"
-            >
-              <ExternalLink size={18} />
-              <span>Connect on LinkedIn</span>
-            </a>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  };
-
   // Schema markup for about page
   const aboutSchema = {
     ...generateOrganizationSchema(),
@@ -297,33 +241,25 @@ export default function About() {
               <Badge variant="secondary" className="text-teal-300 bg-teal-500/10 border-teal-400/20">
                 Our Journey
               </Badge>
-              <div className="space-y-6">
-                <WordByWordTyping
-                  text={`Building Digital Dreams
-
-Founded in 2019 in Khammam, India, Trivesha began with a simple mission: to bridge the gap between innovative ideas and exceptional digital execution. What started as a small team of passionate developers has grown into a trusted partner for businesses worldwide.
-
-We specialize in creating digital experiences that not only look beautiful but also drive real business results. From startups to established enterprises, we've helped our clients transform their digital presence and achieve their goals.
-
-Today, we continue to push boundaries with cutting-edge technologies while maintaining our core values of clarity, craft, and commitment.`}
-                  className="text-lg leading-relaxed"
-                  speed={20}
-                  startDelay={300}
-                  highlightWords={{
-                    "Building": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "Digital": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "Dreams": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "trusted": "text-teal-300 font-semibold",
-                    "partner": "text-teal-300 font-semibold",
-                    "businesses": "text-teal-300 font-semibold",
-                    "worldwide": "text-teal-300 font-semibold",
-                    "digital": "text-orange-300 font-semibold",
-                    "experiences": "text-orange-300 font-semibold",
-                    "beautiful": "text-orange-300 font-semibold",
-                    "cutting-edge": "text-purple-300 font-semibold",
-                    "technologies": "text-purple-300 font-semibold"
-                  }}
-                />
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-teal-300">
+                Building Digital Dreams
+              </h2>
+              <div className="space-y-4 text-lg text-zinc-300 leading-relaxed">
+                <p>
+                  Founded in 2019 in Khammam, India, Trivesha began with a simple mission: 
+                  to bridge the gap between innovative ideas and exceptional digital execution. 
+                  What started as a small team of passionate developers has grown into a 
+                  trusted partner for businesses worldwide.
+                </p>
+                <p>
+                  We specialize in creating digital experiences that not only look beautiful 
+                  but also drive real business results. From startups to established enterprises, 
+                  we've helped our clients transform their digital presence and achieve their goals.
+                </p>
+                <p>
+                  Today, we continue to push boundaries with cutting-edge technologies while 
+                  maintaining our core values of clarity, craft, and commitment.
+                </p>
               </div>
             </div>
             <div className="relative">
@@ -421,7 +357,38 @@ Today, we continue to push boundaries with cutting-edge technologies while maint
 
           <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             {founders.map((founder, index) => (
-              <FounderCard key={index} founder={founder} index={index} />
+              <Card 
+                key={index} 
+                className="founder-card group cursor-pointer border border-white/10 bg-[#111528]/80 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_50px_rgba(45,212,191,0.15)] hover:-translate-y-2 hover:border-teal-400/30 hover:border-b-4 hover:border-b-orange-400 transition-all duration-300 rounded-2xl overflow-hidden"
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="relative mb-6">
+                    <img 
+                      src={founder.image} 
+                      alt={founder.name}
+                      className="w-32 h-32 rounded-full object-cover mx-auto shadow-lg group-hover:shadow-xl transition-shadow"
+                    />
+                  </div>
+                  
+                  <h3 className="font-heading text-2xl font-bold text-teal-300 mb-1">
+                    {founder.name}
+                  </h3>
+                  <p className="text-orange-400 font-medium mb-4">
+                    {founder.role}
+                  </p>
+                  <p className="text-zinc-300 leading-relaxed mb-6">
+                    {founder.bio}
+                  </p>
+                  
+                  <a 
+                    href={founder.linkedin}
+                    className="inline-flex items-center space-x-2 text-teal-300 hover:text-orange-400 transition-colors"
+                  >
+                    <ExternalLink size={18} />
+                    <span>Connect on LinkedIn</span>
+                  </a>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
