@@ -26,7 +26,12 @@ const sampleProjects = [
     featured: true,
     status: "published",
     order: 1,
-    technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
+    technologies: [
+      { name: "React", category: "Frontend", color: "#61DAFB" },
+      { name: "TypeScript", category: "Language", color: "#3178C6" },
+      { name: "Node.js", category: "Backend", color: "#339933" },
+      { name: "MongoDB", category: "Database", color: "#47A248" },
+    ],
     duration: "3 months",
     teamSize: 4,
     budget: "$25,000 - $35,000",
@@ -50,7 +55,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 2,
-    technologies: ["React Native", "Node.js", "MongoDB", "AWS"],
+    technologies: [
+      { name: "React Native", category: "Mobile", color: "#61DAFB" },
+      { name: "Node.js", category: "Backend", color: "#339933" },
+      { name: "MongoDB", category: "Database", color: "#47A248" },
+      { name: "AWS", category: "Cloud", color: "#FF9900" },
+    ],
     duration: "6 months",
     teamSize: 6,
     budget: "$50,000 - $75,000",
@@ -74,7 +84,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 3,
-    technologies: ["Next.js", "PostgreSQL", "AWS", "D3.js"],
+    technologies: [
+      { name: "Next.js", category: "Frontend", color: "#000000" },
+      { name: "PostgreSQL", category: "Database", color: "#336791" },
+      { name: "AWS", category: "Cloud", color: "#FF9900" },
+      { name: "D3.js", category: "Visualization", color: "#F68E56" },
+    ],
     duration: "4 months",
     teamSize: 5,
     budget: "$40,000 - $60,000",
@@ -94,7 +109,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 4,
-    technologies: ["Phaser.js", "Canvas", "WebGL", "Cordova"],
+    technologies: [
+      { name: "Phaser.js", category: "Game Engine", color: "#8A2BE2" },
+      { name: "Canvas", category: "Graphics", color: "#FF4500" },
+      { name: "WebGL", category: "Graphics", color: "#990000" },
+      { name: "Cordova", category: "Mobile", color: "#E8E8E8" },
+    ],
     duration: "5 months",
     teamSize: 3,
     budget: "$30,000 - $45,000",
@@ -118,7 +138,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 5,
-    technologies: ["WordPress", "WooCommerce", "PHP", "MySQL"],
+    technologies: [
+      { name: "WordPress", category: "CMS", color: "#21759B" },
+      { name: "WooCommerce", category: "E-commerce", color: "#96588A" },
+      { name: "PHP", category: "Backend", color: "#777BB4" },
+      { name: "MySQL", category: "Database", color: "#4479A1" },
+    ],
     duration: "2 months",
     teamSize: 3,
     budget: "$15,000 - $25,000",
@@ -142,7 +167,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 6,
-    technologies: ["AWS", "Docker", "Kubernetes", "CloudFront"],
+    technologies: [
+      { name: "AWS", category: "Cloud", color: "#FF9900" },
+      { name: "Docker", category: "DevOps", color: "#2496ED" },
+      { name: "Kubernetes", category: "DevOps", color: "#326CE5" },
+      { name: "CloudFront", category: "CDN", color: "#FF9900" },
+    ],
     duration: "3 months",
     teamSize: 4,
     budget: "$20,000 - $35,000",
@@ -166,7 +196,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 7,
-    technologies: ["Vue.js", "Laravel", "MySQL", "Redis"],
+    technologies: [
+      { name: "Vue.js", category: "Frontend", color: "#4FC08D" },
+      { name: "Laravel", category: "Backend", color: "#FF2D20" },
+      { name: "MySQL", category: "Database", color: "#4479A1" },
+      { name: "Redis", category: "Cache", color: "#DC382D" },
+    ],
     duration: "8 months",
     teamSize: 7,
     budget: "$80,000 - $120,000",
@@ -190,7 +225,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 8,
-    technologies: ["Flutter", "Firebase", "Dart", "SQLite"],
+    technologies: [
+      { name: "Flutter", category: "Mobile", color: "#02569B" },
+      { name: "Firebase", category: "Backend", color: "#FFCA28" },
+      { name: "Dart", category: "Language", color: "#0175C2" },
+      { name: "SQLite", category: "Database", color: "#003B57" },
+    ],
     duration: "7 months",
     teamSize: 5,
     budget: "$60,000 - $90,000",
@@ -210,7 +250,12 @@ const sampleProjects = [
     featured: false,
     status: "published",
     order: 9,
-    technologies: ["Unity", "C#", "Photon", "Blender"],
+    technologies: [
+      { name: "Unity", category: "Game Engine", color: "#000000" },
+      { name: "C#", category: "Language", color: "#239120" },
+      { name: "Photon", category: "Networking", color: "#0099FF" },
+      { name: "Blender", category: "3D Graphics", color: "#F5792A" },
+    ],
     duration: "10 months",
     teamSize: 6,
     budget: "$100,000 - $150,000",
@@ -241,14 +286,20 @@ const seedPortfolio = async () => {
     await Project.deleteMany({});
     console.log("Cleared existing projects");
 
-    // Add sample projects
+    // Add sample projects one by one to ensure slug generation
     const projectsWithUser = sampleProjects.map((project) => ({
       ...project,
       createdBy: adminUser._id,
       updatedBy: adminUser._id,
     }));
 
-    const createdProjects = await Project.insertMany(projectsWithUser);
+    const createdProjects = [];
+    for (const projectData of projectsWithUser) {
+      const project = new Project(projectData);
+      await project.save();
+      createdProjects.push(project);
+    }
+
     console.log(`Created ${createdProjects.length} sample projects`);
 
     console.log("Portfolio seeding completed successfully!");

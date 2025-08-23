@@ -94,6 +94,72 @@ router.get("/categories", async (req, res) => {
   }
 });
 
+// @desc    Get current featured project
+// @route   GET /api/portfolio/featured
+// @access  Public
+router.get("/featured", async (req, res) => {
+  try {
+    const featuredProject = await Project.findOne({
+      featured: true,
+      status: "published",
+    }).populate("createdBy", "firstName lastName");
+
+    // Disable caching to fix 304 issues
+    res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.set("Pragma", "no-cache");
+    res.set("Expires", "0");
+
+    if (!featuredProject) {
+      return res.json({
+        success: true,
+        data: { project: null },
+        message: "No featured project found",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: { project: featuredProject },
+    });
+  } catch (error) {
+    console.error("Get featured project error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+});
+
+// @desc    Get single project by slug
+// @route   GET /api/portfolio/slug/:slug
+// @access  Public
+router.get("/slug/:slug", async (req, res) => {
+  try {
+    const project = await Project.findBySlug(req.params.slug).populate(
+      "createdBy",
+      "firstName lastName"
+    );
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: "Project not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: { project },
+    });
+  } catch (error) {
+    console.error("Get project by slug error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+});
+
 // @desc    Get single project
 // @route   GET /api/portfolio/:id
 // @access  Public
@@ -264,6 +330,21 @@ router.post(
         });
       }
 
+      // If creating a featured project, unfeature all other projects first
+      if (req.body.featured === true) {
+        await Project.updateMany(
+          {},
+          {
+            featured: false,
+            updatedBy: req.user.id,
+          }
+        );
+        console.log(
+          "🌟 Unfeatured all existing projects, creating new featured project:",
+          req.body.title
+        );
+      }
+
       const projectData = {
         ...req.body,
         createdBy: req.user.id,
@@ -272,6 +353,18 @@ router.post(
 
       const project = await Project.create(projectData);
 
+      // Double-check: Ensure only this project is featured if it was set as featured
+      if (projectData.featured === true) {
+        await Project.updateMany(
+          { _id: { $ne: project._id } },
+          {
+            featured: false,
+            updatedBy: req.user.id,
+          }
+        );
+        console.log("✅ Verified: Only", project.title, "is now featured");
+      }
+
       res.status(201).json({
         success: true,
         message: "Project created successfully",
@@ -279,6 +372,19 @@ router.post(
       });
     } catch (error) {
       console.error("Create project error:", error);
+
+      // Handle validation errors
+      if (error.name === "ValidationError") {
+        const validationErrors = Object.values(error.errors).map(
+          (err) => err.message
+        );
+        return res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: validationErrors,
+        });
+      }
+
       res.status(500).json({
         success: false,
         message: "Server error",
@@ -353,6 +459,21 @@ router.put(
         });
       }
 
+      // If setting project as featured, unfeature all other projects first
+      if (req.body.featured === true) {
+        await Project.updateMany(
+          { _id: { $ne: req.params.id } },
+          {
+            featured: false,
+            updatedBy: req.user.id,
+          }
+        );
+        console.log(
+          "🌟 Unfeatured all other projects, featuring:",
+          project.title
+        );
+      }
+
       const updatedProject = await Project.findByIdAndUpdate(
         req.params.id,
         {
@@ -364,6 +485,22 @@ router.put(
         .populate("createdBy", "firstName lastName")
         .populate("updatedBy", "firstName lastName");
 
+      // Double-check: Ensure only this project is featured if it was set as featured
+      if (req.body.featured === true) {
+        await Project.updateMany(
+          { _id: { $ne: req.params.id } },
+          {
+            featured: false,
+            updatedBy: req.user.id,
+          }
+        );
+        console.log(
+          "✅ Verified: Only",
+          updatedProject.title,
+          "is now featured"
+        );
+      }
+
       res.json({
         success: true,
         message: "Project updated successfully",
@@ -371,6 +508,19 @@ router.put(
       });
     } catch (error) {
       console.error("Update project error:", error);
+
+      // Handle validation errors
+      if (error.name === "ValidationError") {
+        const validationErrors = Object.values(error.errors).map(
+          (err) => err.message
+        );
+        return res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: validationErrors,
+        });
+      }
+
       res.status(500).json({
         success: false,
         message: "Server error",
