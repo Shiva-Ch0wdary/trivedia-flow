@@ -49,6 +49,23 @@ export const authAPI = {
   changePassword: (data: any) => api.put('/auth/change-password', data),
 };
 
+// Pricing API
+export const pricingAPI = {
+  // Public endpoints
+  getPlans: () => api.get('/pricing'),
+  
+  // Admin endpoints
+  getAdminPlans: () => api.get('/pricing/admin'),
+  getPlan: (id: string) => api.get(`/pricing/admin/${id}`),
+  createPlan: (data: any) => api.post('/pricing/admin', data),
+  updatePlan: (id: string, data: any) => api.put(`/pricing/admin/${id}`, data),
+  togglePopular: (id: string) => api.patch(`/pricing/admin/${id}/popular`),
+  deletePlan: (id: string) => api.delete(`/pricing/admin/${id}`),
+  restorePlan: (id: string) => api.patch(`/pricing/admin/${id}/restore`),
+  reorderPlans: (plans: Array<{ id: string; order: number }>) => 
+    api.patch('/pricing/admin/reorder', { plans }),
+};
+
 // Admin API
 export const adminAPI = {
   getUsers: (params?: any) => api.get('/admin/users', { params }),

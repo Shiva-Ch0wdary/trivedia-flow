@@ -43,12 +43,21 @@ import RealEstateApp from "./pages/case-study/RealEstateApp";
 import AdminLogin from "./pages/admin/Login";
 import AdminRegister from "./pages/admin/Register";
 import AdminDashboard from "./pages/admin/Dashboard";
+import PricingManagement from "./pages/admin/PricingManagement";
 import PortfolioManagement from "./pages/admin/EnhancedPortfolioManagement";
 import UserManagement from "./pages/admin/UserManagement";
 import AdminLayout from "./components/admin/AdminLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // Component to handle scroll-to-top on route changes
 const ScrollToTopHandler = () => {
@@ -292,6 +301,13 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminLayout>
                     <UserManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/pricing" element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <PricingManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

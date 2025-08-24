@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import User from "./models/User.js";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config({ path: "./config.env" });
 
 // Connect to MongoDB
-await mongoose.connect(
-  "mongodb+srv://shivachowdary753:shiva%402024@cluster0.autdqcj.mongodb.net/trivedia_db?retryWrites=true&w=majority&appName=Cluster0"
-);
+await mongoose.connect(process.env.MONGODB_URI);
 
 try {
   console.log("🔍 Checking existing users...");
@@ -25,7 +27,9 @@ try {
   }
 
   // Check if admin user exists
-  const adminUser = await User.findOne({ email: "shivachowdary753@gmail.com" });
+  const adminUser = await User.findOne({
+    email: process.env.ADMIN_EMAIL,
+  }).select("+password");
   if (adminUser) {
     console.log("✅ Admin user found:", adminUser.email);
     console.log("🔐 Testing password...");
@@ -34,20 +38,23 @@ try {
 
     if (!isPasswordValid) {
       const isPasswordValid2 = await bcrypt.compare(
-        "admin123",
+        process.env.ADMIN_PASSWORD,
         adminUser.password
       );
-      console.log('🔓 Password valid with "admin123":', isPasswordValid2);
+      console.log(
+        `🔓 Password valid with "${process.env.ADMIN_PASSWORD}":`,
+        isPasswordValid2
+      );
     }
   } else {
     console.log("❌ Admin user not found");
     console.log("🔨 Creating admin user...");
 
-    const hashedPassword = await bcrypt.hash("admin123", 12);
+    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 12);
 
     const newAdmin = new User({
       username: "admin",
-      email: "shivachowdary753@gmail.com",
+      email: process.env.ADMIN_EMAIL,
       firstName: "Shiva",
       lastName: "Chowdary",
       password: hashedPassword,

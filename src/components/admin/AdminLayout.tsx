@@ -24,6 +24,7 @@ import {
   Upload,
   BarChart3,
   Briefcase,
+  CreditCard,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -55,6 +56,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       href: '/admin/users',
       icon: Users,
       current: location.pathname.startsWith('/admin/users'),
+    },
+    {
+      name: 'Pricing',
+      href: '/admin/pricing',
+      icon: CreditCard,
+      current: location.pathname.startsWith('/admin/pricing'),
     },
     {
       name: 'Content',
