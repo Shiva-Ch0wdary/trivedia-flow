@@ -25,6 +25,7 @@ import {
   BarChart3,
   Briefcase,
   CreditCard,
+  MessageSquare,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -50,6 +51,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       href: '/admin/portfolio',
       icon: Briefcase,
       current: location.pathname.startsWith('/admin/portfolio'),
+    },
+    {
+      name: 'Contacts',
+      href: '/admin/contacts',
+      icon: MessageSquare,
+      current: location.pathname.startsWith('/admin/contacts'),
     },
     {
       name: 'Users',

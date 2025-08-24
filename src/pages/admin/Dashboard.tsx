@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { adminAPI, portfolioAPI, pricingAPI } from '@/lib/api';
+import { adminAPI, portfolioAPI, pricingAPI, contactAPI } from '@/lib/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,11 @@ import {
   CheckCircle,
   Gamepad2,
   PaintBucket,
-  FolderPlus
+  FolderPlus,
+  MessageSquare,
+  Mail,
+  Calendar,
+  Clock3
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -57,6 +61,38 @@ const Dashboard: React.FC = () => {
     refetchInterval: 60000, // Refresh every minute
   });
 
+  const { data: contactStats, error: contactStatsError, isLoading: contactStatsLoading } = useQuery({
+    queryKey: ['contact-stats'],
+    queryFn: async () => {
+      console.log('🔍 Fetching contact stats...');
+      const result = await contactAPI.getStats();
+      console.log('📊 Contact stats result:', result);
+      return result;
+    },
+    refetchInterval: 60000, // Refresh every minute
+  });
+
+  const { data: recentContacts, error: recentContactsError } = useQuery({
+    queryKey: ['recent-contacts'],
+    queryFn: async () => {
+      console.log('🔍 Fetching recent contacts...');
+      const result = await contactAPI.getAll({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' });
+      console.log('📋 Recent contacts result:', result);
+      return result;
+    },
+    refetchInterval: 60000, // Refresh every minute
+  });
+
+  // Debug logging
+  React.useEffect(() => {
+    if (contactStatsError) {
+      console.error('❌ Contact stats error:', contactStatsError);
+    }
+    if (recentContactsError) {
+      console.error('❌ Recent contacts error:', recentContactsError);
+    }
+  }, [contactStatsError, recentContactsError]);
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -79,8 +115,14 @@ const Dashboard: React.FC = () => {
   }
 
   const statsData = stats?.data?.data || {};
+  const contactStatsData = (contactStats as any)?.data?.data || {};
 
-  // Enhanced stat cards with project and pricing data
+  // Debug logging for contact stats
+  console.log('🔍 Contact stats data:', contactStatsData);
+  console.log('🔍 Contact stats loading:', contactStatsLoading);
+  console.log('🔍 Contact stats error:', contactStatsError);
+
+  // Enhanced stat cards with project, pricing, and contact data
   const statCards = [
     // User Statistics
     {
@@ -93,13 +135,22 @@ const Dashboard: React.FC = () => {
       change: `+${statsData.recentUsers || 0} this week`,
     },
     {
-      title: 'Active Users',
-      value: statsData.activeUsers || 0,
-      icon: UserCheck,
-      description: 'Currently active users',
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
-      change: `${statsData.activeUsersChange || 0}% this month`,
+      title: 'Total Contacts',
+      value: contactStatsData.total || 0,
+      icon: MessageSquare,
+      description: 'Contact form submissions',
+      color: 'text-teal-400',
+      bgColor: 'bg-teal-500/10',
+      change: `${contactStatsData.recent || 0} this week`,
+    },
+    {
+      title: 'New Contacts',
+      value: contactStatsData.today || 0,
+      icon: Mail,
+      description: 'Submissions today',
+      color: 'text-orange-400',
+      bgColor: 'bg-orange-500/10',
+      change: 'Requires attention',
     },
     {
       title: 'Total Projects',
@@ -323,6 +374,55 @@ const Dashboard: React.FC = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Recent Contacts */}
+        <Card className="bg-gray-800/50 border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center">
+              <MessageSquare className="h-5 w-5 mr-2" />
+              Recent Contacts
+            </CardTitle>
+            <CardDescription className="text-gray-400">
+              Latest contact form submissions
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {(recentContacts as any)?.data?.data ? (
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {(recentContacts as any).data.data.map((contact: any) => (
+                  <div key={contact._id} className="flex items-start space-x-3 py-2 border-b border-gray-700 last:border-b-0">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/20 flex items-center justify-center mt-0.5">
+                      <Mail className="h-4 w-4 text-teal-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-sm font-medium">{contact.name}</p>
+                      <p className="text-gray-400 text-xs truncate">{contact.email}</p>
+                      <p className="text-gray-400 text-xs truncate">{contact.projectType || 'General Inquiry'}</p>
+                      <p className="text-gray-500 text-xs">
+                        {formatDistanceToNow(new Date(contact.createdAt), { addSuffix: true })}
+                      </p>
+                    </div>
+                    <Badge variant={contact.status === 'new' ? 'destructive' : 'secondary'} className="text-xs">
+                      {contact.status}
+                    </Badge>
+                  </div>
+                ))}
+                {(recentContacts as any).data.data.length === 0 && (
+                  <div className="text-center py-6 text-gray-400">
+                    <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">No recent contacts</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-16 bg-gray-700 rounded animate-pulse" />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       {/* Quick Actions */}
@@ -338,6 +438,13 @@ const Dashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Button 
+              className="bg-teal-600 hover:bg-teal-700 text-white h-auto py-4 flex flex-col items-center space-y-2"
+              onClick={() => navigate('/admin/contacts')}
+            >
+              <MessageSquare className="h-6 w-6" />
+              <span>View Contacts</span>
+            </Button>
             <Button 
               className="bg-blue-600 hover:bg-blue-700 text-white h-auto py-4 flex flex-col items-center space-y-2"
               onClick={() => navigate('/admin/users')}
@@ -358,13 +465,6 @@ const Dashboard: React.FC = () => {
             >
               <DollarSign className="h-6 w-6" />
               <span>Manage Pricing</span>
-            </Button>
-            <Button 
-              className="bg-orange-600 hover:bg-orange-700 text-white h-auto py-4 flex flex-col items-center space-y-2"
-              onClick={() => navigate('/admin/content')}
-            >
-              <FileText className="h-6 w-6" />
-              <span>Site Content</span>
             </Button>
           </div>
         </CardContent>

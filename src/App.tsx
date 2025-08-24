@@ -46,6 +46,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import PricingManagement from "./pages/admin/PricingManagement";
 import PortfolioManagement from "./pages/admin/EnhancedPortfolioManagement";
 import UserManagement from "./pages/admin/UserManagement";
+import ContactManagement from "./pages/admin/ContactManagement";
 import AdminLayout from "./components/admin/AdminLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
@@ -294,6 +295,13 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminLayout>
                     <PortfolioManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/contacts" element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <ContactManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

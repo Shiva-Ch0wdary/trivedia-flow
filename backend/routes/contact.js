@@ -287,6 +287,69 @@ router.get(
   }
 );
 
+// @desc    Get contact statistics (Admin only)
+// @route   GET /api/contact/admin/stats
+// @access  Private (Admin/Editor)
+router.get(
+  "/admin/stats",
+  protect,
+  authorize("admin", "editor"),
+  async (req, res) => {
+    try {
+      const stats = await Contact.getStats();
+
+      // Get additional stats
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      const todayCount = await Contact.countDocuments({
+        createdAt: { $gte: todayStart },
+      });
+
+      const avgResponseTime = await Contact.aggregate([
+        {
+          $match: {
+            status: { $ne: "new" },
+            createdAt: {
+              $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            avgResponseTime: {
+              $avg: {
+                $subtract: ["$updatedAt", "$createdAt"],
+              },
+            },
+          },
+        },
+      ]);
+
+      res.json({
+        success: true,
+        data: {
+          ...stats,
+          today: todayCount,
+          avgResponseTimeHours:
+            avgResponseTime.length > 0
+              ? Math.round(
+                  avgResponseTime[0].avgResponseTime / (1000 * 60 * 60 * 1000)
+                )
+              : null,
+        },
+      });
+    } catch (error) {
+      console.error("Get contact stats error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+      });
+    }
+  }
+);
+
 // @desc    Get single contact submission (Admin only)
 // @route   GET /api/contact/admin/:id
 // @access  Private (Admin/Editor)
@@ -427,68 +490,5 @@ router.delete("/admin/:id", protect, authorize("admin"), async (req, res) => {
     });
   }
 });
-
-// @desc    Get contact statistics (Admin only)
-// @route   GET /api/contact/admin/stats
-// @access  Private (Admin/Editor)
-router.get(
-  "/admin/stats",
-  protect,
-  authorize("admin", "editor"),
-  async (req, res) => {
-    try {
-      const stats = await Contact.getStats();
-
-      // Get additional stats
-      const todayStart = new Date();
-      todayStart.setHours(0, 0, 0, 0);
-
-      const todayCount = await Contact.countDocuments({
-        createdAt: { $gte: todayStart },
-      });
-
-      const avgResponseTime = await Contact.aggregate([
-        {
-          $match: {
-            status: { $ne: "new" },
-            createdAt: {
-              $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-            },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            avgResponseTime: {
-              $avg: {
-                $subtract: ["$updatedAt", "$createdAt"],
-              },
-            },
-          },
-        },
-      ]);
-
-      res.json({
-        success: true,
-        data: {
-          ...stats,
-          today: todayCount,
-          avgResponseTimeHours:
-            avgResponseTime.length > 0
-              ? Math.round(
-                  avgResponseTime[0].avgResponseTime / (1000 * 60 * 60 * 1000)
-                )
-              : null,
-        },
-      });
-    } catch (error) {
-      console.error("Get contact stats error:", error);
-      res.status(500).json({
-        success: false,
-        message: "Server error",
-      });
-    }
-  }
-);
 
 export default router;
