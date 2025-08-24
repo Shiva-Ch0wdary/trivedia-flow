@@ -74,6 +74,7 @@ export const adminAPI = {
   updateUser: (id: string, data: any) => api.put(`/admin/users/${id}`, data),
   deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
   getStats: () => api.get('/admin/stats'),
+  getRecentActivity: (params?: any) => api.get('/admin/recent-activity', { params }),
 };
 
 // Portfolio API
