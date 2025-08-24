@@ -142,4 +142,17 @@ export const uploadAPI = {
   getFiles: (params?: any) => api.get('/upload/files', { params }),
 };
 
+// Contact API
+export const contactAPI = {
+  // Public endpoints
+  submitForm: (data: any) => api.post('/contact', data),
+  
+  // Admin endpoints
+  getAll: (params?: any) => api.get('/contact/admin', { params }),
+  getById: (id: string) => api.get(`/contact/admin/${id}`),
+  update: (id: string, data: any) => api.put(`/contact/admin/${id}`, data),
+  delete: (id: string) => api.delete(`/contact/admin/${id}`),
+  getStats: () => api.get('/contact/admin/stats'),
+};
+
 export default api;

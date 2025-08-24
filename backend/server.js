@@ -17,6 +17,7 @@ import contentRoutes from "./routes/content.js";
 import uploadRoutes from "./routes/upload.js";
 import portfolioRoutes from "./routes/portfolio.js";
 import pricingRoutes from "./routes/pricing.js";
+import contactRoutes from "./routes/contact.js";
 
 // Import middleware
 import { errorHandler } from "./middleware/errorHandler.js";
@@ -104,6 +105,7 @@ app.use("/api/content", contentRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/pricing", pricingRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Error handling middleware
 app.use(notFound);

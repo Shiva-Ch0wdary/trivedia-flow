@@ -12,9 +12,12 @@ import ContactAnimatedBackground from "@/components/ui/contact-animated-backgrou
 import emailIcon from "@/assets/contact/email.png";
 import callIcon from "@/assets/contact/call.png";
 import locationIcon from "@/assets/contact/location.png";
+import { contactAPI } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ContactDark() {
   const canonical = typeof window !== "undefined" ? window.location.href : "/contact";
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,6 +30,8 @@ export default function ContactDark() {
     privacyPolicy: false,
   });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const contactCards = [
     {
@@ -97,9 +102,90 @@ export default function ContactDark() {
     },
   ];
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you! We'll get back to you within 24 hours.");
+    
+    if (isSubmitting || isSubmitted) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Basic frontend validation
+      if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields (Name, Email, Message)",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!formData.privacyPolicy) {
+        toast({
+          title: "Privacy Policy",
+          description: "Please accept the privacy policy to continue",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Submit form
+      const response = await contactAPI.submitForm({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        company: formData.company.trim() || undefined,
+        phone: formData.phone.trim() || undefined,
+        projectType: formData.projectType || undefined,
+        budget: formData.budget || undefined,
+        timeline: formData.timeline || undefined,
+        message: formData.message.trim(),
+      });
+
+      if (response.data.success) {
+        setIsSubmitted(true);
+        
+        toast({
+          title: "Thank you! 🎉",
+          description: "Your message has been sent successfully. We'll get back to you within 24 hours!",
+        });
+
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          phone: "",
+          projectType: "",
+          budget: "",
+          timeline: "",
+          message: "",
+          privacyPolicy: false,
+        });
+
+        // Show success message for 5 seconds then allow new submissions
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      }
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      
+      let errorMessage = "We're experiencing technical difficulties. Please try again later.";
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.errors) {
+        errorMessage = error.response.data.errors.map((err: any) => err.msg).join(', ');
+      }
+      
+      toast({
+        title: "Submission Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToForm = () => {
@@ -367,9 +453,26 @@ export default function ContactDark() {
                 type="submit"
                 size="lg"
                 className="w-full h-14 bg-teal-500 hover:bg-teal-400 text-black text-lg font-semibold shadow-[0_10px_40px_rgba(45,212,191,0.25)] disabled:opacity-60"
-                disabled={!formData.name || !formData.email || !formData.privacyPolicy}
+                disabled={!formData.name || !formData.email || !formData.privacyPolicy || isSubmitting || isSubmitted}
               >
-                Send Project Request
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending Message...
+                  </>
+                ) : isSubmitted ? (
+                  <>
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Message Sent Successfully!
+                  </>
+                ) : (
+                  "Send Project Request"
+                )}
               </Button>
             </form>
           </div>
