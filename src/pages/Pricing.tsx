@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, X, ChevronDown, ChevronUp, Sparkles, Zap, TrendingUp } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { pricingAPI } from "@/lib/api";
 import domainIcon from "@/assets/pricing/domain.png";
 import sslIcon from "@/assets/pricing/ssl.png";
 import securityIcon from "@/assets/pricing/security.png";
@@ -16,64 +18,28 @@ export default function Pricing() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'Starter' | 'Growth' | 'Scale'>('Growth');
 
-  const pricingPlans = [
-    {
-      name: "Starter",
-      price: "₹8k–₹25k",
-      priceNote: "Starting from ₹8,000",
-      description: "Perfect for small businesses and personal websites",
-      popular: false,
-      features: [
-        "1–3 responsive pages",
-        "Mobile-first design",
-        "Basic SEO setup",
-        "SSL certificate included",
-        "Domain setup help",
-        "30-day post-launch support",
-        "Contact form integration"
-      ],
-      cta: "Choose Starter",
-      note: "Custom features available on request"
-    },
-    {
-      name: "Growth",
-      price: "₹25k–₹80k",
-      priceNote: "Starting from ₹25,000",
-      description: "For businesses with dynamic content and custom needs",
-      popular: true,
-      features: [
-        "5–10 custom pages",
-        "Content Management System",
-        "Custom UI/UX design",
-        "Backend integration",
-        "Analytics setup",
-        "60-day support & updates",
-        "Performance optimization",
-        "Social media integration"
-      ],
-      cta: "Choose Growth",
-      note: "Most popular for growing businesses"
-    },
-    {
-      name: "Scale",
-      price: "₹80k+",
-      priceNote: "Starting from ₹80,000",
-      description: "Custom applications and enterprise solutions",
-      popular: false,
-      features: [
-        "Unlimited pages & features",
-        "Complex backend systems",
-        "API integrations",
-        "Custom admin dashboard",
-        "Advanced analytics",
-        "90-day premium support",
-        "Performance SLA",
-        "Scalable architecture"
-      ],
-      cta: "Choose Scale",
-      note: "Enterprise-grade solutions"
+  // Fetch dynamic pricing plans
+  const { data: pricingData, isLoading: plansLoading, error: plansError } = useQuery({
+    queryKey: ['pricing-plans'],
+    queryFn: () => pricingAPI.getPlans(),
+  });
+
+  const dynamicPlans = pricingData?.data?.data?.plans || [];
+
+  // Use dynamic plans only
+  const pricingPlans = dynamicPlans;
+
+  // Update activeTab based on available plans
+  useEffect(() => {
+    if (pricingPlans.length > 0) {
+      const popularPlan = pricingPlans.find((plan: any) => plan.popular);
+      if (popularPlan) {
+        setActiveTab(popularPlan.name as 'Starter' | 'Growth' | 'Scale');
+      } else {
+        setActiveTab(pricingPlans[0].name as 'Starter' | 'Growth' | 'Scale');
+      }
     }
-  ];
+  }, [pricingPlans]);
 
   const comparisonFeatures = [
     {
@@ -361,9 +327,49 @@ export default function Pricing() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
+            {plansLoading ? (
+              // Loading state
+              [...Array(3)].map((_, index) => (
+                <Card key={index} className="relative border border-white/5 bg-[#1A1F26] animate-pulse">
+                  <CardHeader className="text-center p-8 pb-4">
+                    <div className="h-6 bg-gray-700 rounded mb-4"></div>
+                    <div className="h-10 bg-gray-700 rounded mb-4"></div>
+                    <div className="h-4 bg-gray-700 rounded mb-4"></div>
+                    <div className="h-16 bg-gray-700 rounded"></div>
+                  </CardHeader>
+                  <CardContent className="p-8 pt-4">
+                    <div className="space-y-4 mb-8">
+                      {[...Array(6)].map((_, idx) => (
+                        <div key={idx} className="h-4 bg-gray-700 rounded"></div>
+                      ))}
+                    </div>
+                    <div className="h-12 bg-gray-700 rounded"></div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : plansError ? (
+              // Error state
+              <div className="col-span-full text-center py-12">
+                <p className="text-red-400 mb-4">❌ Failed to load pricing plans</p>
+                <p className="text-gray-400 text-sm mb-4">Please try refreshing the page</p>
+                <Button 
+                  onClick={() => window.location.reload()}
+                  className="bg-[#007C78] hover:bg-[#006763] text-white"
+                >
+                  Retry
+                </Button>
+              </div>
+            ) : pricingPlans.length === 0 ? (
+              // No plans available
+              <div className="col-span-full text-center py-12">
+                <p className="text-yellow-400 mb-4">⚠️ No pricing plans available</p>
+                <p className="text-gray-400 text-sm">Please contact us for pricing information</p>
+              </div>
+            ) : null}
+            
+            {!plansLoading && pricingPlans.map((plan: any, index: number) => (
               <Card 
-                key={index}
+                key={plan._id || plan.name || index}
                 className={`pricing-card relative border border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-300 bg-[#1A1F26] ${
                   plan.popular ? 'lg:scale-105 ring-2 ring-[#FF6B3D] shadow-[0_0_30px_rgba(255,107,61,0.3)]' : ''
                 }`}
@@ -381,9 +387,11 @@ export default function Pricing() {
                   <div className="text-4xl font-bold text-white mb-2" style={{ letterSpacing: '-0.02em' }}>
                     {plan.price}
                   </div>
-                  <p className="text-sm text-[#B0B3B8] mb-4">
-                    {plan.priceNote}
-                  </p>
+                  {plan.priceNote && (
+                    <p className="text-sm text-[#B0B3B8] mb-4">
+                      {plan.priceNote}
+                    </p>
+                  )}
                   <CardDescription className="text-base leading-relaxed text-[#E4E6EB]">
                     {plan.description}
                   </CardDescription>
@@ -391,7 +399,7 @@ export default function Pricing() {
 
                 <CardContent className="p-8 pt-4">
                   <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature, idx) => (
+                    {plan.features.map((feature: string, idx: number) => (
                       <li key={idx} className="flex items-start space-x-3">
                         <Check className="w-5 h-5 text-[#2ECC71] mt-0.5 flex-shrink-0" />
                         <span className="text-[#E4E6EB]">{feature}</span>
@@ -411,9 +419,11 @@ export default function Pricing() {
                     <Link to="/contact">{plan.cta}</Link>
                   </Button>
 
-                  <p className="text-sm text-[#B0B3B8] text-center mt-4">
-                    {plan.note}
-                  </p>
+                  {plan.note && (
+                    <p className="text-sm text-[#B0B3B8] text-center mt-4">
+                      {plan.note}
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             ))}
