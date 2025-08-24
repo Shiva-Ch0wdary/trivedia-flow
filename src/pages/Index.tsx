@@ -376,58 +376,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Pricing Preview */}
-      <section className="bg-gray-900 py-24 border-t border-gray-800">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl text-white mb-6">Simple, Transparent Pricing</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mb-6"></div>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-              Choose the perfect plan for your project needs
-            </p>
-          </div>
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-            <PricingCard
-              title="Starter"
-              range="₹15K - ₹50K"
-              features={[
-                "Landing pages",
-                "Basic UI/UX design",
-                "3 months support",
-                "Mobile responsive"
-              ]}
-            />
-            <PricingCard
-              title="Growth"
-              range="₹50K - ₹2L"
-              features={[
-                "Full websites",
-                "Custom features",
-                "6 months support",
-                "SEO optimization",
-                "Analytics setup"
-              ]}
-              isPopular={true}
-            />
-            <PricingCard
-              title="Scale"
-              range="₹2L+"
-              features={[
-                "Complex applications",
-                "Mobile apps",
-                "12 months support",
-                "DevOps & hosting",
-                "Dedicated team"
-              ]}
-            />
-          </div>
-          <div className="text-center mt-16">
-            <Button asChild size="lg" className="bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white px-8 py-4 text-lg shadow-lg shadow-teal-500/25">
-              <Link to="/pricing">View Detailed Pricing</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Testimonials */}
       <section className="bg-black py-24 border-t border-gray-800">

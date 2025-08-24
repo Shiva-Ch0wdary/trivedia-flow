@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import SEO from "@/components/SEO";
 import { generateOrganizationSchema } from "@/lib/seo";
-import WordByWordTyping from "@/components/ui/word-by-word-typing";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -298,32 +297,13 @@ export default function About() {
                 Our Journey
               </Badge>
               <div className="space-y-6">
-                <WordByWordTyping
-                  text={`Building Digital Dreams
-
-Founded in 2019 in Khammam, India, Trivesha began with a simple mission: to bridge the gap between innovative ideas and exceptional digital execution. What started as a small team of passionate developers has grown into a trusted partner for businesses worldwide.
-
-We specialize in creating digital experiences that not only look beautiful but also drive real business results. From startups to established enterprises, we've helped our clients transform their digital presence and achieve their goals.
-
-Today, we continue to push boundaries with cutting-edge technologies while maintaining our core values of clarity, craft, and commitment.`}
-                  className="text-lg leading-relaxed"
-                  speed={20}
-                  startDelay={300}
-                  highlightWords={{
-                    "Building": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "Digital": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "Dreams": "text-teal-300 font-bold text-3xl md:text-4xl font-heading",
-                    "trusted": "text-teal-300 font-semibold",
-                    "partner": "text-teal-300 font-semibold",
-                    "businesses": "text-teal-300 font-semibold",
-                    "worldwide": "text-teal-300 font-semibold",
-                    "digital": "text-orange-300 font-semibold",
-                    "experiences": "text-orange-300 font-semibold",
-                    "beautiful": "text-orange-300 font-semibold",
-                    "cutting-edge": "text-purple-300 font-semibold",
-                    "technologies": "text-purple-300 font-semibold"
-                  }}
-                />
+                <div className="text-lg leading-relaxed">
+                  <span className="text-teal-300 font-bold text-3xl md:text-4xl font-heading">Building Digital Dreams</span>
+                  <br /><br />
+                  Founded in 2019 in Khammam, India, Trivesha began with a simple mission: to bridge the gap between innovative ideas and exceptional digital execution. What started as a small team of passionate developers has grown into a <span className="text-teal-300 font-semibold">trusted partner</span> for <span className="text-teal-300 font-semibold">businesses worldwide</span>.<br /><br />
+                  We specialize in creating <span className="text-orange-300 font-semibold">digital experiences</span> that not only look <span className="text-orange-300 font-semibold">beautiful</span> but also drive real business results. From startups to established enterprises, we've helped our clients transform their digital presence and achieve their goals.<br /><br />
+                  Today, we continue to push boundaries with <span className="text-purple-300 font-semibold">cutting-edge technologies</span> while maintaining our core values of clarity, craft, and commitment.
+                </div>
               </div>
             </div>
             <div className="relative">
@@ -365,13 +345,13 @@ Today, we continue to push boundaries with cutting-edge technologies while maint
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {milestones.map((milestone, index) => (
-                <div key={index} className="relative">
+                <div key={index} className="relative h-full">
                   {/* Timeline connector line for desktop */}
                   {index < milestones.length - 1 && (
                     <div className="hidden lg:block absolute top-8 left-full w-8 h-0.5 bg-gradient-to-r from-teal-400/50 to-transparent z-0" />
                   )}
                   
-                  <div className="group cursor-pointer relative z-10">
+                  <div className="group cursor-pointer relative z-10 h-full flex flex-col">
                     {/* Year badge with glow */}
                     <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
                       milestone.isHighlight 
@@ -383,12 +363,12 @@ Today, we continue to push boundaries with cutting-edge technologies while maint
                       </span>
                     </div>
                     
-                    {/* Content card */}
-                    <div className="bg-gradient-to-br from-[#111528]/90 to-[#0A0E2A]/90 backdrop-blur-sm border border-white/10 rounded-xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_50px_rgba(45,212,191,0.1)] group-hover:border-teal-400/30 group-hover:-translate-y-1 transition-all duration-300">
+                    {/* Content card with fixed height */}
+                    <div className="bg-gradient-to-br from-[#111528]/90 to-[#0A0E2A]/90 backdrop-blur-sm border border-white/10 rounded-xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_50px_rgba(45,212,191,0.1)] group-hover:border-teal-400/30 group-hover:-translate-y-1 transition-all duration-300 flex-1 flex flex-col min-h-[200px]">
                       <h3 className="text-lg font-bold text-zinc-100 mb-3 group-hover:text-teal-300 transition-colors">
                         {milestone.title}
                       </h3>
-                      <p className="text-sm text-zinc-400 leading-relaxed">
+                      <p className="text-sm text-zinc-400 leading-relaxed flex-1">
                         {milestone.description}
                       </p>
                       

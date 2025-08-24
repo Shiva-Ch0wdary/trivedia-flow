@@ -303,9 +303,64 @@ export default function Services() {
         {categories.map((category, index) => (
           <div 
             key={index} 
-            className={`py-16 ${index % 2 === 0 ? 'bg-[#0A0E2A]' : 'bg-[#0F1428]'}`}
+            className={`py-16 relative overflow-hidden ${index % 2 === 0 ? 'bg-[#0A0E2A]' : 'bg-[#0F1428]'}`}
           >
-            <div className="container mx-auto max-w-7xl px-6">
+            {/* Timeline Pattern Background */}
+            <div className="absolute inset-0 opacity-5">
+              {/* Vertical timeline lines */}
+              <div className="absolute left-1/4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#2DD4BF] to-transparent" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#FF7849] to-transparent" />
+              <div className="absolute left-3/4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#2DD4BF] to-transparent" />
+              
+              {/* Horizontal connecting lines */}
+              <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2DD4BF]/50 to-transparent" />
+              <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF7849]/50 to-transparent" />
+              
+              {/* Timeline nodes/dots */}
+              <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-[#2DD4BF]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute top-1/4 left-1/2 w-2 h-2 bg-[#FF7849]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute top-1/4 left-3/4 w-3 h-3 bg-[#2DD4BF]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              
+              <div className="absolute top-3/4 left-1/4 w-2 h-2 bg-[#FF7849]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute top-3/4 left-1/2 w-3 h-3 bg-[#2DD4BF]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute top-3/4 left-3/4 w-2 h-2 bg-[#FF7849]/60 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+              
+              {/* Diagonal connection lines */}
+              <div className="absolute top-1/4 left-1/4 w-32 h-px bg-gradient-to-r from-[#2DD4BF]/30 to-transparent transform rotate-45 origin-left" />
+              <div className="absolute top-3/4 right-1/4 w-32 h-px bg-gradient-to-l from-[#FF7849]/30 to-transparent transform -rotate-45 origin-right" />
+            </div>
+            
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-3">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `
+                  linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px),
+                  linear-gradient(rgba(255,120,73,0.1) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(255,120,73,0.1) 1px, transparent 1px)
+                `,
+                backgroundSize: '80px 80px, 80px 80px, 120px 120px, 120px 120px',
+                backgroundPosition: '0 0, 0 0, 40px 40px, 40px 40px'
+              }} />
+            </div>
+            
+            {/* Flowing timeline animation */}
+            <div className="absolute inset-0 opacity-4">
+              <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2DD4BF]/40 to-transparent animate-pulse" style={{ animationDelay: `${index * 0.5}s` }} />
+              <div className="absolute top-0 bottom-0 left-1/2 w-px bg-gradient-to-b from-transparent via-[#FF7849]/40 to-transparent animate-pulse" style={{ animationDelay: `${index * 0.8}s` }} />
+            </div>
+            
+            {/* Subtle radial gradients */}
+            <div className="absolute inset-0 opacity-8">
+              <div className="absolute inset-0" style={{
+                background: `
+                  radial-gradient(ellipse 200px 100px at ${index % 2 === 0 ? '20%' : '80%'} 30%, rgba(45,212,191,0.08), transparent),
+                  radial-gradient(ellipse 150px 75px at ${index % 2 === 0 ? '80%' : '20%'} 70%, rgba(255,120,73,0.06), transparent)
+                `
+              }} />
+            </div>
+            
+            <div className="container mx-auto max-w-7xl px-6 relative z-10">
               <div className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                 <div className={`space-y-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <Badge variant="secondary" className="text-[#2DD4BF] bg-[#2DD4BF]/10 border border-[#2DD4BF]/20">
