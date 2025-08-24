@@ -36,18 +36,18 @@ const ContactManagement = () => {
   const { toast } = useToast();
 
   const statusColors = {
-    new: 'bg-blue-100 text-blue-800',
-    contacted: 'bg-yellow-100 text-yellow-800',
-    'in-progress': 'bg-purple-100 text-purple-800',
-    completed: 'bg-green-100 text-green-800',
-    archived: 'bg-gray-100 text-gray-800'
+    new: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    contacted: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
+    'in-progress': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    completed: 'bg-green-500/20 text-green-300 border-green-500/30',
+    archived: 'bg-gray-500/20 text-gray-300 border-gray-500/30'
   };
 
   const priorityColors = {
-    low: 'bg-gray-100 text-gray-800',
-    medium: 'bg-blue-100 text-blue-800',
-    high: 'bg-orange-100 text-orange-800',
-    urgent: 'bg-red-100 text-red-800'
+    low: 'bg-gray-500/20 text-gray-300 border-gray-500/30',
+    medium: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    high: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+    urgent: 'bg-red-500/20 text-red-300 border-red-500/30'
   };
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const ContactManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-teal-500"></div>
       </div>
     );
   }
@@ -121,31 +121,32 @@ const ContactManagement = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">Contact Management</h1>
-        <Badge variant="outline" className="text-lg px-3 py-1">
+        <h1 className="text-3xl font-bold text-white">Contact Management</h1>
+        <Badge variant="outline" className="text-lg px-3 py-1 border-gray-600 text-gray-300">
           {contacts.length} Total Contacts
         </Badge>
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="bg-gray-800/50 border-gray-700">
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Search</label>
+              <label className="block text-sm font-medium mb-2 text-gray-300">Search</label>
               <Input
                 placeholder="Search by name, email, or company..."
                 value={filters.search}
                 onChange={(e) => setFilters({...filters, search: e.target.value})}
+                className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Status</label>
+              <label className="block text-sm font-medium mb-2 text-gray-300">Status</label>
               <Select value={filters.status} onValueChange={(value) => setFilters({...filters, status: value})}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-gray-800 border-gray-600">
                   <SelectItem value="all">All Statuses</SelectItem>
                   <SelectItem value="new">New</SelectItem>
                   <SelectItem value="contacted">Contacted</SelectItem>
@@ -156,12 +157,12 @@ const ContactManagement = () => {
               </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Priority</label>
+              <label className="block text-sm font-medium mb-2 text-gray-300">Priority</label>
               <Select value={filters.priority} onValueChange={(value) => setFilters({...filters, priority: value})}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-gray-800 border-gray-600">
                   <SelectItem value="all">All Priorities</SelectItem>
                   <SelectItem value="low">Low</SelectItem>
                   <SelectItem value="medium">Medium</SelectItem>
@@ -177,12 +178,12 @@ const ContactManagement = () => {
       {/* Contacts List */}
       <div className="grid gap-6">
         {contacts.map((contact) => (
-          <Card key={contact._id} className="hover:shadow-lg transition-shadow">
+          <Card key={contact._id} className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-200">
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-xl text-blue-600">{contact.name}</CardTitle>
-                  <p className="text-gray-600 mt-1">
+                  <CardTitle className="text-xl text-teal-400">{contact.name}</CardTitle>
+                  <p className="text-gray-400 mt-1">
                     {contact.email} • {contact.company && `${contact.company} • `}
                     {formatDate(contact.createdAt)}
                   </p>
@@ -200,20 +201,20 @@ const ContactManagement = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <p className="text-sm text-gray-600">Project Type: <span className="font-medium text-gray-900">{contact.projectType || 'Not specified'}</span></p>
-                  <p className="text-sm text-gray-600">Budget: <span className="font-medium text-gray-900">{contact.budget || 'Not specified'}</span></p>
-                  <p className="text-sm text-gray-600">Timeline: <span className="font-medium text-gray-900">{contact.timeline || 'Not specified'}</span></p>
+                  <p className="text-sm text-gray-400">Project Type: <span className="font-medium text-gray-200">{contact.projectType || 'Not specified'}</span></p>
+                  <p className="text-sm text-gray-400">Budget: <span className="font-medium text-gray-200">{contact.budget || 'Not specified'}</span></p>
+                  <p className="text-sm text-gray-400">Timeline: <span className="font-medium text-gray-200">{contact.timeline || 'Not specified'}</span></p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Phone: <span className="font-medium text-gray-900">{contact.phone || 'Not provided'}</span></p>
-                  <p className="text-sm text-gray-600">User Email Sent: <span className={contact.emailSentToUser ? 'text-green-600' : 'text-red-600'}>{contact.emailSentToUser ? 'Yes' : 'No'}</span></p>
-                  <p className="text-sm text-gray-600">Admin Email Sent: <span className={contact.emailSentToAdmin ? 'text-green-600' : 'text-red-600'}>{contact.emailSentToAdmin ? 'Yes' : 'No'}</span></p>
+                  <p className="text-sm text-gray-400">Phone: <span className="font-medium text-gray-200">{contact.phone || 'Not provided'}</span></p>
+                  <p className="text-sm text-gray-400">User Email Sent: <span className={contact.emailSentToUser ? 'text-green-400' : 'text-red-400'}>{contact.emailSentToUser ? 'Yes' : 'No'}</span></p>
+                  <p className="text-sm text-gray-400">Admin Email Sent: <span className={contact.emailSentToAdmin ? 'text-green-400' : 'text-red-400'}>{contact.emailSentToAdmin ? 'Yes' : 'No'}</span></p>
                 </div>
               </div>
               
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Message:</p>
-                <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">{contact.message}</p>
+                <p className="text-sm font-medium text-gray-300 mb-2">Message:</p>
+                <p className="text-sm text-gray-300 bg-gray-700 p-3 rounded-lg">{contact.message}</p>
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -252,7 +253,7 @@ const ContactManagement = () => {
       {contacts.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
-            <p className="text-gray-500 text-lg">No contacts found matching your filters.</p>
+            <p className="text-gray-400 text-lg">No contacts found matching your filters.</p>
           </CardContent>
         </Card>
       )}
