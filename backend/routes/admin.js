@@ -331,6 +331,11 @@ router.delete("/users/:id", async (req, res) => {
 // @access  Private (Admin only)
 router.get("/stats", async (req, res) => {
   try {
+    // Import models
+    const Project = (await import("../models/Project.js")).default;
+    const PricingPlan = (await import("../models/PricingPlan.js")).default;
+
+    // User statistics
     const totalUsers = await User.countDocuments();
     const activeUsers = await User.countDocuments({ isActive: true });
     const adminUsers = await User.countDocuments({ role: "admin" });
@@ -351,9 +356,53 @@ router.get("/stats", async (req, res) => {
       lastLogin: { $gte: oneDayAgo },
     });
 
+    // Project statistics
+    const totalProjects = await Project.countDocuments();
+    const publishedProjects = await Project.countDocuments({
+      status: "published",
+    });
+    const draftProjects = await Project.countDocuments({ status: "draft" });
+    const featuredProjects = await Project.countDocuments({ featured: true });
+
+    // Projects by category
+    const webDesignProjects = await Project.countDocuments({
+      category: "Web Design",
+      status: "published",
+    });
+    const webDevProjects = await Project.countDocuments({
+      category: "Web Development",
+      status: "published",
+    });
+    const mobileAppProjects = await Project.countDocuments({
+      category: "Mobile Apps",
+      status: "published",
+    });
+    const gameProjects = await Project.countDocuments({
+      category: "Games",
+      status: "published",
+    });
+
+    // Recent projects (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const recentProjects = await Project.countDocuments({
+      createdAt: { $gte: thirtyDaysAgo },
+    });
+
+    // Pricing plan statistics
+    const totalPricingPlans = await PricingPlan.countDocuments();
+    const activePricingPlans = await PricingPlan.countDocuments({
+      isActive: true,
+    });
+    const popularPricingPlan = await PricingPlan.findOne({
+      popular: true,
+      isActive: true,
+    });
+
     res.json({
       success: true,
       data: {
+        // User stats
         totalUsers,
         activeUsers,
         adminUsers,
@@ -361,10 +410,116 @@ router.get("/stats", async (req, res) => {
         viewerUsers,
         recentUsers,
         recentLogins,
+
+        // Project stats
+        totalProjects,
+        publishedProjects,
+        draftProjects,
+        featuredProjects,
+        webDesignProjects,
+        webDevProjects,
+        mobileAppProjects,
+        gameProjects,
+        recentProjects,
+
+        // Pricing stats
+        totalPricingPlans,
+        activePricingPlans,
+        popularPricingPlan: popularPricingPlan?.name || "None",
+
+        // Growth metrics
+        userGrowthRate:
+          recentUsers > 0 ? Math.round((recentUsers / totalUsers) * 100) : 0,
+        projectGrowthRate:
+          recentProjects > 0
+            ? Math.round((recentProjects / totalProjects) * 100)
+            : 0,
       },
     });
   } catch (error) {
     console.error("Get stats error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+});
+
+// @desc    Get recent activity feed
+// @route   GET /api/admin/recent-activity
+// @access  Private (Admin only)
+router.get("/recent-activity", async (req, res) => {
+  try {
+    const Project = (await import("../models/Project.js")).default;
+    const PricingPlan = (await import("../models/PricingPlan.js")).default;
+
+    const limit = parseInt(req.query.limit) || 10;
+
+    // Get recent users
+    const recentUsers = await User.find()
+      .select("firstName lastName email role createdAt")
+      .sort({ createdAt: -1 })
+      .limit(Math.floor(limit / 3))
+      .lean();
+
+    // Get recent projects
+    const recentProjects = await Project.find()
+      .select("title status category createdAt")
+      .populate("createdBy", "firstName lastName")
+      .sort({ createdAt: -1 })
+      .limit(Math.floor(limit / 3))
+      .lean();
+
+    // Get recent pricing updates
+    const recentPricingUpdates = await PricingPlan.find()
+      .select("name popular isActive updatedAt")
+      .populate("updatedBy", "firstName lastName")
+      .sort({ updatedAt: -1 })
+      .limit(Math.floor(limit / 3))
+      .lean();
+
+    // Combine and format activities
+    const activities = [
+      ...recentUsers.map((user) => ({
+        type: "user",
+        action: "User registered",
+        details: `${user.firstName} ${user.lastName} (${user.role})`,
+        timestamp: user.createdAt,
+        icon: "UserPlus",
+        color: "blue",
+      })),
+      ...recentProjects.map((project) => ({
+        type: "project",
+        action: `Project ${project.status}`,
+        details: `${project.title} (${project.category})`,
+        timestamp: project.createdAt,
+        icon: "FolderPlus",
+        color: "green",
+      })),
+      ...recentPricingUpdates.map((plan) => ({
+        type: "pricing",
+        action: "Pricing updated",
+        details: `${plan.name} plan ${plan.popular ? "(marked popular)" : ""}`,
+        timestamp: plan.updatedAt,
+        icon: "DollarSign",
+        color: "orange",
+      })),
+    ];
+
+    // Sort by timestamp and limit
+    const sortedActivities = activities
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, limit);
+
+    res.json({
+      success: true,
+      data: {
+        activities: sortedActivities,
+        total: activities.length,
+      },
+    });
+  } catch (error) {
+    console.error("Get recent activity error:", error);
     res.status(500).json({
       success: false,
       message: "Server error",

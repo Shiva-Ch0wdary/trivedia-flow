@@ -39,16 +39,15 @@ import { formatDistanceToNow } from 'date-fns';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  
   const { data: stats, isLoading, error } = useQuery({
     queryKey: ['admin-stats'],
     queryFn: () => adminAPI.getStats(),
     refetchInterval: 30000, // Auto-refresh every 30 seconds
   });
 
-  const { data: users } = useQuery({
+  const { data: users, isLoading: usersLoading } = useQuery({
     queryKey: ['admin-users'],
-    queryFn: () => adminAPI.getUsers(),
+    queryFn: () => adminAPI.getUsers({ limit: 5 }),
   });
 
   const { data: recentActivity, isLoading: activityLoading } = useQuery({
@@ -99,17 +98,30 @@ const Dashboard: React.FC = () => {
       description: 'Currently active users',
       color: 'text-green-400',
       bgColor: 'bg-green-500/10',
-      change: `${statsData.activeUsersChange || 0}% this month`,
+      change: `${statsData.recentLogins || 0} recent logins`,
     },
+    
+    // Project Statistics
     {
       title: 'Total Projects',
       value: statsData.totalProjects || 0,
-      icon: Briefcase,
-      description: 'Portfolio projects',
+      icon: FolderOpen,
+      description: 'All projects in system',
       color: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
       change: `${statsData.publishedProjects || 0} published`,
     },
+    {
+      title: 'Published Projects',
+      value: statsData.publishedProjects || 0,
+      icon: Globe,
+      description: 'Live projects',
+      color: 'text-teal-400',
+      bgColor: 'bg-teal-500/10',
+      change: `+${statsData.recentProjects || 0} this month`,
+    },
+    
+    // Featured and Draft Projects
     {
       title: 'Featured Projects',
       value: statsData.featuredProjects || 0,
@@ -117,67 +129,94 @@ const Dashboard: React.FC = () => {
       description: 'Highlighted projects',
       color: 'text-yellow-400',
       bgColor: 'bg-yellow-500/10',
-      change: `${statsData.draftProjects || 0} drafts`,
+      change: 'Premium showcase',
     },
+    {
+      title: 'Draft Projects',
+      value: statsData.draftProjects || 0,
+      icon: FileText,
+      description: 'Projects in progress',
+      color: 'text-orange-400',
+      bgColor: 'bg-orange-500/10',
+      change: 'Awaiting publication',
+    },
+    
+    // Pricing Statistics
     {
       title: 'Pricing Plans',
-      value: statsData.totalPricingPlans || 0,
+      value: statsData.activePricingPlans || 0,
       icon: DollarSign,
       description: 'Active pricing plans',
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
-      change: `${statsData.activePricingPlans || 0} active`,
+      color: 'text-emerald-400',
+      bgColor: 'bg-emerald-500/10',
+      change: `Popular: ${statsData.popularPricingPlan}`,
     },
     {
-      title: 'Web Development',
-      value: statsData.projectsByCategory?.['Web Development'] || 0,
-      icon: Code,
-      description: 'Web dev projects',
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      change: 'Category stats',
-    },
-    {
-      title: 'UI/UX Design',
-      value: statsData.projectsByCategory?.['UI/UX Design'] || 0,
-      icon: Palette,
-      description: 'Design projects',
-      color: 'text-pink-400',
-      bgColor: 'bg-pink-500/10',
-      change: 'Category stats',
-    },
-    {
-      title: 'Mobile Apps',
-      value: statsData.projectsByCategory?.['Mobile App'] || 0,
-      icon: Smartphone,
-      description: 'Mobile projects',
+      title: 'Growth Rate',
+      value: `${statsData.userGrowthRate || 0}%`,
+      icon: TrendingUp,
+      description: 'User growth this week',
       color: 'text-indigo-400',
       bgColor: 'bg-indigo-500/10',
-      change: 'Category stats',
+      change: `${statsData.projectGrowthRate || 0}% projects`,
     },
   ];
 
-  // User role statistics
   const roleStats = [
-    { role: 'Admin', count: statsData.adminUsers || 0, color: 'bg-red-500', icon: Shield },
-    { role: 'Users', count: statsData.regularUsers || 0, color: 'bg-blue-500', icon: Users },
-    { role: 'Inactive', count: statsData.inactiveUsers || 0, color: 'bg-gray-500', icon: UserX },
+    {
+      role: 'Admin',
+      count: statsData.adminUsers || 0,
+      color: 'bg-red-500',
+      icon: Shield,
+    },
+    {
+      role: 'Editor',
+      count: statsData.editorUsers || 0,
+      color: 'bg-blue-500',
+      icon: UserCheck,
+    },
+    {
+      role: 'Viewer',
+      count: statsData.viewerUsers || 0,
+      color: 'bg-green-500',
+      icon: Eye,
+    },
   ];
 
-  // Project category statistics
   const projectCategoryStats = [
-    { category: 'Web Development', count: statsData.projectsByCategory?.['Web Development'] || 0, color: 'bg-blue-500', icon: Code },
-    { category: 'UI/UX Design', count: statsData.projectsByCategory?.['UI/UX Design'] || 0, color: 'bg-pink-500', icon: Palette },
-    { category: 'Mobile App', count: statsData.projectsByCategory?.['Mobile App'] || 0, color: 'bg-indigo-500', icon: Smartphone },
-    { category: 'Games', count: statsData.projectsByCategory?.['Games'] || 0, color: 'bg-green-500', icon: Gamepad2 },
-    { category: 'Branding', count: statsData.projectsByCategory?.['Branding'] || 0, color: 'bg-purple-500', icon: PaintBucket },
+    {
+      category: 'Web Design',
+      count: statsData.webDesignProjects || 0,
+      color: 'bg-pink-500',
+      icon: PaintBucket,
+    },
+    {
+      category: 'Web Development',
+      count: statsData.webDevProjects || 0,
+      color: 'bg-blue-500',
+      icon: Code,
+    },
+    {
+      category: 'Mobile Apps',
+      count: statsData.mobileAppProjects || 0,
+      color: 'bg-green-500',
+      icon: Smartphone,
+    },
+    {
+      category: 'Games',
+      count: statsData.gameProjects || 0,
+      color: 'bg-purple-500',
+      icon: Gamepad2,
+    },
   ];
 
-  // Activity icon mapping
+  // Helper function to get activity icon
   const getActivityIcon = (iconName: string) => {
     const icons = {
-      Users, UserPlus, Briefcase, FolderPlus, Settings, Star, Eye, Upload, 
-      Plus, Activity, CheckCircle, AlertCircle, DollarSign
+      UserPlus,
+      FolderPlus,
+      DollarSign,
+      Activity,
     };
     return icons[iconName as keyof typeof icons] || Activity;
   };
@@ -317,6 +356,71 @@ const Dashboard: React.FC = () => {
                   <div className="text-center py-6 text-gray-400">
                     <AlertCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                     <p className="text-sm">No recent activity</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+        {/* Recent Users */}
+        <Card className="bg-gray-800/50 border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-white">Recent Users</CardTitle>
+            <CardDescription className="text-gray-400">
+              Latest registered users
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {usersLoading ? (
+              <div className="space-y-3">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-12 bg-gray-700 rounded animate-pulse" />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {users?.data?.users?.slice(0, 5).map((user: any) => (
+                  <div key={user._id} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-sm font-medium">
+                          {user.initials}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-white font-medium">{user.fullName}</p>
+                        <p className="text-gray-400 text-sm">{user.email}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Badge
+                        variant={
+                          user.role === 'admin'
+                            ? 'destructive'
+                            : user.role === 'editor'
+                            ? 'default'
+                            : 'secondary'
+                        }
+                        className="text-xs"
+                      >
+                        {user.role}
+                      </Badge>
+                      <p className="text-gray-400 text-xs mt-1">
+                        {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {users?.data?.users?.length > 0 && (
+                  <div className="pt-3 border-t border-gray-600">
+                    <Link to="/admin/users">
+                      <Button variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-700">
+                        <Users className="h-4 w-4 mr-2" />
+                        View All Users
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </div>
