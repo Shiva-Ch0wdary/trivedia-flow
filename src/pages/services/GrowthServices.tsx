@@ -177,7 +177,7 @@ export default function GrowthServices() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Growth Services — Trivesha</title>
+        <title>Growth Services - Trivesha</title>
         <meta name="description" content="Professional growth services including SEO, digital marketing, social media growth, analytics, and conversion optimization. Accelerate your business growth with data-driven strategies." />
         <link rel="canonical" href={canonical} />
       </Helmet>

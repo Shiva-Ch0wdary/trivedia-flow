@@ -155,7 +155,7 @@ export default function UIUXDesign() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>UI/UX Design Services — Trivesha</title>
+        <title>UI/UX Design Services - Trivesha</title>
         <meta name="description" content="Professional UI/UX design services using Figma and modern design tools. User-centered designs that drive engagement and conversions." />
         <link rel="canonical" href={canonical} />
       </Helmet>

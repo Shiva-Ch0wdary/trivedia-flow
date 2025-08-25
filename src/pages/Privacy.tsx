@@ -23,11 +23,11 @@ export default function Privacy() {
       icon: User,
       content: "We may collect the following types of information:",
       list: [
-        "Contact details — name, email, phone, company",
-        "Project information — details you share about your business needs",
-        "Technical data — IP address, browser type, device info",
-        "Usage data — pages visited, time spent, click patterns",
-        "Payment details (for paid projects) — processed securely by third-party payment providers"
+        "Contact details - name, email, phone, company",
+        "Project information - details you share about your business needs",
+        "Technical data - IP address, browser type, device info",
+        "Usage data - pages visited, time spent, click patterns",
+        "Payment details (for paid projects) - processed securely by third-party payment providers"
       ]
     },
     {
@@ -110,7 +110,7 @@ export default function Privacy() {
   return (
     <main className="min-h-screen bg-black">
       <Helmet>
-        <title>Privacy Policy — Trivesha</title>
+        <title>Privacy Policy - Trivesha</title>
         <meta name="description" content="Learn how Trivesha collects, uses, and protects your personal information. Your privacy matters to us." />
         <link rel="canonical" href={canonical} />
       </Helmet>

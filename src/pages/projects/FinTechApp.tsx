@@ -130,7 +130,7 @@ export default function FinTechApp() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>FinTech Mobile App — Portfolio — Trivesha</title>
+        <title>FinTech Mobile App - Portfolio - Trivesha</title>
         <meta name="description" content="Secure banking mobile app for SecureBank with 100K+ daily users, biometric authentication, and 4.8-star rating. View the complete development case study." />
         <link rel="canonical" href={canonical} />
       </Helmet>

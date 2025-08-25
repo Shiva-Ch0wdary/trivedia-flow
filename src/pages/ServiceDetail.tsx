@@ -19,8 +19,8 @@ export default function ServiceDetail() {
   return (
     <main className="section">
       <Helmet>
-        <title>{title} — Trivesha</title>
-        <meta name="description" content={`${title} by Trivesha — deliverables, process, timeline, and pricing.`} />
+        <title>{title} - Trivesha</title>
+        <meta name="description" content={`${title} by Trivesha - deliverables, process, timeline, and pricing.`} />
         <link rel="canonical" href={canonical} />
       </Helmet>
       <div className="container text-left">

@@ -157,7 +157,7 @@ export default function SaaSDashboard() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>SaaS Dashboard Development — Portfolio — Trivesha</title>
+        <title>SaaS Dashboard Development - Portfolio - Trivesha</title>
         <meta name="description" content="Real-time analytics dashboard for DataFlow Pro processing 1M+ data points daily with 99.9% uptime. Complete development case study." />
         <link rel="canonical" href={canonical} />
       </Helmet>

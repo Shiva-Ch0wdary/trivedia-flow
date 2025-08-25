@@ -5,7 +5,7 @@ export default function Integrations() {
   return (
     <main className="section">
       <Helmet>
-        <title>Integrations — Trivesha</title>
+        <title>Integrations - Trivesha</title>
         <meta name="description" content="Partner tools and integrations we support." />
         <link rel="canonical" href={canonical} />
       </Helmet>

@@ -5,7 +5,7 @@ export default function ComingSoon() {
   return (
     <main className="section">
       <Helmet>
-        <title>Coming Soon — Trivesha</title>
+        <title>Coming Soon - Trivesha</title>
         <meta name="description" content="This page is coming soon." />
         <link rel="canonical" href={canonical} />
       </Helmet>

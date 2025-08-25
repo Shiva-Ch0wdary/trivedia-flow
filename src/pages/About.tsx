@@ -134,7 +134,7 @@ export default function About() {
     {
       icon: "💎",
       title: "Clarity",
-      description: "Clear communication and transparent pricing. No hidden costs, no surprises—just honest collaboration from start to finish."
+      description: "Clear communication and transparent pricing. No hidden costs, no surprises-just honest collaboration from start to finish."
     },
     {
       icon: "🎨",
@@ -192,7 +192,7 @@ export default function About() {
   return (
     <main className="bg-[#0A0E2A] text-zinc-100">
       <SEO
-        title="About Us — Trivesha"
+        title="About Us - Trivesha"
         description="Learn about Trivesha's journey, founders, and our mission to deliver exceptional digital solutions since 2019."
         canonical="/about"
         ogImage="/social-images/og-about.png"

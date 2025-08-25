@@ -176,7 +176,7 @@ export default function InfrastructureServices() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Infrastructure Services — Trivesha</title>
+        <title>Infrastructure Services - Trivesha</title>
         <meta name="description" content="Professional infrastructure services including cloud solutions, server management, database optimization, security, and DevOps. Build reliable, scalable infrastructure." />
         <link rel="canonical" href={canonical} />
       </Helmet>

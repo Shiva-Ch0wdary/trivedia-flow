@@ -144,7 +144,7 @@ export default function Portfolio() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA]">
       <SEO
-        title="Portfolio — Trivesha"
+        title="Portfolio - Trivesha"
         description="Explore our portfolio of web design, development, mobile apps, games and maintenance projects. Real results for real businesses."
         canonical="/portfolio"
         ogImage="/social-images/og-portfolio.png"
@@ -177,7 +177,7 @@ export default function Portfolio() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2DD4BF] to-[#5EEAD4] drop-shadow-[0_4px_20px_rgba(45,212,191,0.3)]">Your Results.</span>
               </h1>
               <p className="text-lg md:text-xl text-[#A0AEC0] mb-8 leading-relaxed">
-                From Figma concepts to deployed products — here's how we deliver measurable results for businesses like yours.
+                From Figma concepts to deployed products - here's how we deliver measurable results for businesses like yours.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Button 

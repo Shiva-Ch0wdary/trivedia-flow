@@ -168,7 +168,7 @@ export default function DesignServices() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Design Services — Trivesha</title>
+        <title>Design Services - Trivesha</title>
         <meta name="description" content="Professional design services including UI/UX design, branding, website redesigns, and mobile app design. Transform your ideas into beautiful, functional designs." />
         <link rel="canonical" href={canonical} />
       </Helmet>

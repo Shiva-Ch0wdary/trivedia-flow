@@ -146,7 +146,7 @@ export default function Pricing() {
   return (
     <main className="bg-[#0E1117] text-[#E4E6EB]">
       <Helmet>
-        <title>Pricing — Trivesha</title>
+        <title>Pricing - Trivesha</title>
         <meta name="description" content="Transparent pricing for web design and development. Choose from Starter, Growth, or Scale packages with clear deliverables." />
         <link rel="canonical" href={canonical} />
       </Helmet>
@@ -791,7 +791,7 @@ export default function Pricing() {
                   "Excellent value for money. Professional service at fair prices."
                 </p>
                 <p className="text-xs text-[#007C78] font-medium mt-1">
-                  — Verified Client Review
+                  - Verified Client Review
                 </p>
               </div>
             </div>

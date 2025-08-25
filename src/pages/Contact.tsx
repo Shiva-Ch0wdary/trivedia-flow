@@ -199,7 +199,7 @@ export default function ContactDark() {
   return (
     <main className="text-zinc-100 relative">
       <Helmet>
-        <title>Contact Us — Trivesha</title>
+        <title>Contact Us - Trivesha</title>
         <meta
           name="description"
           content="Get in touch with Trivesha. Request a quote, discuss your project, or ask questions. We respond within 24 hours."

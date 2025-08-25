@@ -5,7 +5,7 @@ export default function Testimonials() {
   return (
     <main className="section">
       <Helmet>
-        <title>Testimonials — Trivesha</title>
+        <title>Testimonials - Trivesha</title>
         <meta name="description" content="Client reviews and success stories." />
         <link rel="canonical" href={canonical} />
       </Helmet>

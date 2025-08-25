@@ -179,7 +179,7 @@ export default function DevelopmentServices() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Development Services — Trivesha</title>
+        <title>Development Services - Trivesha</title>
         <meta name="description" content="Professional development services including web development, mobile apps, backend systems, and custom software solutions. Build robust applications with cutting-edge technologies." />
         <link rel="canonical" href={canonical} />
       </Helmet>

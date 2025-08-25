@@ -162,7 +162,7 @@ export default function Blog() {
   return (
     <main className="min-h-screen bg-black">
       <SEO
-        title="Insights & Ideas — Trivesha Blog"
+        title="Insights & Ideas - Trivesha Blog"
         description="Design, Development & Digital Trends from the Trivesha Team. Expert insights on web development, UI/UX design, and modern technology."
         canonical="/blog"
         ogImage="/social-images/og-blog.png"

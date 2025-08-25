@@ -171,7 +171,7 @@ export default function Services() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA]">
       <SEO
-        title="Services — Trivesha"
+        title="Services - Trivesha"
         description="Web design, development, apps, DevOps, maintenance. Explore Trivesha services and compare plans."
         canonical="/services"
         ogImage="/social-images/og-services.png"

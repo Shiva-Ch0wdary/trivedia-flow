@@ -106,7 +106,7 @@ export default function Terms() {
   return (
     <main className="min-h-screen bg-black">
       <Helmet>
-        <title>Terms of Service — Trivesha</title>
+        <title>Terms of Service - Trivesha</title>
         <meta name="description" content="Terms of Service for Trivesha. Learn about our service agreements, payment terms, and client responsibilities." />
         <link rel="canonical" href={canonical} />
       </Helmet>

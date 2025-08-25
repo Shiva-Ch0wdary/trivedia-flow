@@ -108,7 +108,7 @@ export default function ECommerceRedesign() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>E-Commerce Platform Redesign — Portfolio — Trivesha</title>
+        <title>E-Commerce Platform Redesign - Portfolio - Trivesha</title>
         <meta name="description" content="Complete e-commerce platform redesign for Fashion Forward that increased conversion rates by 45% and reduced cart abandonment by 65%. View the full case study." />
         <link rel="canonical" href={canonical} />
       </Helmet>

@@ -26,7 +26,7 @@ const FAQ = () => {
         {
           id: 'where-located',
           question: 'Where are you located?',
-          answer: 'We\'re based in Khammam, India — but we work with clients worldwide. Distance is never a barrier to delivering exceptional digital solutions.'
+          answer: 'We\'re based in Khammam, India - but we work with clients worldwide. Distance is never a barrier to delivering exceptional digital solutions.'
         },
         {
           id: 'how-to-start',
@@ -53,7 +53,7 @@ const FAQ = () => {
         {
           id: 'custom-vs-template',
           question: 'Do you offer custom designs or templates?',
-          answer: 'Always custom. No cookie-cutters — your project gets its own tailored look and feel that perfectly represents your brand and meets your specific requirements.'
+          answer: 'Always custom. No cookie-cutters - your project gets its own tailored look and feel that perfectly represents your brand and meets your specific requirements.'
         },
         {
           id: 'mobile-responsive',
@@ -107,7 +107,7 @@ const FAQ = () => {
         {
           id: 'technologies',
           question: 'Which technologies do you use?',
-          answer: 'Primarily React, TypeScript, Node.js, Python, and cloud services like AWS — but we pick the technology stack that best fits your project requirements and long-term goals.'
+          answer: 'Primarily React, TypeScript, Node.js, Python, and cloud services like AWS - but we pick the technology stack that best fits your project requirements and long-term goals.'
         },
         {
           id: 'security',
@@ -206,7 +206,7 @@ const FAQ = () => {
               Got Questions? We've Got Answers
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-300 font-['Inter']">
-              Whether it's about pricing, process, or support — here's everything you need to know.
+              Whether it's about pricing, process, or support - here's everything you need to know.
             </p>
             
             {/* Search Bar */}

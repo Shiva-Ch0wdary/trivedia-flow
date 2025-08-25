@@ -54,7 +54,7 @@ export default function CaseStudy() {
   return (
     <main className="min-h-screen bg-black">
       <Helmet>
-        <title>{project.title} Case Study — Trivesha</title>
+        <title>{project.title} Case Study - Trivesha</title>
         <meta name="description" content={`Case study: ${project.overview.substring(0, 150)}...`} />
         <link rel="canonical" href={canonical} />
       </Helmet>

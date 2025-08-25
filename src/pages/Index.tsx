@@ -176,8 +176,8 @@ export default function Index() {
   return (
     <main className="min-h-screen bg-black">
       <SEO
-        title="Build, Launch, Maintain — Websites, Apps, Games | Trivesha"
-        description="From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place. Since 2019, we've delivered 120+ projects with 99.9% uptime."
+        title="Build, Launch, Maintain - Websites, Apps, Games | Trivesha"
+        description="From Figma to Play Store: Design, Development, Deployment, Maintenance - all in one place. Since 2019, we've delivered 120+ projects with 99.9% uptime."
         canonical="/"
         ogImage="/social-images/og-home.png"
         schemaMarkup={schemaMarkup}
@@ -207,7 +207,7 @@ export default function Index() {
               </h1>
               
               <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
-                From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place.
+                From Figma to Play Store: Design, Development, Deployment, Maintenance - all in one place.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

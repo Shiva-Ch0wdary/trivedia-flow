@@ -128,7 +128,7 @@ export default function WebDevelopment() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Web Development Services — Trivesha</title>
+        <title>Web Development Services - Trivesha</title>
         <meta name="description" content="Professional web development services using React, Next.js, and modern technologies. Custom websites that drive business growth." />
         <link rel="canonical" href={canonical} />
       </Helmet>

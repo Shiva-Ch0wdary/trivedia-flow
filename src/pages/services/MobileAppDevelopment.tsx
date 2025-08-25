@@ -151,7 +151,7 @@ export default function MobileAppDevelopment() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>Mobile App Development Services — Trivesha</title>
+        <title>Mobile App Development Services - Trivesha</title>
         <meta name="description" content="Professional mobile app development for iOS and Android. React Native and Flutter apps that drive business growth." />
         <link rel="canonical" href={canonical} />
       </Helmet>

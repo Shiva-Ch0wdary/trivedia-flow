@@ -86,15 +86,15 @@ export default function ProjectDetail() {
   return (
     <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <Helmet>
-        <title>{project.title} — Portfolio — Trivesha</title>
+        <title>{project.title} - Portfolio - Trivesha</title>
         <meta name="description" content={project.description || project.longDescription} />
         <link rel="canonical" href={canonical} />
-        <meta property="og:title" content={`${project.title} — Portfolio — Trivesha`} />
+        <meta property="og:title" content={`${project.title} - Portfolio - Trivesha`} />
         <meta property="og:description" content={project.description || project.longDescription} />
         <meta property="og:image" content={project.heroImage || project.image} />
         <meta property="og:url" content={canonical} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${project.title} — Portfolio — Trivesha`} />
+        <meta name="twitter:title" content={`${project.title} - Portfolio - Trivesha`} />
         <meta name="twitter:description" content={project.description || project.longDescription} />
         <meta name="twitter:image" content={project.heroImage || project.image} />
       </Helmet>

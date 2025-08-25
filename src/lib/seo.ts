@@ -2,8 +2,8 @@
 export const SITE_CONFIG = {
   name: 'Trivesha',
   url: 'https://trivesha.com',
-  title: 'Build, Launch, Maintain — Websites, Apps, Games | Trivesha',
-  description: 'From Figma to Play Store: Design, Development, Deployment, Maintenance — all in one place. Since 2019, we\'ve delivered 120+ projects with 99.9% uptime.',
+  title: 'Build, Launch, Maintain - Websites, Apps, Games | Trivesha',
+  description: 'From Figma to Play Store: Design, Development, Deployment, Maintenance - all in one place. Since 2019, we\'ve delivered 120+ projects with 99.9% uptime.',
   keywords: 'web development, mobile app development, UI UX design, software development, digital agency, startup services, MVP development',
   author: 'Trivesha Team',
   creator: 'Trivesha',
