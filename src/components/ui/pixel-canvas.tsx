@@ -27,7 +27,7 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
       canvas.innerHTML = '';
       
       const rect = canvas.getBoundingClientRect();
-      const pixelSize = 8; // Base pixel size
+  const pixelSize = 3; // Smaller particle size for subtle effect
       const totalGap = gap;
       
       // Calculate grid dimensions
@@ -57,7 +57,7 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
           const pixel = document.createElement('div');
-          pixel.className = 'pixel';
+          pixel.className = 'pixel particle';
           
           // Calculate distance from center for staggered animation
           const distance = Math.sqrt(Math.pow(col - centerX, 2) + Math.pow(row - centerY, 2));
@@ -78,10 +78,7 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
             pixel.classList.add('dim');
           }
           
-          // Mark center pixels
-          if (Math.abs(col - centerX) <= 1 && Math.abs(row - centerY) <= 1) {
-            pixel.classList.add('center');
-          }
+          // No center highlight for particles
           
           // Random pulse animation
           if (Math.random() > 0.8) {

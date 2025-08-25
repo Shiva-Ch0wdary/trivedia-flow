@@ -1,3 +1,15 @@
+// Type for pricing plan
+type PricingPlan = {
+  _id?: string;
+  name: string;
+  price: string;
+  priceNote?: string;
+  description: string;
+  features: string[];
+  cta?: string;
+  note?: string;
+  popular?: boolean;
+};
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +44,7 @@ export default function Pricing() {
   // Update activeTab based on available plans
   useEffect(() => {
     if (pricingPlans.length > 0) {
-      const popularPlan = pricingPlans.find((plan: any) => plan.popular);
+  const popularPlan = pricingPlans.find((plan: PricingPlan) => plan.popular);
       if (popularPlan) {
         setActiveTab(popularPlan.name as 'Starter' | 'Growth' | 'Scale');
       } else {
@@ -367,7 +379,7 @@ export default function Pricing() {
               </div>
             ) : null}
             
-            {!plansLoading && pricingPlans.map((plan: any, index: number) => (
+            {!plansLoading && pricingPlans.map((plan: PricingPlan, index: number) => (
               <Card 
                 key={plan._id || plan.name || index}
                 className={`pricing-card relative border border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-300 bg-[#1A1F26] ${
@@ -743,7 +755,7 @@ export default function Pricing() {
           </div>
 
           <div className="space-y-6">
-            {faqs.map((faq, index) => (
+            {faqs.slice(0, 2).map((faq, index) => (
               <Card key={index} className="border border-white/10 bg-[#1A1F26] hover:border-[#007C78]/50 hover:bg-[#232830] transition-all duration-300">
                 <CardContent className="p-0">
                   <button
@@ -769,6 +781,11 @@ export default function Pricing() {
                 </CardContent>
               </Card>
             ))}
+            <div className="text-center pt-6">
+              <Button asChild className="bg-[#007C78] hover:bg-[#006763] text-white font-semibold px-8 py-3 rounded-xl">
+                <Link to="/faq">View all FAQ's</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -777,9 +794,7 @@ export default function Pricing() {
       <section className="py-16 bg-[#0E1117] border-t border-white/10">
         <div className="container mx-auto max-w-7xl px-6 text-center">
           <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-12">
-            <Badge variant="secondary" className="bg-[#007C78]/20 text-[#007C78] border border-[#007C78]/30 px-4 py-2">
-              ✅ JustDial Verified Partner
-            </Badge>
+          
             <div className="flex items-center space-x-4">
               <img 
                 src="/placeholder.svg" 

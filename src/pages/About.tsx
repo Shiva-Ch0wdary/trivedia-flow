@@ -119,14 +119,14 @@ export default function About() {
       role: "Co-Founder & Lead Developer",
       bio: "Full-stack developer with expertise in modern web technologies and system architecture.",
       image: "/placeholder.svg",
-      linkedin: "#"
+  linkedin: "https://www.linkedin.com/in/trivesha-tech-439635378/"
     },
     {
       name: "Shiva",
       role: "Co-Founder & Creative Director",
       bio: "UI/UX designer and strategist passionate about creating user-centered digital experiences.",
       image: "/placeholder.svg",
-      linkedin: "#"
+  linkedin: "https://www.linkedin.com/in/trivesha-tech-439635378/"
     }
   ];
 
@@ -548,9 +548,6 @@ export default function About() {
                       <h4 className="font-bold text-teal-300 text-lg mb-1">
                         {testimonial.author}
                       </h4>
-                      <p className="text-zinc-400 text-sm font-medium">
-                        {testimonial.role}
-                      </p>
                     </div>
                     
                     {/* Company badge */}
@@ -592,11 +589,7 @@ export default function About() {
                 <Link to="/contact">Request a free quote</Link>
               </Button>
               
-              {/* AI Agent mention */}
-              <div className="mt-8 inline-flex items-center space-x-2 text-sm text-zinc-400">
-                <span>💬</span>
-                <span>Quick 2-min project brief with our AI assistant</span>
-              </div>
+             
             </div>
           </div>
         </div>

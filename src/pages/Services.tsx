@@ -63,7 +63,7 @@ export default function Services() {
       icon: "⚙️",
       title: "Backend Maintenance & Deployment",
       description: "Reliable server management, continuous deployment, and infrastructure optimization services.",
-      link: "#backend",
+      link: "/services/backend",
       theme: "purple" as const
     },
     {
@@ -77,14 +77,14 @@ export default function Services() {
       icon: "🎮",
       title: "Game Development",
       description: "Casual HTML5 and mobile games with engaging gameplay and monetization strategies.",
-      link: "#games",
+      link: "/services/games",
       theme: "green" as const
     },
     {
       icon: "🌐",
       title: "Domain & Hosting Management",
       description: "Complete domain registration, DNS management, and hosting solutions for your projects.",
-      link: "#hosting",
+      link: "/services/hosting",
       theme: "pink" as const
     }
   ];
@@ -507,9 +507,6 @@ export default function Services() {
                       <h4 className="font-bold text-[#EAEAEA] text-base mb-1">
                         {testimonial.name}
                       </h4>
-                      <p className="text-sm text-[#A0AEC0] font-medium">
-                        {testimonial.role}
-                      </p>
                     </div>
                   </div>
                 </CardContent>

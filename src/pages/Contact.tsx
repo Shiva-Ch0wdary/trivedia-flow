@@ -496,7 +496,7 @@ export default function ContactDark() {
           </div>
 
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
+                {faqs.slice(0, 2).map((faq, index) => (
               <Card
                 key={index}
                 className="border border-white/10 bg-[#0F1428] hover:border-blue-400/30 hover:bg-[#0F1428]/90 transition-all duration-300"
@@ -521,6 +521,11 @@ export default function ContactDark() {
                 </CardContent>
               </Card>
             ))}
+                <div className="text-center pt-6">
+                  <Button asChild className="bg-teal-500 hover:bg-teal-400 text-black font-semibold px-8 py-3 rounded-xl">
+                    <Link to="/faq">View all FAQ's</Link>
+                  </Button>
+                </div>
           </div>
         </div>
       </section>
@@ -572,7 +577,7 @@ export default function ContactDark() {
                 <div className="flex items-center gap-4">
                   {/* LinkedIn */}
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/in/trivesha-tech-439635378/"
                     className="group w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:border-blue-400/50 rounded-xl flex items-center justify-center transition-all duration-300 hover:bg-blue-500/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(59,130,246,0.3)]"
                   >
                     <svg className="w-5 h-5 text-white group-hover:text-blue-300 transition-colors" fill="currentColor" viewBox="0 0 24 24">

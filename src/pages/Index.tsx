@@ -104,7 +104,7 @@ const PricingCard = ({ title, range, features, isPopular = false }: { title: str
   </div>
 );
 
-const TestimonialCard = ({ quote, name, company, avatar }: { quote: string; name: string; company: string; avatar: string }) => (
+const TestimonialCard = ({ quote, name, avatar }: { quote: string; name: string; avatar: string }) => (
   <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-teal-500/50 transition-all duration-300 relative group">
     <div className="absolute -top-2 -left-2 text-6xl text-teal-500/30 font-serif">"</div>
     <div className="relative z-10">
@@ -120,7 +120,6 @@ const TestimonialCard = ({ quote, name, company, avatar }: { quote: string; name
         </div>
         <div>
           <p className="font-semibold text-white">{name}</p>
-          <p className="text-sm text-teal-400">{company}</p>
         </div>
       </div>
     </div>
@@ -420,19 +419,16 @@ export default function Index() {
             <TestimonialCard
               quote="Trivesha delivered our e-commerce platform ahead of schedule. The attention to detail and performance optimization exceeded our expectations."
               name="Rajesh Kumar"
-              company="TechStart Solutions"
               avatar="/placeholder.svg"
             />
             <TestimonialCard
               quote="Clear communication and fast iterations made our mobile app project smooth. They handled both design and development perfectly."
               name="Priya Singh"
-              company="HealthTech India"
               avatar="/placeholder.svg"
             />
             <TestimonialCard
               quote="Our website conversions jumped 38% after launch. The design is beautiful and the performance is outstanding."
               name="Michael Chen"
-              company="Global Ventures"
               avatar="/placeholder.svg"
             />
           </div>

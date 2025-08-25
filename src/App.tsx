@@ -28,6 +28,9 @@ import ProjectDetail from "./pages/ProjectDetail";
 import WebDevelopment from "./pages/services/WebDevelopment";
 import MobileAppDevelopment from "./pages/services/MobileAppDevelopment";
 import UIUXDesign from "./pages/services/UIUXDesign";
+import BackendMaintenance from "./pages/services/backend";
+import GameDevelopment from "./pages/services/games";
+import HostingManagement from "./pages/services/hosting";
 import DesignServices from "./pages/services/DesignServices";
 import DevelopmentServices from "./pages/services/DevelopmentServices";
 import InfrastructureServices from "./pages/services/InfrastructureServices";
@@ -116,6 +119,27 @@ const App = () => (
                 <>
                   <Header />
                   <UIUXDesign />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/backend" element={
+                <>
+                  <Header />
+                  <BackendMaintenance />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/games" element={
+                <>
+                  <Header />
+                  <GameDevelopment />
+                  <Footer />
+                </>
+              } />
+              <Route path="/services/hosting" element={
+                <>
+                  <Header />
+                  <HostingManagement />
                   <Footer />
                 </>
               } />
