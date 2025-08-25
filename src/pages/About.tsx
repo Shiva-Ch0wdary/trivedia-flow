@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ScrollToTop from "@/components/ui/scroll-to-top";
+import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import aboutImage from "@/assets/about-1.png";
@@ -289,8 +290,25 @@ export default function About() {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-20 md:py-24 bg-[#0A0E2A]">
-        <div className="container mx-auto max-w-7xl px-6">
+      <section className="py-20 md:py-24 bg-[#0A0E2A] relative overflow-hidden">
+        {/* Animated Grid Pattern Background */}
+        <div className="absolute inset-0 opacity-20">
+          <AnimatedGridPattern 
+            className="w-full h-full object-cover"
+            width={1400}
+            height={600}
+          />
+        </div>
+        
+        {/* Additional background elements for depth */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(45,212,191,0.15), transparent 50%),
+                              radial-gradient(circle at 75% 75%, rgba(255,120,73,0.1), transparent 50%)`
+          }} />
+        </div>
+        
+        <div className="container mx-auto max-w-7xl px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
               <Badge variant="secondary" className="text-teal-300 bg-teal-500/10 border-teal-400/20">

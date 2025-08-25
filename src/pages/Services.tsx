@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import PixelCanvas from "@/components/ui/pixel-canvas";
 import designImage from "@/assets/services/design.png";
 import developmentImage from "@/assets/services/development.png";
 import infrastructureImage from "@/assets/services/infrastructure.png";
@@ -48,37 +49,43 @@ export default function Services() {
       icon: "🎨",
       title: "UI/UX Design",
       description: "Figma-first prototypes and user-centered design solutions that convert visitors into customers.",
-      link: "/services/ui-ux-design"
+      link: "/services/ui-ux-design",
+      theme: "teal" as const
     },
     {
       icon: "💻",
       title: "Website Development",
       description: "Static, dynamic, and custom websites built with modern technologies for optimal performance.",
-      link: "/services/web-development"
+      link: "/services/web-development",
+      theme: "blue" as const
     },
     {
       icon: "⚙️",
       title: "Backend Maintenance & Deployment",
       description: "Reliable server management, continuous deployment, and infrastructure optimization services.",
-      link: "#backend"
+      link: "#backend",
+      theme: "purple" as const
     },
     {
       icon: "📱",
       title: "Mobile App Development",
       description: "Cross-platform mobile applications for Play Store and App Store with native performance.",
-      link: "/services/mobile-app-development"
+      link: "/services/mobile-app-development",
+      theme: "orange" as const
     },
     {
       icon: "🎮",
       title: "Game Development",
       description: "Casual HTML5 and mobile games with engaging gameplay and monetization strategies.",
-      link: "#games"
+      link: "#games",
+      theme: "green" as const
     },
     {
       icon: "🌐",
       title: "Domain & Hosting Management",
       description: "Complete domain registration, DNS management, and hosting solutions for your projects.",
-      link: "#hosting"
+      link: "#hosting",
+      theme: "pink" as const
     }
   ];
 
@@ -242,8 +249,13 @@ export default function Services() {
           
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.slice(0, visibleProjects).map((service, index) => (
-              <Card key={index} className="service-card group cursor-pointer border border-[#1C2333] bg-[#111528] shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.25)] hover:border-[#2DD4BF]/30 transition-all duration-300">
-                <CardHeader className="text-center p-4 md:p-6">
+              <Card key={index} className="service-card group cursor-pointer border border-[#1C2333] bg-[#111528] shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.25)] hover:border-[#2DD4BF]/30 transition-all duration-300 relative overflow-hidden">
+                <PixelCanvas 
+                  theme={service.theme}
+                  gap={4}
+                  speed={25}
+                />
+                <CardHeader className="text-center p-4 md:p-6 relative z-20">
                   <div className="service-icon w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 bg-[#0F1428] border border-[#1C2333]">
                     <span className="text-lg md:text-2xl">{service.icon}</span>
                   </div>
@@ -251,12 +263,12 @@ export default function Services() {
                     {service.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 md:p-6 pt-0">
+                <CardContent className="p-4 md:p-6 pt-0 relative z-20">
                   <CardDescription className="text-center text-[#A0AEC0] leading-relaxed text-sm md:text-base">
                     {service.description}
                   </CardDescription>
                 </CardContent>
-                <CardFooter className="justify-center p-4 md:p-6 pt-0">
+                <CardFooter className="justify-center p-4 md:p-6 pt-0 relative z-20">
                   {service.link.startsWith('#') ? (
                     <a 
                       href={service.link}

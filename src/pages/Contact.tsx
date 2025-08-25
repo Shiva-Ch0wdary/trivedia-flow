@@ -9,6 +9,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ContactAnimatedBackground from "@/components/ui/contact-animated-background";
+import ContactStars from "@/components/ui/contact-stars";
 import emailIcon from "@/assets/contact/email.png";
 import callIcon from "@/assets/contact/call.png";
 import locationIcon from "@/assets/contact/location.png";
@@ -167,15 +168,18 @@ export default function ContactDark() {
           setIsSubmitted(false);
         }, 5000);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Contact form error:', error);
       
       let errorMessage = "We're experiencing technical difficulties. Please try again later.";
       
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.data?.errors) {
-        errorMessage = error.response.data.errors.map((err: any) => err.msg).join(', ');
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { data?: { message?: string; errors?: Array<{ msg: string }> } } };
+        if (axiosError.response?.data?.message) {
+          errorMessage = axiosError.response.data.message;
+        } else if (axiosError.response?.data?.errors) {
+          errorMessage = axiosError.response.data.errors.map((err: { msg: string }) => err.msg).join(', ');
+        }
       }
       
       toast({
@@ -206,6 +210,7 @@ export default function ContactDark() {
       {/* Hero Section with Animated Background */}
       <section className="contact-animated-bg relative overflow-hidden min-h-screen flex items-center">
         <ContactAnimatedBackground />
+        <ContactStars section="hero" density="medium" />
         <div className="container mx-auto max-w-7xl px-6 py-20 md:py-24 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-[0_6px_24px_rgba(255,255,255,0.35)]">
@@ -245,6 +250,7 @@ export default function ContactDark() {
 
       {/* Contact Cards */}
       <section className="py-16 bg-[#0A0E2A] relative z-10">
+        <ContactStars section="general" density="low" />
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {contactCards.map((card, index) => (
@@ -287,6 +293,7 @@ export default function ContactDark() {
 
       {/* Contact Form */}
       <section id="contact-form" className="py-20 md:py-24 bg-[#0A0E2A] relative z-10">
+        <ContactStars section="form" density="medium" />
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-teal-300 mb-4">Tell Us About Your Project</h2>
@@ -481,6 +488,7 @@ export default function ContactDark() {
 
       {/* FAQ Section */}
       <section className="py-20 md:py-24 bg-[#0A0E2A] relative z-10">
+        <ContactStars section="general" density="low" />
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-teal-300 mb-4">Frequently Asked Questions</h2>
@@ -519,6 +527,7 @@ export default function ContactDark() {
 
       {/* Footer CTA */}
       <section className="py-20 bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#0F1428] relative overflow-hidden z-10">
+        <ContactStars section="general" density="low" />
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div

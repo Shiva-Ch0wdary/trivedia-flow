@@ -1,0 +1,205 @@
+/* Pixel Canvas Shimmer Effect */
+.pixel-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+/* Show pixels on card hover with auto-fade */
+.service-card:hover .pixel-canvas {
+  opacity: 0.6;
+  animation: pixelCanvasFade 2.3s ease-in-out forwards;
+}
+
+.pixel-canvas:focus-within {
+  opacity: 0.4;
+  animation: pixelCanvasFade 2.3s ease-in-out forwards;
+}
+
+/* Auto-fade animation */
+@keyframes pixelCanvasFade {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Individual pixel styling */
+.pixel {
+  width: 100%;
+  height: 100%;
+  border-radius: 1px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: currentColor;
+  box-shadow: 0 0 2px currentColor;
+}
+
+/* Pixel animation states with auto-fade */
+.service-card:hover .pixel {
+  opacity: 0.3;
+  transform: scale(1);
+  animation: pixelFade 2.3s ease-in-out forwards;
+}
+
+.service-card:focus-within .pixel {
+  opacity: 0.2;
+  transform: scale(0.95);
+  animation: pixelFade 2.3s ease-in-out forwards;
+}
+
+/* Individual pixel auto-fade animation */
+@keyframes pixelFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  15% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  85% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+/* Pulse animation for enhanced effect with auto-fade */
+@keyframes pixelPulse {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+  87% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.service-card:hover .pixel.pulse {
+  animation: pixelPulse 2.3s ease-in-out forwards;
+}
+
+/* Color themes for different cards */
+.pixel-canvas[data-theme="teal"] .pixel {
+  color: #2DD4BF;
+}
+
+.pixel-canvas[data-theme="orange"] .pixel {
+  color: #FF7849;
+}
+
+.pixel-canvas[data-theme="blue"] .pixel {
+  color: #3B82F6;
+}
+
+.pixel-canvas[data-theme="purple"] .pixel {
+  color: #8B5CF6;
+}
+
+.pixel-canvas[data-theme="green"] .pixel {
+  color: #10B981;
+}
+
+.pixel-canvas[data-theme="pink"] .pixel {
+  color: #EC4899;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .pixel-canvas {
+    gap: 3px;
+    padding: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pixel-canvas {
+    gap: 2px;
+    padding: 2px;
+  }
+}
+
+/* Additional pixel variants */
+.pixel.bright {
+  box-shadow: 0 0 3px currentColor, 0 0 6px currentColor;
+}
+
+.pixel.dim {
+  opacity: 0.15;
+}
+
+.pixel.glow {
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+/* Staggered animation delays based on distance from center */
+.pixel[data-delay="1"] { transition-delay: 0.05s; }
+.pixel[data-delay="2"] { transition-delay: 0.1s; }
+.pixel[data-delay="3"] { transition-delay: 0.15s; }
+.pixel[data-delay="4"] { transition-delay: 0.2s; }
+.pixel[data-delay="5"] { transition-delay: 0.25s; }
+.pixel[data-delay="6"] { transition-delay: 0.3s; }
+.pixel[data-delay="7"] { transition-delay: 0.35s; }
+.pixel[data-delay="8"] { transition-delay: 0.4s; }
+.pixel[data-delay="9"] { transition-delay: 0.45s; }
+.pixel[data-delay="10"] { transition-delay: 0.5s; }
+
+/* Enhanced glow effects for special pixels with auto-fade */
+.service-card:hover .pixel.center {
+  opacity: 0.5;
+  transform: scale(1.2);
+  box-shadow: 0 0 4px currentColor, 0 0 8px currentColor;
+  animation: centerPixelFade 2.3s ease-in-out forwards;
+}
+
+/* Center pixel auto-fade animation */
+@keyframes centerPixelFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  15% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  85% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}

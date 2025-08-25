@@ -10,6 +10,8 @@ import ScrollToTop from "@/components/ui/scroll-to-top";
 import AnimatedBackground from "@/components/ui/animated-background";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Calendar, Users, HeartHandshake, Layers, Rocket, Shield, Smartphone, Globe, Gamepad2, Wrench, Eye, Star, MessageSquare, Mail } from "lucide-react";
+import "@/styles/interactive-particles.css";
+import { useEffect } from "react";
 
 const BenefitItem = ({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) => (
   <div className="flex items-center gap-4 bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-teal-500/50 transition-all duration-300 group">
@@ -143,6 +145,33 @@ export default function Index() {
     generateLocalBusinessSchema(),
     generateWebSiteSchema()
   ];
+
+  // Add mouse interaction for particles
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const ctaSection = document.querySelector('.cta-section') as HTMLElement;
+      if (!ctaSection) return;
+
+      const rect = ctaSection.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Update CSS custom properties for mouse position
+      ctaSection.style.setProperty('--mouse-x', `${x}px`);
+      ctaSection.style.setProperty('--mouse-y', `${y}px`);
+
+      // Add glow effect following mouse
+      const glowElement = ctaSection.querySelector('::before') as HTMLElement;
+      if (ctaSection.contains(e.target as Node)) {
+        ctaSection.style.setProperty('--mouse-opacity', '1');
+      } else {
+        ctaSection.style.setProperty('--mouse-opacity', '0');
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   return (
     <main className="min-h-screen bg-black">
@@ -411,31 +440,56 @@ export default function Index() {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-gradient-to-r from-gray-900 via-black to-gray-900 py-24 border-t border-teal-500/20 relative overflow-hidden">
-        {/* Animated Teal Particles Background */}
+      <section className="bg-gradient-to-r from-gray-900 via-black to-gray-900 py-24 border-t border-teal-500/20 relative overflow-hidden cta-section">
+        {/* Interactive Particles & Light Effects Background */}
         <div className="absolute inset-0">
-          {/* Large floating particles */}
-          <div className="absolute top-20 left-20 w-3 h-3 bg-teal-400/20 rounded-full animate-pulse"></div>
-          <div className="absolute top-32 right-32 w-2 h-2 bg-teal-300/30 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute bottom-40 left-40 w-4 h-4 bg-teal-500/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-40 left-1/3 w-1.5 h-1.5 bg-teal-400/25 rounded-full animate-ping" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute bottom-32 right-20 w-2.5 h-2.5 bg-teal-300/20 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute top-60 right-1/4 w-1 h-1 bg-teal-400/40 rounded-full animate-ping" style={{animationDelay: '2.5s'}}></div>
+          {/* Glowing particles with shine effect */}
+          <div className="absolute top-20 left-20 w-3 h-3 bg-teal-400/30 rounded-full animate-pulse shadow-[0_0_15px_rgba(45,212,191,0.6)] hover:shadow-[0_0_25px_rgba(45,212,191,0.8)] transition-all duration-500 cursor-pointer interactive-particle"></div>
+          <div className="absolute top-32 right-32 w-2 h-2 bg-teal-300/40 rounded-full animate-ping shadow-[0_0_10px_rgba(45,212,191,0.5)]" style={{animationDelay: '0.5s'}}></div>
+          <div className="absolute bottom-40 left-40 w-4 h-4 bg-teal-500/25 rounded-full animate-pulse shadow-[0_0_20px_rgba(45,212,191,0.7)] hover:shadow-[0_0_30px_rgba(45,212,191,0.9)] transition-all duration-500 cursor-pointer interactive-particle large" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-40 left-1/3 w-1.5 h-1.5 bg-teal-400/35 rounded-full animate-ping shadow-[0_0_8px_rgba(45,212,191,0.6)]" style={{animationDelay: '1.5s'}}></div>
+          <div className="absolute bottom-32 right-20 w-2.5 h-2.5 bg-teal-300/30 rounded-full animate-pulse shadow-[0_0_12px_rgba(45,212,191,0.5)] hover:shadow-[0_0_20px_rgba(45,212,191,0.7)] transition-all duration-500 cursor-pointer interactive-particle" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-60 right-1/4 w-1 h-1 bg-teal-400/50 rounded-full animate-ping shadow-[0_0_6px_rgba(45,212,191,0.8)]" style={{animationDelay: '2.5s'}}></div>
           
-          {/* Medium particles */}
-          <div className="absolute top-1/4 left-1/6 w-2 h-2 bg-teal-400/25 rounded-full animate-bounce" style={{animationDelay: '0.8s', animationDuration: '3s'}}></div>
-          <div className="absolute bottom-1/3 right-1/6 w-1.5 h-1.5 bg-teal-300/30 rounded-full animate-bounce" style={{animationDelay: '1.2s', animationDuration: '4s'}}></div>
-          <div className="absolute top-1/2 left-1/8 w-1 h-1 bg-teal-500/35 rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+          {/* Medium floating particles with glow */}
+          <div className="absolute top-1/4 left-1/6 w-2 h-2 bg-teal-400/35 rounded-full animate-bounce shadow-[0_0_10px_rgba(45,212,191,0.6)] hover:shadow-[0_0_18px_rgba(45,212,191,0.8)] transition-all duration-500 cursor-pointer interactive-particle" style={{animationDelay: '0.8s', animationDuration: '3s'}}></div>
+          <div className="absolute bottom-1/3 right-1/6 w-1.5 h-1.5 bg-teal-300/40 rounded-full animate-bounce shadow-[0_0_8px_rgba(45,212,191,0.5)]" style={{animationDelay: '1.2s', animationDuration: '4s'}}></div>
+          <div className="absolute top-1/2 left-1/8 w-1 h-1 bg-teal-500/45 rounded-full animate-pulse shadow-[0_0_6px_rgba(45,212,191,0.7)]" style={{animationDelay: '0.3s'}}></div>
           
-          {/* Small scattered particles */}
-          <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-teal-400/30 rounded-full animate-ping" style={{animationDelay: '3s'}}></div>
-          <div className="absolute bottom-1/4 left-1/4 w-0.5 h-0.5 bg-teal-300/40 rounded-full animate-pulse" style={{animationDelay: '3.5s'}}></div>
-          <div className="absolute top-3/4 right-1/8 w-1 h-1 bg-teal-400/20 rounded-full animate-ping" style={{animationDelay: '4s'}}></div>
+          {/* Small scattered shine particles */}
+          <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-teal-400/40 rounded-full animate-ping shadow-[0_0_8px_rgba(45,212,191,0.8)]" style={{animationDelay: '3s'}}></div>
+          <div className="absolute bottom-1/4 left-1/4 w-0.5 h-0.5 bg-teal-300/50 rounded-full animate-pulse shadow-[0_0_4px_rgba(45,212,191,0.9)]" style={{animationDelay: '3.5s'}}></div>
+          <div className="absolute top-3/4 right-1/8 w-1 h-1 bg-teal-400/30 rounded-full animate-ping shadow-[0_0_6px_rgba(45,212,191,0.6)]" style={{animationDelay: '4s'}}></div>
           
-          {/* Floating gradient orbs */}
-          <div className="absolute top-1/4 right-1/5 w-8 h-8 bg-gradient-to-r from-teal-400/10 to-teal-300/5 rounded-full blur-sm animate-pulse" style={{animationDelay: '1.8s'}}></div>
-          <div className="absolute bottom-1/5 left-1/5 w-12 h-12 bg-gradient-to-br from-teal-500/8 to-teal-400/3 rounded-full blur-md animate-pulse" style={{animationDelay: '2.3s'}}></div>
-          <div className="absolute top-2/3 left-2/3 w-6 h-6 bg-gradient-to-l from-teal-300/12 to-teal-500/6 rounded-full blur-sm animate-pulse" style={{animationDelay: '0.7s'}}></div>
+          {/* Floating gradient orbs with intense glow */}
+          <div className="absolute top-1/4 right-1/5 w-8 h-8 bg-gradient-to-r from-teal-400/20 to-teal-300/10 rounded-full blur-sm animate-pulse shadow-[0_0_25px_rgba(45,212,191,0.4)] hover:shadow-[0_0_40px_rgba(45,212,191,0.6)] transition-all duration-700 cursor-pointer interactive-particle large" style={{animationDelay: '1.8s'}}></div>
+          <div className="absolute bottom-1/5 left-1/5 w-12 h-12 bg-gradient-to-br from-teal-500/15 to-teal-400/8 rounded-full blur-md animate-pulse shadow-[0_0_30px_rgba(45,212,191,0.3)]" style={{animationDelay: '2.3s'}}></div>
+          <div className="absolute top-2/3 left-2/3 w-6 h-6 bg-gradient-to-l from-teal-300/25 to-teal-500/12 rounded-full blur-sm animate-pulse shadow-[0_0_20px_rgba(45,212,191,0.5)] hover:shadow-[0_0_35px_rgba(45,212,191,0.7)] transition-all duration-700 cursor-pointer interactive-particle" style={{animationDelay: '0.7s'}}></div>
+          
+          {/* Additional sparkle effects */}
+          <div className="absolute top-16 left-1/2 w-1 h-1 bg-white/60 rounded-full animate-ping shadow-[0_0_10px_rgba(255,255,255,0.8)] sparkle-white" style={{animationDelay: '4.5s'}}></div>
+          <div className="absolute bottom-16 right-1/2 w-0.5 h-0.5 bg-white/70 rounded-full animate-pulse shadow-[0_0_6px_rgba(255,255,255,0.9)] sparkle-white" style={{animationDelay: '5s'}}></div>
+          <div className="absolute top-1/2 right-1/5 w-1.5 h-1.5 bg-white/50 rounded-full animate-ping shadow-[0_0_8px_rgba(255,255,255,0.7)] sparkle-white" style={{animationDelay: '5.5s'}}></div>
+          <div className="absolute top-3/4 left-1/5 w-0.5 h-0.5 bg-white/80 rounded-full animate-pulse shadow-[0_0_4px_rgba(255,255,255,1)] sparkle-white" style={{animationDelay: '6s'}}></div>
+          <div className="absolute bottom-1/3 right-2/3 w-1 h-1 bg-white/55 rounded-full animate-ping shadow-[0_0_7px_rgba(255,255,255,0.8)] sparkle-white" style={{animationDelay: '6.5s'}}></div>
+          
+          {/* Moving light rays */}
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-teal-400/20 to-transparent animate-pulse" style={{animationDelay: '2s', animationDuration: '6s'}}></div>
+          <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-teal-300/15 to-transparent animate-pulse" style={{animationDelay: '4s', animationDuration: '8s'}}></div>
+          
+          {/* Interactive constellation lines (on hover) */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{stopColor: 'rgba(45,212,191,0.6)', stopOpacity: 0}} />
+                <stop offset="50%" style={{stopColor: 'rgba(45,212,191,0.8)', stopOpacity: 1}} />
+                <stop offset="100%" style={{stopColor: 'rgba(45,212,191,0.6)', stopOpacity: 0}} />
+              </linearGradient>
+            </defs>
+            <line x1="15%" y1="25%" x2="40%" y2="60%" stroke="url(#lineGradient)" strokeWidth="1" className="opacity-0 transition-opacity duration-1000 hover:opacity-100" />
+            <line x1="85%" y1="30%" x2="60%" y2="80%" stroke="url(#lineGradient)" strokeWidth="1" className="opacity-0 transition-opacity duration-1000 hover:opacity-100" />
+            <line x1="25%" y1="75%" x2="75%" y2="25%" stroke="url(#lineGradient)" strokeWidth="1" className="opacity-0 transition-opacity duration-1000 hover:opacity-100" />
+          </svg>
         </div>
         
         <div className="container mx-auto px-6 text-center relative z-10">
