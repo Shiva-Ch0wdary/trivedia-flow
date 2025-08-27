@@ -74,7 +74,7 @@ const process = [
 
 export default function GameDevelopment() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-950 text-white">
+    <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <SEO
         title="Game Development — Trivesha"
         description="Casual HTML5 and mobile games with engaging gameplay and monetization strategies."
@@ -83,13 +83,13 @@ export default function GameDevelopment() {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-green-900 to-green-950 pt-24 pb-16">
+  <section className="relative overflow-hidden bg-gradient-to-br from-[#0F1428] to-[#0A0E2A] pt-24 pb-16">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-green-300">Game Development</h1>
-              <p className="text-lg mb-8 text-green-100">Casual HTML5 and mobile games with engaging gameplay and monetization strategies for your brand or business.</p>
-              <Button asChild className="bg-green-600 hover:bg-green-500 text-white font-semibold px-8 py-4 text-lg">
+              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-[#2DD4BF]">Game Development</h1>
+              <p className="text-lg mb-8 text-[#A0AEC0]">Casual HTML5 and mobile games with engaging gameplay and monetization strategies for your brand or business.</p>
+              <Button asChild className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold px-8 py-4 text-lg">
                 <Link to="/contact">Get a free quote</Link>
               </Button>
             </div>
@@ -101,22 +101,22 @@ export default function GameDevelopment() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-green-950">
+      <section className="py-24 bg-[#0A0E2A]">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-green-300 mb-4 drop-shadow-[0_4px_20px_rgba(34,197,94,0.2)]">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#2DD4BF] mb-4 drop-shadow-[0_4px_20px_rgba(45,212,191,0.2)]">
               Why Choose Our Game Development
             </h2>
-            <p className="text-lg text-green-100 max-w-2xl mx-auto">
+            <p className="text-lg text-[#A0AEC0] max-w-2xl mx-auto">
               Engaging, scalable, and monetizable games for every platform
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, i) => (
-              <div key={i} className="group border border-green-700 bg-green-900/60 rounded-2xl p-8 text-center shadow-lg hover:shadow-green-400/10 transition-all duration-300">
+              <div key={i} className="group border border-[#1C2333] bg-[#111528] rounded-2xl p-8 text-center shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.15)] hover:border-[#2DD4BF]/30 transition-all duration-300">
                 <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="font-bold text-xl mb-2 text-green-200">{feature.title}</h3>
-                <p className="text-green-100 text-base">{feature.description}</p>
+                <h3 className="font-bold text-xl mb-2 text-[#EAEAEA]">{feature.title}</h3>
+                <p className="text-[#A0AEC0] text-base">{feature.description}</p>
               </div>
             ))}
           </div>

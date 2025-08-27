@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PixelCanvas from "@/components/ui/pixel-canvas";
+import InitialsAvatar from "@/components/ui/initials-avatar";
 import designImage from "@/assets/services/design.png";
 import developmentImage from "@/assets/services/development.png";
 import infrastructureImage from "@/assets/services/infrastructure.png";
@@ -496,9 +497,10 @@ export default function Services() {
                   
                   <div className="flex items-center space-x-4 pt-4 border-t border-[#1C2333] group-hover:border-[#2DD4BF]/20 transition-colors duration-300">
                     <div className="relative">
-                      <img 
-                        src={testimonial.avatar} 
-                        alt={testimonial.name}
+                      <InitialsAvatar
+                        name={testimonial.name}
+                        src={testimonial.avatar}
+                        size={48}
                         className="w-12 h-12 rounded-full object-cover border-2 border-[#2DD4BF]/30 group-hover:border-[#2DD4BF]/60 transition-colors duration-300"
                       />
                       <div className="absolute inset-0 rounded-full bg-[#2DD4BF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

@@ -115,18 +115,18 @@ export default function About() {
 
   const founders = [
     {
-      name: "Gopi",
-      role: "Co-Founder & Lead Developer",
+      name: "Gopi Chakradhar",
+      role: "",
       bio: "Full-stack developer with expertise in modern web technologies and system architecture.",
-      image: "/placeholder.svg",
-  linkedin: "https://www.linkedin.com/in/trivesha-tech-439635378/"
+      image: "https://ik.imagekit.io/gopichakradhar/assets/super.jpg?updatedAt=1748004690247",
+      linkedin: "https://www.linkedin.com/in/gopi-chakradhar/"
     },
     {
-      name: "Shiva",
-      role: "Co-Founder & Creative Director",
+      name: "Shiva Rama Krishna",
+      role: "",
       bio: "UI/UX designer and strategist passionate about creating user-centered digital experiences.",
-      image: "/placeholder.svg",
-  linkedin: "https://www.linkedin.com/in/trivesha-tech-439635378/"
+      image: "https://ik.imagekit.io/gopichakradhar/assets/shiva.png",
+      linkedin: "https://www.linkedin.com/in/mandapudi-shiva-rama-krishna/"
     }
   ];
 
@@ -269,17 +269,17 @@ export default function About() {
             <div className="flex items-center justify-center mb-8 bg-white/5 backdrop-blur rounded-2xl p-6 max-w-lg mx-auto border border-white/10">
               <div className="flex -space-x-4">
                 <img 
-                  src="/placeholder.svg" 
-                  alt="Founder" 
+                  src={founders[0].image} 
+                  alt={founders[0].name} 
                   className="w-16 h-16 rounded-full border-4 border-white/20 shadow-lg"
                 />
                 <img 
-                  src="/placeholder.svg" 
-                  alt="Founder" 
+                  src={founders[1].image} 
+                  alt={founders[1].name} 
                   className="w-16 h-16 rounded-full border-4 border-white/20 shadow-lg"
                 />
               </div>
-              <span className="ml-6 text-lg text-teal-300 font-medium">Founded by Gopi & Shiva</span>
+              <span className="ml-6 text-lg text-teal-300 font-medium">Founded by {founders[0].name.split(' ')[0]} & {founders[1].name.split(' ')[0]}</span>
             </div>
             
             <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-black text-lg px-8 py-4 shadow-[0_10px_40px_rgba(45,212,191,0.25)]" asChild>
@@ -487,12 +487,8 @@ export default function About() {
           </div>
 
           <div className="text-center">
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-teal-400 text-teal-300 hover:bg-teal-500 hover:text-black text-lg px-8 bg-transparent"
-            >
-              See full services
+            <Button asChild variant="outline" size="lg" className="border-teal-400 text-teal-300 hover:bg-teal-500 hover:text-black text-lg px-8 bg-transparent">
+              <Link to="/services">See full services</Link>
             </Button>
           </div>
         </div>

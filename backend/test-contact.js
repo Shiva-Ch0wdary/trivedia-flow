@@ -7,7 +7,7 @@ async function testContactSubmission() {
     name: "Test User",
     email: "test@example.com", // Change this to your test email
     company: "Test Company",
-    phone: "+91 9876543210",
+  phone: "+91 7330975148",
     projectType: "Website Development",
     budget: "₹50k - ₹1L",
     timeline: "1-2 months",

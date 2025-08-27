@@ -121,7 +121,7 @@ const emailTemplates = {
               <div class="contact-info">
                 <h3 style="margin: 0 0 15px 0; color: #667eea;">📞 Need Immediate Assistance?</h3>
                 <p style="margin: 5px 0;"><strong>Email:</strong> trivesha.tech@gmail.com</p>
-                <p style="margin: 5px 0;"><strong>Phone:</strong> +91 98765 43210</p>
+                <p style="margin: 5px 0;"><strong>Phone:</strong> +91 73309 75148</p>
                 <p style="margin: 5px 0;"><strong>Business Hours:</strong> Mon-Fri, 9AM-7PM IST</p>
               </div>
             </div>
@@ -131,7 +131,7 @@ const emailTemplates = {
               <div class="social-links">
                 <a href="#">LinkedIn</a>
                 <a href="#">Instagram</a>
-                <a href="#">GitHub</a>
+                <a href="https://github.com/triveshatech">GitHub</a>
               </div>
               <p>© 2024 Trivesha Tech. Transforming ideas into digital reality.</p>
             </div>
@@ -157,7 +157,7 @@ What's Next:
 
 Contact us anytime:
 Email: trivesha.tech@gmail.com
-Phone: +91 98765 43210
+Phone: +91 73309 75148
 
 Best regards,
 The Trivesha Tech Team`,

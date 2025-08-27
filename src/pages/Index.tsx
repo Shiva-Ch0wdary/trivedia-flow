@@ -10,6 +10,7 @@ import ScrollToTop from "@/components/ui/scroll-to-top";
 import AnimatedBackground from "@/components/ui/animated-background";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Calendar, Users, HeartHandshake, Layers, Rocket, Shield, Smartphone, Globe, Gamepad2, Wrench, Eye, Star, MessageSquare, Mail } from "lucide-react";
+import InitialsAvatar from "@/components/ui/initials-avatar";
 import "@/styles/interactive-particles.css";
 import { useEffect } from "react";
 
@@ -115,9 +116,7 @@ const TestimonialCard = ({ quote, name, avatar }: { quote: string; name: string;
       </div>
       <p className="text-gray-300 mb-6 italic leading-relaxed">{quote}</p>
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 bg-gray-700 rounded-full overflow-hidden ring-2 ring-teal-500/30">
-          <img src={avatar} alt={name} className="w-full h-full object-cover" />
-        </div>
+        <InitialsAvatar name={name} src={avatar} size={48} className="ring-2 ring-teal-500/30" />
         <div>
           <p className="font-semibold text-white">{name}</p>
         </div>
@@ -170,6 +169,28 @@ export default function Index() {
 
     document.addEventListener('mousemove', handleMouseMove);
     return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Smooth-scroll to element when URL contains a hash (e.g. #contact)
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        try {
+          const el = document.querySelector(hash) as HTMLElement | null;
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } catch (e) {
+          // ignore invalid selector
+        }
+      }
+    };
+
+    // initial check
+    scrollToHash();
+    window.addEventListener('hashchange', scrollToHash);
+    return () => window.removeEventListener('hashchange', scrollToHash);
   }, []);
 
   return (
@@ -282,7 +303,7 @@ export default function Index() {
               From concept to launch, we provide comprehensive digital solutions tailored to your business needs
             </p>
           </div>
-          <div className="grid gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 max-w-7xl mx-auto">
+          <div className="grid gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 max-w-[90%] mx-auto">
             <ServiceCard
               image={uiImage}
               title="UI/UX & Figma Design"
@@ -314,7 +335,7 @@ export default function Index() {
                 "Simple 2D games",
                 "App Store deployment"
               ]}
-              link="/services/mobile"
+              link="#contact"
             />
             <ServiceCard
               image={dImage}
@@ -325,7 +346,7 @@ export default function Index() {
                 "Performance optimization",
                 "99.9% uptime guarantee"
               ]}
-              link="/services/maintenance"
+              link="#contact"
             />
           </div>
           <div className="text-center mt-16">
@@ -436,7 +457,7 @@ export default function Index() {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-gradient-to-r from-gray-900 via-black to-gray-900 py-24 border-t border-teal-500/20 relative overflow-hidden cta-section">
+  <section id="contact" className="bg-gradient-to-r from-gray-900 via-black to-gray-900 py-24 border-t border-teal-500/20 relative overflow-hidden cta-section">
         {/* Interactive Particles & Light Effects Background */}
         <div className="absolute inset-0">
           {/* Glowing particles with shine effect */}
@@ -531,13 +552,8 @@ export default function Index() {
                       <Mail className="w-5 h-5 mr-2" />
                       Get Free Quote
                     </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline"
-                      size="lg" 
-                      className="flex-1 border-orange-500/50 bg-orange-500/10 text-orange-400 hover:bg-orange-500 hover:text-white font-semibold py-4 text-lg backdrop-blur-sm"
-                    >
-                      Call Now
+                    <Button asChild type="button" variant="outline" size="lg" className="flex-1 border-orange-500/50 bg-orange-500/10 text-orange-400 hover:bg-orange-500 hover:text-white font-semibold py-4 text-lg backdrop-blur-sm">
+                      <a href="https://wa.me/917330975148" target="_blank" rel="noopener noreferrer">Call Now</a>
                     </Button>
                   </div>
                 </form>

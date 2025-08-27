@@ -70,14 +70,14 @@ export const generateOrganizationSchema = () => ({
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+91-9876543210",
+  "telephone": "+91-7330975148",
     "contactType": "customer service",
     "email": "hello@trivesha.com"
   },
   "sameAs": [
     "https://linkedin.com/company/trivesha",
     "https://twitter.com/trivesha",
-    "https://github.com/trivesha"
+  "https://github.com/triveshatech"
   ],
   "service": [
     {

@@ -45,9 +45,9 @@ export default function ContactDark() {
     {
       image: callIcon,
       title: "Call Us",
-      content: "+91 98765 43210",
+      content: "+91 73309 75148",
       subtitle: "Mon–Fri, 9am–7pm IST",
-      action: "tel:+919876543210",
+      action: "tel:+917330975148",
       actionText: "Call Now",
     },
     {
@@ -222,18 +222,18 @@ export default function ContactDark() {
 
             {/* Founders Quote */}
             <div className="flex items-center justify-center mb-8 bg-black/20 backdrop-blur-md rounded-2xl p-6 max-w-lg mx-auto border border-white/20">
-              <div className="flex -space-x-3 mr-4">
-                <img
-                  src="/placeholder.svg"
-                  alt="Founder"
-                  className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
-                />
-                <img
-                  src="/placeholder.svg"
-                  alt="Founder"
-                  className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
-                />
-              </div>
+                <div className="flex -space-x-3 mr-4">
+                  <img
+                    src="https://ik.imagekit.io/gopichakradhar/assets/super.jpg?updatedAt=1748004690247"
+                    alt="Gopi Chakradhar"
+                    className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
+                  />
+                  <img
+                    src="https://ik.imagekit.io/gopichakradhar/assets/shiva.png"
+                    alt="Mandapudi Shiva Rama Krishna"
+                    className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
+                  />
+                </div>
               <p className="text-sm text-white font-medium">"We reply in less than 24 hours"</p>
             </div>
 
@@ -355,7 +355,7 @@ export default function ContactDark() {
                   </Label>
                   <Input
                     id="phone"
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 73309 75148"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="h-12 border-white/15 bg-[#0B0F1F] text-zinc-100 placeholder:text-zinc-500 focus:border-blue-400"
@@ -597,7 +597,7 @@ export default function ContactDark() {
 
                   {/* GitHub */}
                   <a
-                    href="#"
+                    href="https://github.com/triveshatech"
                     className="group w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:border-gray-400/50 rounded-xl flex items-center justify-center transition-all duration-300 hover:bg-gray-500/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(156,163,175,0.3)]"
                   >
                     <svg className="w-5 h-5 text-white group-hover:text-gray-300 transition-colors" fill="currentColor" viewBox="0 0 24 24">

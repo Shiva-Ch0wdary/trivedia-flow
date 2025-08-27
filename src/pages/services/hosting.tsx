@@ -114,7 +114,7 @@ const process = [
 
 export default function HostingManagement() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-900 via-pink-800 to-pink-950 text-white">
+    <main className="bg-[#0A0E2A] text-[#EAEAEA] min-h-screen">
       <SEO
         title="Domain & Hosting Management — Trivesha"
         description="Complete domain registration, DNS management, and hosting solutions for your projects."
@@ -123,13 +123,13 @@ export default function HostingManagement() {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-pink-900 to-pink-950 pt-24 pb-16">
+  <section className="relative overflow-hidden bg-gradient-to-br from-[#0F1428] to-[#0A0E2A] pt-24 pb-16">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-pink-300">Domain & Hosting Management</h1>
-              <p className="text-lg mb-8 text-pink-100">Complete domain registration, DNS management, and hosting solutions for your business or personal projects.</p>
-              <Button asChild className="bg-pink-600 hover:bg-pink-500 text-white font-semibold px-8 py-4 text-lg">
+              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-[#2DD4BF]">Domain & Hosting Management</h1>
+              <p className="text-lg mb-8 text-[#A0AEC0]">Complete domain registration, DNS management, and hosting solutions for your business or personal projects.</p>
+              <Button asChild className="bg-[#2DD4BF] hover:bg-[#5EEAD4] text-[#0A0E2A] font-semibold px-8 py-4 text-lg">
                 <Link to="/contact">Get a free quote</Link>
               </Button>
             </div>
@@ -141,22 +141,22 @@ export default function HostingManagement() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-pink-950">
+      <section className="py-24 bg-[#0A0E2A]">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-pink-300 mb-4 drop-shadow-[0_4px_20px_rgba(236,72,153,0.2)]">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#2DD4BF] mb-4 drop-shadow-[0_4px_20px_rgba(45,212,191,0.2)]">
               Why Choose Our Hosting
             </h2>
-            <p className="text-lg text-pink-100 max-w-2xl mx-auto">
+            <p className="text-lg text-[#A0AEC0] max-w-2xl mx-auto">
               Fast, secure, and scalable hosting for every business size
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, i) => (
-              <div key={i} className="group border border-pink-700 bg-pink-900/60 rounded-2xl p-8 text-center shadow-lg hover:shadow-pink-400/10 transition-all duration-300">
+              <div key={i} className="group border border-[#1C2333] bg-[#111528] rounded-2xl p-8 text-center shadow-[0_8px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_36px_rgba(45,212,191,0.15)] hover:border-[#2DD4BF]/30 transition-all duration-300">
                 <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="font-bold text-xl mb-2 text-pink-200">{feature.title}</h3>
-                <p className="text-pink-100 text-base">{feature.description}</p>
+                <h3 className="font-bold text-xl mb-2 text-[#EAEAEA]">{feature.title}</h3>
+                <p className="text-[#A0AEC0] text-base">{feature.description}</p>
               </div>
             ))}
           </div>

@@ -413,7 +413,7 @@ export default function WebDevelopment() {
 
                   {/* GitHub */}
                   <a
-                    href="#"
+                    href="https://github.com/triveshatech"
                     className="group w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:border-gray-400/50 rounded-xl flex items-center justify-center transition-all duration-300 hover:bg-gray-500/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(156,163,175,0.3)]"
                   >
                     <svg className="w-5 h-5 text-white group-hover:text-gray-300 transition-colors" fill="currentColor" viewBox="0 0 24 24">
