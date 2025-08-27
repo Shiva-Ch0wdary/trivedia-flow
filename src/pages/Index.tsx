@@ -12,7 +12,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Calendar, Users, HeartHandshake, Layers, Rocket, Shield, Smartphone, Globe, Gamepad2, Wrench, Eye, Star, MessageSquare, Mail } from "lucide-react";
 import InitialsAvatar from "@/components/ui/initials-avatar";
 import "@/styles/interactive-particles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useLatestProjects } from "@/hooks/use-latest-projects";
+import { contactAPI } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 const BenefitItem = ({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) => (
   <div className="flex items-center gap-4 bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-teal-500/50 transition-all duration-300 group">
@@ -60,14 +63,24 @@ const ServiceCard = ({ image, title, bullets, link }: { image: string; title: st
   </div>
 );
 
-const ProjectCard = ({ title, result, image }: { title: string; result: string; image: string }) => (
+const ProjectCard = ({ title, result, image, slug }: { title: string; result: string; image: string; slug: string }) => (
   <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800/50 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 group">
     <div className="aspect-video bg-gray-800 relative overflow-hidden">
-      <img src={image} alt={title} className="w-full h-full object-cover opacity-80" />
+      <img 
+        src={image} 
+        alt={`${title} project showcase`}
+        className="w-full h-full object-cover opacity-80" 
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          target.src = '/placeholder.svg';
+        }}
+      />
       <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-        <Button variant="secondary" size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
-          <Eye className="w-4 h-4 mr-2" />
-          View Case Study
+        <Button asChild variant="secondary" size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
+          <Link to={`/portfolio/${slug}`}>
+            <Eye className="w-4 h-4 mr-2" />
+            View Case Study
+          </Link>
         </Button>
       </div>
     </div>
@@ -137,12 +150,91 @@ const ProcessStep = ({ step, title, desc, icon }: { step: string; title: string;
 );
 
 export default function Index() {
+  // Fetch latest 3 projects
+  const { projects, loading, error } = useLatestProjects(3);
+  
+  // Form state for the quote request
+  const [formData, setFormData] = useState({
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
   // Schema markup for homepage
   const schemaMarkup = [
     generateOrganizationSchema(),
     generateLocalBusinessSchema(),
     generateWebSiteSchema()
   ];
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      // Set a default message if none provided
+      setFormData(prev => ({
+        ...prev,
+        message: "I'm interested in getting a quote for my project. Please contact me with more details."
+      }));
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await contactAPI.submitForm({
+        name: formData.email.split('@')[0], // Extract name from email prefix
+        email: formData.email,
+        message: formData.message.trim() || "I'm interested in getting a quote for my project. Please contact me with more details.",
+        projectType: "Website Development", // Default project type
+        source: "homepage-quote-form"
+      });
+
+      if (response.data.success) {
+        toast({
+          title: "Thank You! 🎉",
+          description: "We've received your request and will get back to you within 24 hours.",
+          variant: "default",
+        });
+        
+        // Reset form
+        setFormData({
+          email: '',
+          message: ''
+        });
+      } else {
+        throw new Error(response.data.message || 'Something went wrong');
+      }
+    } catch (error: any) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Submission Failed",
+        description: error.response?.data?.message || "Please try again later or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Add mouse interaction for particles
   useEffect(() => {
@@ -372,22 +464,62 @@ export default function Index() {
               <Link to="/portfolio">View All Projects</Link>
             </Button>
           </div>
+          
+          {/* Dynamic Project Cards */}
           <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <ProjectCard
-              title="E-commerce Platform"
-              result="+120% traffic in 2 months"
-              image="/placeholder.svg"
-            />
-            <ProjectCard
-              title="SaaS Dashboard"
-              result="50% faster user onboarding"
-              image="/placeholder.svg"
-            />
-            <ProjectCard
-              title="Mobile Game"
-              result="100K+ downloads in 3 months"
-              image="/placeholder.svg"
-            />
+            {loading ? (
+              // Loading skeleton
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="bg-gray-900/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800/50 animate-pulse">
+                  <div className="aspect-video bg-gray-800"></div>
+                  <div className="p-6">
+                    <div className="h-6 bg-gray-700 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                  </div>
+                </div>
+              ))
+            ) : error ? (
+              // Error state
+              <div className="col-span-full text-center py-12">
+                <p className="text-red-400 mb-4">Failed to load projects</p>
+                <Button 
+                  onClick={() => window.location.reload()} 
+                  variant="outline" 
+                  className="border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white"
+                >
+                  Try Again
+                </Button>
+              </div>
+            ) : projects.length === 0 ? (
+              // No projects state
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-400 mb-4">No projects available</p>
+                <Button asChild variant="outline" className="border-teal-500/50 text-teal-400 hover:bg-teal-500 hover:text-white">
+                  <Link to="/contact">Start Your Project</Link>
+                </Button>
+              </div>
+            ) : (
+              // Display projects
+              projects.map((project) => {
+                // Get the best available result text
+                const resultText = project.results && project.results.length > 0 
+                  ? project.results[0] 
+                  : `${project.category} for ${project.client}`;
+                
+                // Get the best available image URL
+                const imageUrl = project.fullImageUrl || project.image;
+                
+                return (
+                  <ProjectCard
+                    key={project._id}
+                    title={project.title}
+                    result={resultText}
+                    image={imageUrl}
+                    slug={project.slug}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </section>
@@ -527,30 +659,39 @@ export default function Index() {
             
             <div className="max-w-lg mx-auto">
               <div className="bg-gray-900/80 backdrop-blur-sm rounded-3xl p-8 border border-teal-500/20 shadow-2xl shadow-teal-500/10">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleFormSubmit}>
                   <div>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="Your email address"
                       className="w-full px-6 py-4 rounded-xl bg-gray-800/50 border border-teal-500/30 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all duration-300"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
                     <textarea
-                      placeholder="Brief project idea (optional)"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Tell us about your project"
                       rows={3}
                       className="w-full px-6 py-4 rounded-xl bg-gray-800/50 border border-teal-500/30 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 focus:border-teal-400 resize-none transition-all duration-300"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
                       type="submit" 
                       size="lg" 
-                      className="flex-1 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white font-semibold py-4 text-lg shadow-lg shadow-teal-500/25"
+                      disabled={isSubmitting}
+                      className="flex-1 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white font-semibold py-4 text-lg shadow-lg shadow-teal-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Mail className="w-5 h-5 mr-2" />
-                      Get Free Quote
+                      {isSubmitting ? 'Sending...' : 'Get Free Quote'}
                     </Button>
                     <Button asChild type="button" variant="outline" size="lg" className="flex-1 border-orange-500/50 bg-orange-500/10 text-orange-400 hover:bg-orange-500 hover:text-white font-semibold py-4 text-lg backdrop-blur-sm">
                       <a href="https://wa.me/917330975148" target="_blank" rel="noopener noreferrer">Call Now</a>

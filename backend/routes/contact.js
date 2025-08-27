@@ -27,10 +27,10 @@ const contactFormLimiter = rateLimit({
 const validateContactForm = [
   body("name")
     .trim()
-    .isLength({ min: 2, max: 100 })
-    .withMessage("Name must be between 2 and 100 characters")
-    .matches(/^[a-zA-Z\s]+$/)
-    .withMessage("Name can only contain letters and spaces"),
+    .isLength({ min: 1, max: 100 })
+    .withMessage("Name must be between 1 and 100 characters")
+    .matches(/^[a-zA-Z0-9\s@._-]+$/)
+    .withMessage("Name contains invalid characters"),
 
   body("email")
     .isEmail()
@@ -91,8 +91,8 @@ const validateContactForm = [
 
   body("message")
     .trim()
-    .isLength({ min: 10, max: 2000 })
-    .withMessage("Message must be between 10 and 2000 characters"),
+    .isLength({ min: 1, max: 2000 })
+    .withMessage("Message must be between 1 and 2000 characters"),
 ];
 
 // @desc    Submit contact form
