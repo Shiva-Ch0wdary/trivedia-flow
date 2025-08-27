@@ -224,7 +224,7 @@ export default function ContactDark() {
             <div className="flex items-center justify-center mb-8 bg-black/20 backdrop-blur-md rounded-2xl p-6 max-w-lg mx-auto border border-white/20">
                 <div className="flex -space-x-3 mr-4">
                   <img
-                    src="https://ik.imagekit.io/gopichakradhar/assets/super.jpg?updatedAt=1748004690247"
+                    src="https://ik.imagekit.io/gopichakradhar/assets/gopi.png"
                     alt="Gopi Chakradhar"
                     className="w-12 h-12 rounded-full border-2 border-white/30 shadow"
                   />

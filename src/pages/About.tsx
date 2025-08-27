@@ -22,27 +22,33 @@ interface Founder {
 export default function About() {
   // Scroll reveal component for founder cards
   const FounderCard = ({ founder, index }: { founder: Founder; index: number }) => {
-    const { elementRef, animationClass } = useScrollReveal({
+    const { elementRef, animationClass, isVisible } = useScrollReveal({
       threshold: 0.2,
-      delay: index * 200, // Stagger animation by 200ms for each card
+      delay: index * 160, // tighter stagger
       duration: 600,
     });
 
+    const transitionDelay = `${index * 120 + 120}ms`;
+
+    const style: React.CSSProperties = {
+      transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(18px) scale(0.985)',
+      opacity: isVisible ? 1 : 0,
+      transition: `transform 620ms cubic-bezier(0.2,0.9,0.2,1) ${transitionDelay}, opacity 480ms ease ${transitionDelay}, box-shadow 420ms ease ${transitionDelay}`,
+      willChange: 'transform, opacity',
+    };
+
     return (
-      <div
-        ref={elementRef}
-        className={`transition-all duration-600 ease-out ${animationClass}`}
-      >
+      <div ref={elementRef} className="will-change-transform" style={style}>
         <Card className="founder-card group cursor-pointer border border-white/10 bg-[#111528]/80 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_50px_rgba(45,212,191,0.15)] hover:-translate-y-2 hover:border-teal-400/30 hover:border-b-4 hover:border-b-orange-400 transition-all duration-300 rounded-2xl overflow-hidden">
           <CardContent className="p-8 text-center">
             <div className="relative mb-6">
               <img 
                 src={founder.image} 
                 alt={founder.name}
-                className="w-32 h-32 rounded-full object-cover mx-auto shadow-lg group-hover:shadow-xl transition-shadow"
+                className="w-32 h-32 rounded-full object-cover mx-auto shadow-lg group-hover:shadow-xl transition-shadow duration-300"
               />
             </div>
-            
+
             <h3 className="font-heading text-2xl font-bold text-teal-300 mb-1">
               {founder.name}
             </h3>
@@ -52,7 +58,7 @@ export default function About() {
             <p className="text-zinc-300 leading-relaxed mb-6">
               {founder.bio}
             </p>
-            
+
             <a 
               href={founder.linkedin}
               className="inline-flex items-center space-x-2 text-teal-300 hover:text-orange-400 transition-colors"
@@ -118,14 +124,14 @@ export default function About() {
       name: "Gopi Chakradhar",
       role: "",
       bio: "Full-stack developer with expertise in modern web technologies and system architecture.",
-      image: "https://ik.imagekit.io/gopichakradhar/assets/super.jpg?updatedAt=1748004690247",
+  image: "https://ik.imagekit.io/gopichakradhar/assets/gopi.png",
       linkedin: "https://www.linkedin.com/in/gopi-chakradhar/"
     },
     {
       name: "Shiva Rama Krishna",
       role: "",
       bio: "UI/UX designer and strategist passionate about creating user-centered digital experiences.",
-      image: "https://ik.imagekit.io/gopichakradhar/assets/shiva.png",
+  image: "https://ik.imagekit.io/gopichakradhar/assets/shiva.png",
       linkedin: "https://www.linkedin.com/in/mandapudi-shiva-rama-krishna/"
     }
   ];
@@ -198,6 +204,21 @@ export default function About() {
         ogImage="/social-images/og-about.png"
         schemaMarkup={aboutSchema}
       />
+
+      {/* Minimal masked reveal animation styles */}
+      <style>{`
+        @keyframes slideReveal {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-slide-reveal {
+          animation: slideReveal 900ms cubic-bezier(0.2,0.9,0.2,1) 300ms both;
+          will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-slide-reveal { animation: none; display: none; }
+        }
+      `}</style>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0A0E2A] via-[#101530] to-[#1C1C1C]">
@@ -314,9 +335,13 @@ export default function About() {
               <Badge variant="secondary" className="text-teal-300 bg-teal-500/10 border-teal-400/20">
                 Our Journey
               </Badge>
-              <div className="space-y-6">
+                  <div className="space-y-6">
                 <div className="text-lg leading-relaxed">
-                  <span className="text-teal-300 font-bold text-3xl md:text-4xl font-heading">Building Digital Dreams</span>
+                  <div className="relative inline-block">
+                    <span className="text-teal-300 font-bold text-3xl md:text-4xl font-heading block relative z-0">Building Digital Dreams</span>
+                    {/* overlay slides to right revealing the text underneath (transparent background) */}
+                    <span className="absolute inset-0 bg-transparent z-10 pointer-events-none animate-slide-reveal" aria-hidden="true" />
+                  </div>
                   <br /><br />
                   Founded in 2019 in Khammam, India, Trivesha began with a simple mission: to bridge the gap between innovative ideas and exceptional digital execution. What started as a small team of passionate developers has grown into a <span className="text-teal-300 font-semibold">trusted partner</span> for <span className="text-teal-300 font-semibold">businesses worldwide</span>.<br /><br />
                   We specialize in creating <span className="text-orange-300 font-semibold">digital experiences</span> that not only look <span className="text-orange-300 font-semibold">beautiful</span> but also drive real business results. From startups to established enterprises, we've helped our clients transform their digital presence and achieve their goals.<br /><br />
