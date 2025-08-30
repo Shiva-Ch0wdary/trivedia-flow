@@ -86,29 +86,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Health check endpoint
-app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Trivedia Flow API is running",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV,
-  });
-});
-
-// API routes
-app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/content", contentRoutes);
-app.use("/api/upload", uploadRoutes);
-app.use("/api/portfolio", portfolioRoutes);
-app.use("/api/pricing", pricingRoutes);
-app.use("/api/contact", contactRoutes);
-
-// Error handling middleware
-app.use(notFound);
-app.use(errorHandler);
-
 // MongoDB connection
 let isConnected = false;
 
@@ -154,7 +131,7 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Health check endpoint
+// Root endpoint
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -165,7 +142,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Health check endpoint (should come after DB middleware)
+// Health check endpoint
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -175,6 +152,24 @@ app.get("/api/health", (req, res) => {
     database: isConnected ? 'connected' : (req.dbError ? `error: ${req.dbError}` : 'disconnected')
   });
 });
+
+// Favicon handler to prevent 404 errors
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
+
+// API routes
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/content", contentRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/pricing", pricingRoutes);
+app.use("/api/contact", contactRoutes);
+
+// Error handling middleware (must be last)
+app.use(notFound);
+app.use(errorHandler);
 
 // Start server
 if (process.env.NODE_ENV !== 'production') {
