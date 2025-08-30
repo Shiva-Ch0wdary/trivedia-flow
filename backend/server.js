@@ -63,6 +63,7 @@ app.use(
     origin: [
       process.env.FRONTEND_URL || "http://localhost:5173",
       "https://trivedia-flow.vercel.app",
+      "https://trivedia-flow-frontend.vercel.app",
       "http://localhost:8080",
       "http://localhost:8081",
       "http://localhost:3000",
