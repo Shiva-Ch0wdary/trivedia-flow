@@ -86,9 +86,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Static files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.status(200).json({
