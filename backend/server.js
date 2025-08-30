@@ -160,6 +160,28 @@ app.use(async (req, res, next) => {
   }
 });
 
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Trivedia Flow API is running",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    database: isConnected ? 'connected' : 'disconnected'
+  });
+});
+
+// Health check endpoint (should come after DB middleware)
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Trivedia Flow API is running",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    database: isConnected ? 'connected' : 'disconnected'
+  });
+});
+
 // Start server
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
