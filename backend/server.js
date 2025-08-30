@@ -62,6 +62,7 @@ app.use(
   cors({
     origin: [
       process.env.FRONTEND_URL || "http://localhost:5173",
+      "https://trivedia-flow.vercel.app",
       "http://localhost:8080",
       "http://localhost:8081",
       "http://localhost:3000",
@@ -112,12 +113,21 @@ app.use(notFound);
 app.use(errorHandler);
 
 // MongoDB connection
+let isConnected = false;
+
 const connectDB = async () => {
+  if (isConnected) {
+    return true;
+  }
+  
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
       socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+      bufferCommands: false, // Disable mongoose buffering
+      bufferMaxEntries: 0, // Disable mongoose buffering
     });
+    isConnected = true;
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     return true;
   } catch (error) {
@@ -131,28 +141,49 @@ const connectDB = async () => {
     console.log(
       "🔗 MongoDB Atlas IP Whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/"
     );
-    // Exit the process to avoid running in an inconsistent mock mode
-    process.exit(1);
+    throw error;
   }
 };
 
+// Connect to database on each request (serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Database connection failed',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
 // Start server
-const startServer = async () => {
-  await connectDB();
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  
+  const startServer = async () => {
+    await connectDB();
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(
-      `🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-    );
-    console.log(
-      `📱 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:5173"}`
-    );
-    console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
-    console.log("🗄️  Database: Connected");
-  });
-};
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(
+        `🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+      );
+      console.log(
+        `📱 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:5173"}`
+      );
+      console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
+      console.log("🗄️  Database: Connected");
+    });
+  };
 
-startServer();
+  startServer();
+}
+
+// Export for Vercel
+export default app;
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (err, promise) => {
