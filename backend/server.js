@@ -24,7 +24,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { notFound } from "./middleware/notFound.js";
 
 // Load environment variables
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./.env" });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
