@@ -122,25 +122,16 @@ const connectDB = async () => {
   
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
-      bufferCommands: false, // Disable mongoose buffering
-      bufferMaxEntries: 0, // Disable mongoose buffering
+      serverSelectionTimeoutMS: 10000, // 10 seconds
+      socketTimeoutMS: 45000,
+      family: 4, // Use IPv4, skip trying IPv6
     });
     isConnected = true;
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     return true;
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
-    console.log(
-      "⚠️  MongoDB connection failed. This might be due to IP whitelist restrictions."
-    );
-    console.log(
-      "📝 Please ensure your IP is whitelisted in MongoDB Atlas or use a local MongoDB instance."
-    );
-    console.log(
-      "🔗 MongoDB Atlas IP Whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/"
-    );
+    isConnected = false;
     throw error;
   }
 };
@@ -151,12 +142,18 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (error) {
-    console.error('Database connection failed:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Database connection failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
-    });
+    console.error('Database connection failed:', error.message);
+    // For health checks, don't fail - just continue without DB
+    if (req.path === '/' || req.path === '/api/health') {
+      req.dbError = error.message;
+      next();
+    } else {
+      res.status(500).json({ 
+        success: false, 
+        message: 'Database connection failed',
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+      });
+    }
   }
 });
 
@@ -167,7 +164,7 @@ app.get("/", (req, res) => {
     message: "Trivedia Flow API is running",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    database: isConnected ? 'connected' : 'disconnected'
+    database: isConnected ? 'connected' : (req.dbError ? `error: ${req.dbError}` : 'disconnected')
   });
 });
 
@@ -178,7 +175,7 @@ app.get("/api/health", (req, res) => {
     message: "Trivedia Flow API is running",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    database: isConnected ? 'connected' : 'disconnected'
+    database: isConnected ? 'connected' : (req.dbError ? `error: ${req.dbError}` : 'disconnected')
   });
 });
 
